@@ -1,25 +1,14 @@
 package com.miticorp.topography.basic.model;
 
-import java.util.Collections;
-import java.util.TreeMap;
-
-import com.miticorp.topography.basic.model.Coordinates.DimensionsRectangularNEH;
-
-public class CoordinatesRectangular extends Coordinates<DimensionsRectangularNEH> {
-	private double north, est, height;
+public class CoordinatesRectangular extends Coordinates {
+	private double north, east, height;
 	
 	// constructors
 	public CoordinatesRectangular() {}
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue) {
 		this.north = northValue;
-		this.est = estValue;
+		this.east = estValue;
 		this.height = heightValue;
-		
-		// TODO de analizat daca se preteaza mai bine varianta cu Map pentru coordonate
-		dimensions = Collections.synchronizedSortedMap(new TreeMap<DimensionsRectangularNEH, Double>());
-		dimensions.put(DimensionsRectangularNEH.NORTH, northValue);
-		dimensions.put(DimensionsRectangularNEH.EST, estValue);
-		dimensions.put(DimensionsRectangularNEH.HEIGHT, heightValue);
 	}
 	
 	// setters and getters
@@ -31,12 +20,12 @@ public class CoordinatesRectangular extends Coordinates<DimensionsRectangularNEH
 		this.north = north;
 	}
 
-	public double getEst() {
-		return est;
+	public double getEast() {
+		return east;
 	}
 
-	public void setEst(double est) {
-		this.est = est;
+	public void setEast(double east) {
+		this.east = east;
 	}
 
 	public double getHeight() {

@@ -1,33 +1,33 @@
 package com.miticorp.topography.basic.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-public class Point<T> extends Shape {
-	private Coordinates<T> coord;
+public class Point extends Shape {
+	private Coordinates coord;
 	private double scaleFactor = 1D;
 
 	// Constructors
 	public Point() {}
-	public Point(Coordinates<T> coord, double scaleFactor) {
+	public Point(Coordinates coord, double scaleFactor) {
 		this.coord = coord;
 		this.scaleFactor = scaleFactor;
 	}
-	public Point(Coordinates<T> coord) {
+	public Point(Coordinates coord) {
 		super();
 		this.coord = coord;
 	}
-	
+
 	// Getters and Setters
-	public Coordinates<T> getCoord() {
+	public synchronized Coordinates getCoord() {
 		return coord;
 	}
-	public void setCoord(Coordinates<T> coord) {
+	public synchronized void setCoord(Coordinates coord) {
 		this.coord = coord;
 	}
-	public double getScaleFactor() {
+	
+	public synchronized double getScaleFactor() {
 		return scaleFactor;
 	}
-	public void setScaleFactor(double scaleFactor) {
+	public synchronized void setScaleFactor(double scaleFactor) {
 		this.scaleFactor = scaleFactor;
 	}
+	
 }

@@ -1,46 +1,64 @@
 package com.miticorp.topography.basic.model;
 
-public class BearingRectangular {
-	private double value;
+public class BearingRectangular<T extends CoordinatesRectangular> extends Angle {
 	private Point from;
 	private Point to;
 	
 	// Constructors
-//	public BearingRectangular() { super(); }
-	public BearingRectangular(Point from, Point to) {
+	public BearingRectangular(Point from, Point to, AngleType angleType) {
 		super();
 		this.from = from;
 		this.to = to;
+		setAngleType(angleType);
+		if (from != null && to != null)
+			setValue(calculateBearingRectangularByPoints(from, to));
+		else setValue(null);
 	}
-	public BearingRectangular(double value, Point from, Point to) {
-		super();
-		this.value = value;
-		this.from = from;
-		this.to = to;
+	public BearingRectangular(Double value, AngleType angleType) {
+		super(value, angleType);
 	}
 	
 	// Getters and Setters
-	public double getValue() {
-		return value;
-	}
-	public void setValue(double value) {
-		this.value = value;
-	}
 	public Point getFrom() {
 		return from;
 	}
 	public void setFrom(Point from) {
 		this.from = from;
+		setValue(calculateBearingRectangularByPoints(from, to));
 	}
+	
 	public Point getTo() {
 		return to;
 	}
 	public void setTo(Point to) {
 		this.to = to;
+		setValue(calculateBearingRectangularByPoints(from, to));
 	}
 	
 	// Calculate the bearing
-//	private double calculateBearing(Point from, Point to) {
-//		
-//	}
+	@SuppressWarnings("unchecked")
+	private Double calculateBearingRectangularByPoints(Point from, Point to) {
+		if (from != null && to != null) {
+			double deltaNorth, deltaEast;
+			double north1, east1;
+			double north2, east2;
+			
+			north1 	= ((T) from.getCoord()).getNorth();
+			north2 	= ((T) to.getCoord()).getNorth();
+			east1 	= ((T) from.getCoord()).getEast();
+			east2 	= ((T) to.getCoord()).getEast();
+			
+			deltaNorth 	= north2 - north1;
+			deltaEast 	= east2 - east1;
+			
+			double theta, omega;
+			// getAngleType().;
+			if ((deltaNorth > 0) && (deltaEast >= 0)) {
+				
+			}
+					
+		}
+		else return null;
+		return null;
+	}
 }

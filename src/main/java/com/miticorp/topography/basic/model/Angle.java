@@ -1,20 +1,20 @@
 package com.miticorp.topography.basic.model;
 
 public class Angle {
-	private static final double CENTESIMAL_TO_RADIAN = 2*Math.PI/400;
-	private static final double RADIAN_TO_CENTESIMAL = 400/(2*Math.PI);
+	public static final double CENTESIMAL_TO_RADIAN = 2*Math.PI/400;
+	public static final double RADIAN_TO_CENTESIMAL = 400/(2*Math.PI);
 	
-	private static final double CENTESIMAL_TO_HEXADECIMA = 360/400;
-	private static final double HEXADECIMAL_TO_CENTESIMAL = 400/360;
+	public static final double CENTESIMAL_TO_HEXADECIMA = 360/400;
+	public static final double HEXADECIMAL_TO_CENTESIMAL = 400/360;
 	
-	private static final double HEXADECIMAL_TO_RADIAN = 2*Math.PI/360;
-	private static final double RADIAN_TO_HEXADECIMAL = 360/(2*Math.PI); 
+	public static final double HEXADECIMAL_TO_RADIAN = 2*Math.PI/360;
+	public static final double RADIAN_TO_HEXADECIMAL = 360/(2*Math.PI); 
 	
-	private double value;
+	private Double value;
 	private AngleType angleType;
 	
 	public Angle() {}
-	public Angle(double value, AngleType angleType) {
+	public Angle(Double value, AngleType angleType) {
 		super();
 		this.value = value;
 		this.angleType = angleType;
@@ -42,8 +42,21 @@ public class Angle {
 		else return null;
 	}
 	
-	public Double transformAngleToSystem2(AngleType toSystem, double value) {
+	public Double transformAngleToSystem(AngleType toSystem, double value) {
 		return transformAngleFromSystemToSystem(this.angleType, toSystem, value);
-	}	
-
+	}
+	
+	
+	public synchronized Double getValue() {
+		return value;
+	}
+	public synchronized void setValue(Double value) {
+		this.value = value;
+	}
+	public synchronized AngleType getAngleType() {
+		return angleType;
+	}
+	public synchronized void setAngleType(AngleType angleType) {
+		this.angleType = angleType;
+	}
 }
