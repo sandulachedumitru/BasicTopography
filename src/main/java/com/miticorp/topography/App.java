@@ -3,6 +3,8 @@ package com.miticorp.topography;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.miticorp.topography.basic.model.Angle;
+
 /**
  * Hello world!
  *
@@ -25,6 +27,7 @@ public class App
         System.out.println( "sin(" + rad + ") = " + Math.sin(rad));
         System.out.println( "sin(" + cent + ") = " + Math.sin(cent * cent2rad));
         System.out.println("arctang(dn/de) = " + Math.atan(dN/dE) * rad2cent);
+        System.out.println("cent2rad = " + Angle.CENTESIMAL_TO_RADIAN);
     }
     
     public static void main() {

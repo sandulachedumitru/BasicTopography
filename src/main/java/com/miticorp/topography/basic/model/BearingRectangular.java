@@ -1,6 +1,6 @@
 package com.miticorp.topography.basic.model;
 
-public class BearingRectangular<T extends CoordinatesRectangular> extends Angle {
+public class BearingRectangular extends Angle {
 	private Point from;
 	private Point to;
 	
@@ -37,47 +37,48 @@ public class BearingRectangular<T extends CoordinatesRectangular> extends Angle 
 	
 	// Calculate the bearing
 	@SuppressWarnings("unchecked")
-	private Double calculateBearingRectangularByPoints(Point from, Point to) {
+	private <T extends CoordinatesRectangular> Double calculateBearingRectangularByPoints(Point from, Point to) {
 		if (from != null && to != null) {
 			double deltaNorth, deltaEast;
 			double north1, east1;
 			double north2, east2;
+			double height1, height2;
 			
 			north1 	= ((T) from.getCoord()).getNorth();
 			north2 	= ((T) to.getCoord()).getNorth();
 			east1 	= ((T) from.getCoord()).getEast();
 			east2 	= ((T) to.getCoord()).getEast();
+			height2	= ((T) from.getCoord()).getHeight();
+			height2	= ((T) to.getCoord()).getHeight();
 			
 			deltaNorth 	= north2 - north1;
 			deltaEast 	= east2 - east1;
 			
-			double theta, omega;
+			double theta = 0D, omega;
 			
 			AngleType angleType = getAngleType();
-			// AngleType angleTypeRadian = new AngleTypeRadian();
-			// angleType.transformAngleToSystem(angleTypeRadian);
-			
+			AngleType angleTypeRadian = new AngleTypeRadian();
+			double cadran = angleType.getMaxNumberOfCircleDegrees() / 4;
 			
 			if ((deltaNorth > 0) && (deltaEast >= 0)) {
 				omega = Math.atan(deltaEast/deltaNorth);
-				theta = omega + 0;
-				theta = omega * angleType.getRadianByTransformationFactor() + angleType.getMaxNumberOfCircleDegrees();
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 0 * cadran;
 			}
 			else if ((deltaNorth <= 0) && (deltaEast > 0)) {
 				omega = Math.atan(deltaNorth/deltaEast);
-				theta = omega + 100;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 1 * cadran;
 			}
 			else if ((deltaNorth < 0) && (deltaEast <= 0)) {
 				omega = Math.atan(deltaEast/deltaNorth);
-				theta = omega + 200;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 2 * cadran;
 			}
 			else if ((deltaNorth >= 0) && (deltaEast < 0)) {
 				omega = Math.atan(deltaNorth/deltaEast);
-				theta = omega + 300;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 3 * cadran;
 			}
-					
+			
+			return theta;
 		}
 		else return null;
-		return null;
 	}
 }
