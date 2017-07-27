@@ -52,9 +52,28 @@ public class BearingRectangular<T extends CoordinatesRectangular> extends Angle 
 			deltaEast 	= east2 - east1;
 			
 			double theta, omega;
-			// getAngleType().;
+			
+			AngleType angleType = getAngleType();
+			// AngleType angleTypeRadian = new AngleTypeRadian();
+			// angleType.transformAngleToSystem(angleTypeRadian);
+			
+			
 			if ((deltaNorth > 0) && (deltaEast >= 0)) {
-				
+				omega = Math.atan(deltaEast/deltaNorth);
+				theta = omega + 0;
+				theta = omega * angleType.getRadianByTransformationFactor() + angleType.getMaxNumberOfCircleDegrees();
+			}
+			else if ((deltaNorth <= 0) && (deltaEast > 0)) {
+				omega = Math.atan(deltaNorth/deltaEast);
+				theta = omega + 100;
+			}
+			else if ((deltaNorth < 0) && (deltaEast <= 0)) {
+				omega = Math.atan(deltaEast/deltaNorth);
+				theta = omega + 200;
+			}
+			else if ((deltaNorth >= 0) && (deltaEast < 0)) {
+				omega = Math.atan(deltaNorth/deltaEast);
+				theta = omega + 300;
 			}
 					
 		}

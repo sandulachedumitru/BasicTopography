@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.model;
 
-public class AngleType extends Angle {
-
+public abstract class AngleType {
+	abstract Double getAngleValueFromRadianByTransformationFactor();
+	abstract Double getRadianFromAngleValueByTransformationFactor();
+	abstract Double getMaxNumberOfCircleDegrees();
 }
