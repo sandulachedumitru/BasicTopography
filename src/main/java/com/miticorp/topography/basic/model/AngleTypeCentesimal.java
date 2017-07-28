@@ -4,7 +4,7 @@ public class AngleTypeCentesimal extends AngleType {
 	private double degree = 400;
 
 	@Override
-	Double getMaxNumberOfCircleDegrees() {
+	public Double getMaxNumberOfCircleDegrees() {
 		return degree;
 	}
 }

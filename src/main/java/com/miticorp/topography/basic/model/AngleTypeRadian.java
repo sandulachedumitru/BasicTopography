@@ -4,7 +4,7 @@ public class AngleTypeRadian extends AngleType {
 	private double degree = 2*Math.PI;
 
 	@Override
-	Double getMaxNumberOfCircleDegrees() {
+	public Double getMaxNumberOfCircleDegrees() {
 		return degree;
 	}
 }

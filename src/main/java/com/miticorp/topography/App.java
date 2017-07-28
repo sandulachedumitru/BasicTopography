@@ -21,13 +21,15 @@ public class App
         double cent = rad * rad2cent;
         
         double dN = 123.456, dE = 45.678;
-
+        
+        double base = 2, pow = 20;
         
         System.out.println( "rad = " + rad + " --> " + cent);
         System.out.println( "sin(" + rad + ") = " + Math.sin(rad));
         System.out.println( "sin(" + cent + ") = " + Math.sin(cent * cent2rad));
         System.out.println("arctang(dn/de) = " + Math.atan(dN/dE) * rad2cent);
         System.out.println("cent2rad = " + Angle.CENTESIMAL_TO_RADIAN);
+        System.out.println(base + "^" + pow + " = " + Math.pow(base, pow));
     }
     
     public static void main() {
