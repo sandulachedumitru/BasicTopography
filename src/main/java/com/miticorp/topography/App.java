@@ -21,7 +21,8 @@ import com.miticorp.topography.basic.utils.Utils;
  */
 public class App 
 {
-    public static void main( String[] args )
+	// TODO de facut clase de test
+	public static void main( String[] args )
     {
         
         double cent2rad = 2*Math.PI/400;

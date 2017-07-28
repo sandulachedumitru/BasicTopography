@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.model;
 
+// TODO de grupat sistemele ortogonale sub o clasa separata
 public class CoordinatesRectangular extends Coordinates {
 	private double north, east, height;
 	

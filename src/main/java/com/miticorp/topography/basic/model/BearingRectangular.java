@@ -2,6 +2,7 @@ package com.miticorp.topography.basic.model;
 
 import com.miticorp.topography.basic.utils.Utils;
 
+// TODO de schimbat numele clasei in AngleBearingRectangula
 public class BearingRectangular<T extends CoordinatesRectangular> extends Angle {
 	private Point<T> from;
 	private Point<T> to;
@@ -12,11 +13,7 @@ public class BearingRectangular<T extends CoordinatesRectangular> extends Angle 
 		this.from = from;
 		this.to = to;
 		setAngleType(angleType);
-		if (from != null && to != null) {
-//			CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, angleType);
-//			setValue(coordinatesPolar.getAngle().getValue());
-			setAngleValue(from, to, getAngleType());
-		}
+		if (from != null && to != null) setAngleValue(from, to, getAngleType());
 		else setValue(null);
 	}
 	public BearingRectangular(Double value, AngleType angleType) {
@@ -29,8 +26,6 @@ public class BearingRectangular<T extends CoordinatesRectangular> extends Angle 
 	}
 	public void setFrom(Point<T> from) {
 		this.from = from;
-//		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, getAngleType());
-//		setValue(coordinatesPolar.getAngle().getValue());
 		setAngleValue(from, to, getAngleType());
 	}
 	
@@ -39,8 +34,6 @@ public class BearingRectangular<T extends CoordinatesRectangular> extends Angle 
 	}
 	public void setTo(Point<T> to) {
 		this.to = to;
-//		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, getAngleType());
-//		setValue(coordinatesPolar.getAngle().getValue());
 		setAngleValue(from, to, getAngleType());
 	}
 	

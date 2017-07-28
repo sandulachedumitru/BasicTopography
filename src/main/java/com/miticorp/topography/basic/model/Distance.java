@@ -6,6 +6,8 @@ public class Distance<T extends CoordinatesRectangular> {
 	private Point<T> from;
 	private Point<T> to;
 	private Double value;
+	// TODO
+	private DistanceType distanceType; // unitatea de masura a distantelor (m, inch, yard, mile, km, etc)
 	
 	// Constructors
 	public Distance(Point<T> from, Point<T> to) {
