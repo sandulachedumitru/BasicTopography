@@ -2,11 +2,11 @@ package com.miticorp.topography.basic.model;
 
 public class CoordinatesPolar extends Coordinates {
 	private Angle angle;
-	private Distance distance;
+	private Distance<?> distance;
 	
 	// Constructors
 	public CoordinatesPolar() { super(); }
-	public CoordinatesPolar(Angle angle, Distance distance) {
+	public CoordinatesPolar(Angle angle, Distance<?> distance) {
 		super();
 		this.angle = angle;
 		this.distance = distance;
@@ -19,10 +19,10 @@ public class CoordinatesPolar extends Coordinates {
 	public synchronized void setAngle(Angle angle) {
 		this.angle = angle;
 	}
-	public synchronized Distance getDistance() {
+	public synchronized Distance<?> getDistance() {
 		return distance;
 	}
-	public synchronized void setDistance(Distance distance) {
+	public synchronized void setDistance(Distance<?> distance) {
 		this.distance = distance;
 	}
 }

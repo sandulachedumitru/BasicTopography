@@ -2,18 +2,20 @@ package com.miticorp.topography.basic.model;
 
 import com.miticorp.topography.basic.utils.Utils;
 
-public class Distance {
-	private Point<?> from;
-	private Point<?> to;
+public class Distance<T extends CoordinatesRectangular> {
+	private Point<T> from;
+	private Point<T> to;
 	private Double value;
 	
 	// Constructors
-	public Distance(Point<?> from, Point<?> to) {
+	public Distance(Point<T> from, Point<T> to) {
 		super();
 		this.from = from;
 		this.to = to;
 		if (from != null && to != null) {
 			CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, new AngleTypeRadian()); 
+			this.value = coordinatesPolar.getDistance().getValue();
+			setDistanceValue(from, to);
 		}
 	}
 	public Distance(Double value) {
@@ -25,16 +27,16 @@ public class Distance {
 	}
 
 	// Getters and Setters
-	public synchronized Point<?> getFrom() {
+	public synchronized Point<T> getFrom() {
 		return from;
 	}
-	public synchronized void setFrom(Point<?> from) {
+	public synchronized void setFrom(Point<T> from) {
 		this.from = from;
 	}
-	public synchronized Point<?> getTo() {
+	public synchronized Point<T> getTo() {
 		return to;
 	}
-	public synchronized void setTo(Point<?> to) {
+	public synchronized void setTo(Point<T> to) {
 		this.to = to;
 	}
 	public synchronized Double getValue() {
@@ -42,5 +44,10 @@ public class Distance {
 	}
 	public synchronized void setValue(Double value) {
 		this.value = value;
+	}
+	
+	private void setDistanceValue(Point<T> from, Point<T> to) {
+		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, new AngleTypeRadian()); 
+		this.value = coordinatesPolar.getDistance().getValue();
 	}
 }

@@ -21,11 +21,11 @@ public class Utils {
 			double height1, height2;
 			
 			north1 	= ((T) from.getCoord()).getNorth() 	* from.getScaleFactor();
-			north2 	= ((T) to.getCoord()).getNorth() 	* from.getScaleFactor();
+			north2 	= ((T) to.getCoord()).getNorth() 	* to.getScaleFactor();
 			east1 	= ((T) from.getCoord()).getEast() 	* from.getScaleFactor();
-			east2 	= ((T) to.getCoord()).getEast() 	* from.getScaleFactor();
-			height2	= ((T) from.getCoord()).getHeight() * from.getScaleFactor();
-			height2	= ((T) to.getCoord()).getHeight()	* from.getScaleFactor();
+			east2 	= ((T) to.getCoord()).getEast() 	* to.getScaleFactor();
+			height1	= ((T) from.getCoord()).getHeight() * from.getScaleFactor();
+			height2	= ((T) to.getCoord()).getHeight()	* to.getScaleFactor();
 			
 			deltaNorth 	= north2 - north1;
 			deltaEast 	= east2 - east1;
@@ -58,7 +58,7 @@ public class Utils {
 			
 			// Prepare return
 			Angle angleRez = new Angle(theta, angleType);
-			Distance distanceRez = new Distance();
+			Distance<T> distanceRez = new Distance<>();
 			
 			distanceRez.setValue(distance);
 			distanceRez.setFrom(from);
