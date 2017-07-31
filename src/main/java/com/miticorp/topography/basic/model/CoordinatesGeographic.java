@@ -1,6 +1,6 @@
 package com.miticorp.topography.basic.model;
 
-public class CoordinatesGeographic extends Coordinates {
+public class CoordinatesGeographic extends CoordinatesOrthogonal {
 	private double latitude, longitude, height;
 
 	// Constructors

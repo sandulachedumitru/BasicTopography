@@ -2,7 +2,6 @@ package com.miticorp.topography.basic.model;
 
 import com.miticorp.topography.basic.utils.Utils;
 
-// TODO de schimbat numele clasei in AngleBearingRectangula
 public class AngleBearingRectangular<T extends CoordinatesRectangular> extends Angle {
 	private Point<T> from;
 	private Point<T> to;
@@ -41,5 +40,4 @@ public class AngleBearingRectangular<T extends CoordinatesRectangular> extends A
 		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, getAngleType());
 		setValue(coordinatesPolar.getAngle().getValue());
 	}
-	
 }

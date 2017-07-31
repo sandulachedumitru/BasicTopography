@@ -6,7 +6,6 @@ public class Distance<T extends CoordinatesRectangular> {
 	private Point<T> from;
 	private Point<T> to;
 	private Double value;
-	// TODO
 	private DistanceType distanceType; // unitatea de masura a distantelor (m, inch, yard, mile, km, etc)
 	
 	// Constructors
@@ -46,6 +45,12 @@ public class Distance<T extends CoordinatesRectangular> {
 	}
 	public synchronized void setValue(Double value) {
 		this.value = value;
+	}
+	public synchronized DistanceType getDistanceType() {
+		return distanceType;
+	}
+	public synchronized void setDistanceType(DistanceType distanceType) {
+		this.distanceType = distanceType;
 	}
 	
 	private void setDistanceValue(Point<T> from, Point<T> to) {
