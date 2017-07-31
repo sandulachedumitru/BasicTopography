@@ -3,12 +3,12 @@ package com.miticorp.topography.basic.model;
 import com.miticorp.topography.basic.utils.Utils;
 
 // TODO de schimbat numele clasei in AngleBearingRectangula
-public class BearingRectangular<T extends CoordinatesRectangular> extends Angle {
+public class AngleBearingRectangular<T extends CoordinatesRectangular> extends Angle {
 	private Point<T> from;
 	private Point<T> to;
 	
 	// Constructors
-	public BearingRectangular(Point<T> from, Point<T> to, AngleType angleType) {
+	public AngleBearingRectangular(Point<T> from, Point<T> to, AngleType angleType) {
 		super();
 		this.from = from;
 		this.to = to;
@@ -16,7 +16,7 @@ public class BearingRectangular<T extends CoordinatesRectangular> extends Angle 
 		if (from != null && to != null) setAngleValue(from, to, getAngleType());
 		else setValue(null);
 	}
-	public BearingRectangular(Double value, AngleType angleType) {
+	public AngleBearingRectangular(Double value, AngleType angleType) {
 		super(value, angleType);
 	}
 	
