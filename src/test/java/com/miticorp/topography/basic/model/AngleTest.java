@@ -17,6 +17,7 @@ import org.junit.Test;
  * @author dumitru.sandulache
  *
  */
+// TODO de continuat restul metodelor din clasa de test
 public class AngleTest {
 	private AngleType from;
 	private AngleType to;
@@ -69,143 +70,17 @@ public class AngleTest {
 	 */
 	@Test
 	public void testTransformAngleFromSystemToSystem() {
-		// loop(new AngleTypeCentesimal(), new AngleTypeHexadecinal(), Angle.CENTESIMAL_TO_RADIAN);
-		
-		Angle angle;
-		Double rez;
-		Random random = new Random();
-		double lenght;
-		
-		// 1. setup
-		from = new AngleTypeCentesimal();
-		to = new AngleTypeCentesimal();
-		// 1. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp = random.nextInt(99999); temp /= 10000;
-			if ((value % (lenght/4)) != 0D ) value += temp;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value));
-		}
-		
-		// 2. setup
-		from = new AngleTypeCentesimal();
-		to = new AngleTypeHexadecinal();
-		// 2. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp = random.nextInt(99999); temp /= 10000;
-			if ((value % (lenght/4)) != 0D ) value += temp;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value*Angle.CENTESIMAL_TO_HEXADECIMAL));
-		}
-		
-		// 3. setup
-		from = new AngleTypeCentesimal();
-		to = new AngleTypeRadian();
-		// 3. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp = random.nextInt(99999); temp /= 10000;
-			if ((value % (lenght/4)) != 0D ) value += temp;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value*Angle.CENTESIMAL_TO_RADIAN));
-		}
-		
-		// 4. setup
-		from = new AngleTypeHexadecinal();
-		to = new AngleTypeHexadecinal();
-		// 4. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp = random.nextInt(99999); temp /= 10000;
-			if ((value % (lenght/4)) != 0D ) value += temp;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value));
-		}
-		
-		// 5. setup
-		from = new AngleTypeHexadecinal();
-		to = new AngleTypeCentesimal();
-		// 5. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp = random.nextInt(99999); temp /= 10000;
-			if ((value % (lenght/4)) != 0D ) value += temp;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value * Angle.HEXADECIMAL_TO_CENTESIMAL));
-		}
-		
-		// 6. setup
-		from = new AngleTypeHexadecinal();
-		to = new AngleTypeRadian();
-		// 6. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp = random.nextInt(99999); temp /= 10000;
-			if ((value % (lenght/4)) != 0D ) value += temp;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value * Angle.HEXADECIMAL_TO_RADIAN));
-		}
-		
-		// 7. setup
-		from = new AngleTypeRadian();
-		to = new AngleTypeRadian();
-		// 7. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-			value = (double) i;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value));
-		}
-		
-		// 8. setup
-		from = new AngleTypeRadian();
-		to = new AngleTypeCentesimal();
-		// 8. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-			value = (double) i;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value * Angle.RADIAN_TO_CENTESIMAL));
-		}
-		
-		// 8. setup
-		from = new AngleTypeRadian();
-		to = new AngleTypeHexadecinal();
-		// 8. test all values cases;
-		lenght = from.getMaxNumberOfCircleDegrees();
-		for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-			value = (double) i;
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value * Angle.RADIAN_TO_HEXADECIMAL));
-		}
-		
+		loop(new AngleTypeCentesimal(), new AngleTypeCentesimal(), 1);
+		loop(new AngleTypeCentesimal(), new AngleTypeHexadecinal(), Angle.CENTESIMAL_TO_HEXADECIMAL);
+		loop(new AngleTypeCentesimal(), new AngleTypeRadian(), Angle.CENTESIMAL_TO_RADIAN);
 
+		loop(new AngleTypeHexadecinal(), new AngleTypeHexadecinal(), 1);
+		loop(new AngleTypeHexadecinal(), new AngleTypeCentesimal(), Angle.HEXADECIMAL_TO_CENTESIMAL);
+		loop(new AngleTypeHexadecinal(), new AngleTypeRadian(), Angle.HEXADECIMAL_TO_RADIAN);
+
+		loop(new AngleTypeRadian(), new AngleTypeRadian(), 1);
+		loop(new AngleTypeRadian(), new AngleTypeCentesimal(), Angle.RADIAN_TO_CENTESIMAL);
+		loop(new AngleTypeRadian(), new AngleTypeHexadecinal(), Angle.RADIAN_TO_HEXADECIMAL);
 	}
 	
 	private static void loop(AngleType from, AngleType to, double factor) {
@@ -215,20 +90,27 @@ public class AngleTest {
 		double lenght, value;
 
 		lenght = from.getMaxNumberOfCircleDegrees();
-		for (int i = 0; i <= lenght; i += 10 ) {
-			value = (double) i;
-			double temp;
-			if (!(from instanceof AngleTypeRadian)) {
-				temp = random.nextInt(99999); temp /= 10000; 
+		if (!(from instanceof AngleTypeRadian)) {
+			for (int i = 0; i <= lenght; i += 10 ) {
+				value = (double) i;
+				double temp = random.nextInt(99999); temp /= 10000;
 				if ((value % (lenght/4)) != 0D ) value += temp;
+				// System.out.println(value);
+				angle = new Angle(value, from);
+				rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
+				assertTrue(rez.equals(value*factor));
 			}
 
-			// System.out.println(value);
-			angle = new Angle(value, from);
-			rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
-			assertTrue(rez.equals(value * factor));
-		}
-	}
+		} else {
+			for (double i = 0; i <= lenght; i += (lenght / 400) ) {
+				value = (double) i;
+				// System.out.println(value);
+				angle = new Angle(value, from);
+				rez = Angle.transformAngleFromSystemToSystem(from, to, angle);
+				assertTrue(rez.equals(value * factor));
+			}
+		} // else
+	} // private method
 
 /*	*//**
 	 * Test method for {@link com.miticorp.topography.basic.model.Angle#transformAngleFromCurrentToAnotherSystem(com.miticorp.topography.basic.model.AngleType, com.miticorp.topography.basic.model.Angle)}.

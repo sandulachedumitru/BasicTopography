@@ -21,7 +21,6 @@ import com.miticorp.topography.basic.utils.Utils;
  */
 public class App 
 {
-	// TODO de facut clase de test
 	public static void main( String[] args )
     {
         
