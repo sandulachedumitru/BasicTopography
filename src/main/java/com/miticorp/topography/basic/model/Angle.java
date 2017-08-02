@@ -2,7 +2,7 @@ package com.miticorp.topography.basic.model;
 
 /**
  * 
- * Base class for angular reprezentation (angular value, angular type ex: grad, deg, rad)
+ * Base class for angular representation (angular value, angular type ex: grad, deg, rad)
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
  */
@@ -11,7 +11,7 @@ public class Angle {
 	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecinal();
 	private static final AngleType angleTypeRadian = new AngleTypeRadian();
 	
-	// Tronsformation parameters between two angular systems
+	// Transformation parameters between two angular systems
 	public static final double CENTESIMAL_TO_RADIAN = angleTypeCentesimal.getAngleChangeSystemFactor(angleTypeRadian);
 	public static final double RADIAN_TO_CENTESIMAL = angleTypeRadian.getAngleChangeSystemFactor(angleTypeCentesimal);
 	
@@ -41,14 +41,13 @@ public class Angle {
 	}
 
 	/**
-	 * Method for tronsformation parameters between two angular systems
+	 * Method for transformation parameters between two angular systems
 	 * @param fromSystem first system
 	 * @param toSystem second system
-	 * @param angle angular value in first system
+	 * @param value angular value in first system
 	 * @return angular value in second system
 	 */
-	public static Double transformAngleFromSystemToSystem(AngleType fromSystem, AngleType toSystem, Angle angle) {
-		Double value = angle.getValue();
+	public static Double transformAngleFromSystemToSystem(AngleType fromSystem, AngleType toSystem, Double value) {
 		if (fromSystem instanceof AngleTypeCentesimal) {
 			if (toSystem instanceof AngleTypeCentesimal) {return value;}
 			else if (toSystem instanceof AngleTypeHexadecinal) {return value * CENTESIMAL_TO_HEXADECIMAL;}
@@ -71,23 +70,61 @@ public class Angle {
 	}
 	
 	/**
-	 * Method for tronsformation parameters between current angular system and another angular systems
-	 * @param toSystem target system
-	 * @param angle angular value in current system
-	 * @return angular value in target system
+	 * Method for transformation parameters between two angular systems
+	 * @param fromSystem first system (is embedded in Angle's angleType propertie)
+	 * @param toSystem second system.
+	 * Embedded Angle's value propertie is set with return angular value.
+	 * So is no need, after method returned, to set value properties.
+	 * @return angular value in second system
 	 */
-	public Double transformAngleFromCurrentToAnotherSystem(AngleType toSystem, Angle angle) {
-		return transformAngleFromSystemToSystem(this.angleType, toSystem, angle);
+	public static Double transformAngleFromSystemToSystem(Angle fromSystem, Angle toSystem) {
+		Double value;
+		AngleType from, to;
+		
+		from = fromSystem.getAngleType();
+		to = toSystem.getAngleType();
+		value = fromSystem.getValue();
+		
+		if (from instanceof AngleTypeCentesimal) {
+			if (to instanceof AngleTypeCentesimal) {}
+			else if (to instanceof AngleTypeHexadecinal) {value *= CENTESIMAL_TO_HEXADECIMAL;}
+			else if (to instanceof AngleTypeRadian) {value *= CENTESIMAL_TO_RADIAN;}
+			else value = null;
+		}
+		else if (from instanceof AngleTypeHexadecinal) {
+			if (to instanceof AngleTypeHexadecinal) {}
+			else if (to instanceof AngleTypeCentesimal) {value *= HEXADECIMAL_TO_CENTESIMAL;}
+			else if (to instanceof AngleTypeRadian) {value *= HEXADECIMAL_TO_RADIAN;}
+			else value = null;
+		}
+		else if (from instanceof AngleTypeRadian) {
+			if (to instanceof AngleTypeRadian) {}
+			else if (to instanceof AngleTypeCentesimal) {value *= RADIAN_TO_CENTESIMAL;}
+			else if (to instanceof AngleTypeHexadecinal) {value *= RADIAN_TO_HEXADECIMAL;}
+			else value = null;
+		}
+		else value = null;
+		
+		toSystem.setValue(value);
+		return value;
 	}
 	
 	/**
-	 * Method for tronsformation parameters between an angular system and current angular systems
-	 * @param fromSystem source system
+	 * Method for transformation parameters between current angular system and another angular systems
+	 * @param toSystem target system
+	 * @return angular value in target system
+	 */
+	public Double transformAngleFromCurrentToAnotherSystem(AngleType toSystem) {
+		return transformAngleFromSystemToSystem(this.angleType, toSystem, this.getValue());
+	}
+	
+	/**
+	 * Method for transformation parameters between an angular system and current angular systems
 	 * @param angle angular value in source system
 	 * @return angular value in current system
 	 */
-	public Double transformAngleFromAnotherToCurrentSystem (AngleType fromSystem, Angle angle) {
-		return transformAngleFromSystemToSystem(fromSystem, this.angleType, angle);
+	public Double transformAngleFromAnotherToCurrentSystem (Angle angle) {
+		return transformAngleFromSystemToSystem(angle.getAngleType(), this.angleType, angle.getValue());
 	}
 	
 	
@@ -109,5 +146,39 @@ public class Angle {
 	}
 	public synchronized void setClockwize(boolean clockwize) {
 		this.clockwize = clockwize;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((angleType == null) ? 0 : angleType.hashCode());
+		result = prime * result + (clockwize ? 1231 : 1237);
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Angle other = (Angle) obj;
+		if (angleType == null) {
+			if (other.angleType != null)
+				return false;
+		} else if (!angleType.equals(other.angleType))
+			return false;
+		if (clockwize != other.clockwize)
+			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
 	}
 }

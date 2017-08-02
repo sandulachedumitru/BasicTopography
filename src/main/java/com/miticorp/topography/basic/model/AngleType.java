@@ -7,4 +7,7 @@ public abstract class AngleType {
 		double factor = t.getMaxNumberOfCircleDegrees() / getMaxNumberOfCircleDegrees(); 
 		return factor;
 	}
+	
+	public abstract int hashCode();
+	public abstract boolean equals(Object obj);
 }
