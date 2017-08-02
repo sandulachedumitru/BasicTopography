@@ -24,15 +24,15 @@ public class Angle {
 	// Fields exposed by Angle by getters and setters
 	private Double value;
 	private AngleType angleType;
-	private boolean clockwize = true; // true by default
+	private boolean clockwise = true; // true by default
 	
 	// Constructors
 	public Angle() {}
-	public Angle(Double value, AngleType angleType, boolean clockwize) {
+	public Angle(Double value, AngleType angleType, boolean clockwise) {
 		super();
 		this.value = value;
 		this.angleType = angleType;
-		this.clockwize = clockwize;
+		this.clockwise = clockwise;
 	}
 	public Angle(Double value, AngleType angleType) {
 		super();
@@ -124,7 +124,8 @@ public class Angle {
 	 * @return angular value in current system
 	 */
 	public Double transformAngleFromAnotherToCurrentSystem (Angle angle) {
-		return transformAngleFromSystemToSystem(angle.getAngleType(), this.angleType, angle.getValue());
+		// return transformAngleFromSystemToSystem(angle.getAngleType(), this.angleType, angle.getValue());
+		return transformAngleFromSystemToSystem(angle, this);
 	}
 	
 	
@@ -141,11 +142,11 @@ public class Angle {
 	public synchronized void setAngleType(AngleType angleType) {
 		this.angleType = angleType;
 	}
-	public synchronized boolean isClockwize() {
-		return clockwize;
+	public synchronized boolean isClockwise() {
+		return clockwise;
 	}
-	public synchronized void setClockwize(boolean clockwize) {
-		this.clockwize = clockwize;
+	public synchronized void setClockwise(boolean clockwise) {
+		this.clockwise = clockwise;
 	}
 	
 	@Override
@@ -153,7 +154,7 @@ public class Angle {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((angleType == null) ? 0 : angleType.hashCode());
-		result = prime * result + (clockwize ? 1231 : 1237);
+		result = prime * result + (clockwise ? 1231 : 1237);
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
@@ -172,7 +173,7 @@ public class Angle {
 				return false;
 		} else if (!angleType.equals(other.angleType))
 			return false;
-		if (clockwize != other.clockwize)
+		if (clockwise != other.clockwise)
 			return false;
 		if (value == null) {
 			if (other.value != null)

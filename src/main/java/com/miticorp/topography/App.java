@@ -4,8 +4,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-
 import com.miticorp.topography.basic.model.Angle;
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.AngleTypeCentesimal;
@@ -67,5 +65,7 @@ public class App
     	AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
     	context.scan("");
     	context.refresh();
+    	
+    	context.close();
     }
 }
