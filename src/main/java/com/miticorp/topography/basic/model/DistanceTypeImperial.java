@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.model;
 
-public class DistanceTypeImperial extends DistanceType {
-	// TODO
+public abstract class DistanceTypeImperial extends DistanceType {
+	
+	public abstract Double getConversionToYard();
 }

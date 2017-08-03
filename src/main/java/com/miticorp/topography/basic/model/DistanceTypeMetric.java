@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.model;
 
-public class DistanceTypeMetric extends DistanceType {
-	// TODO
+public abstract class DistanceTypeMetric extends DistanceType {
+
+	public abstract Double getConversionToMeter();
 }
