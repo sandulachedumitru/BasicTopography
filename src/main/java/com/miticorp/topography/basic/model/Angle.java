@@ -6,6 +6,7 @@ package com.miticorp.topography.basic.model;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
  */
+// TODO de verificat daca metodele primesc parametrii null si de facut protectie impotriva valorii null
 public class Angle {
 	private static final AngleType angleTypeCentesimal = new AngleTypeCentesimal();
 	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecinal();
@@ -85,6 +86,7 @@ public class Angle {
 		to = toSystem.getAngleType();
 		value = fromSystem.getValue();
 		
+		// TODO se apeleaza metoda de mai sus si se elimina bucata de cod care se aseamana
 		if (from instanceof AngleTypeCentesimal) {
 			if (to instanceof AngleTypeCentesimal) {}
 			else if (to instanceof AngleTypeHexadecinal) {value *= CENTESIMAL_TO_HEXADECIMAL;}
