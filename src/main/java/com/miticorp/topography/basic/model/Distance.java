@@ -62,7 +62,8 @@ public class Distance<T extends CoordinatesRectangular> {
 	}
 	
 	/**
-	 * Method for transformation parameters between two distance systems
+	 * Method for transformation parameters between two distance systems 
+	 * (ex: metric to imperial, meter to yard, km to mm, yard to inch, etc)
 	 * @param fromSystem first system witch must be transformed in second system
 	 * @param toSystem second system witch will be transformed from first system
 	 * @param value value of the first distance system
@@ -118,14 +119,15 @@ public class Distance<T extends CoordinatesRectangular> {
 	}
 	
 	/**
-	 * Method for transformation parameters between two distance systems
+	 * Method for transformation parameters between two distance systems 
+	 * (ex: metric to imperial, meter to yard, km to mm, yard to inch, etc)
 	 * @param from first distance witch contain value and must be transformed in another unit system
 	 * @param to second distance witch will be transformed from first
 	 * @param value value of the first distance expressed in a unit system
 	 * @return value of the transformed value parameter
 	 */
 	public static Double transformDistanceFromSystemToSystem(Distance<?> from, Distance<?> to, Double value) {
-		if ((from != null) && (to != null) && (from.getValue() != null)) {
+		if ((from != null) && (to != null)) {
 			DistanceType fromSystem = from.getDistanceType();
 			DistanceType toSystem = to.getDistanceType();
 			value = from.getValue();
@@ -134,16 +136,24 @@ public class Distance<T extends CoordinatesRectangular> {
 		return null;
 	}
 	
-	// TODO javadoc
+	/**
+	 * Method for transformation parameters between current to another unit distance system 
+	 * (ex: metric to imperial, meter to yard, km to mm, yard to inch, etc)
+	 * @param another target unit distance system
+	 * @return distance value in target unit system
+	 */
 	public Double transformDistanceFromCurrentToAnotherUnitSystem(DistanceType another) {
-		if ((this.getValue() != null) && (this.getDistanceType() != null) && (another != null))
-			return transformDistanceFromSystemToSystem(this.getDistanceType(), another, this.getValue());
-		return null;
+		return transformDistanceFromSystemToSystem(this.getDistanceType(), another, this.getValue());
 	}
 	
-	// TODO javadoc
+	/**
+	 * Method for transformation parameters between another to current distance system 
+	 * (ex: metric to imperial, meter to yard, km to mm, yard to inch, etc)
+	 * @param another target unit distance system
+	 * @return distance value in current distance system
+	 */
 	public Double transformDistanceFromAnotherToCurrentUnitSystem(Distance<?> another) {
-		if ((another != null) && (another.getValue() != null) && (another.getDistanceType() != null) && (this.getDistanceType() != null))
+		if (another != null)
 			return transformDistanceFromSystemToSystem(another.getDistanceType(), this.getDistanceType(), another.getValue());
 		return null;
 	}

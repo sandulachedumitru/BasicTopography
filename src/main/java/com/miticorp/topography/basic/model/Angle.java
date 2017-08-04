@@ -6,7 +6,6 @@ package com.miticorp.topography.basic.model;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
  */
-// TODO de verificat daca metodele primesc parametrii null si de facut protectie impotriva valorii null
 public class Angle {
 	private static final AngleType angleTypeCentesimal = new AngleTypeCentesimal();
 	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecinal();
@@ -49,25 +48,24 @@ public class Angle {
 	 * @return angular value in second system
 	 */
 	public static Double transformAngleFromSystemToSystem(AngleType fromSystem, AngleType toSystem, Double value) {
-		if (fromSystem instanceof AngleTypeCentesimal) {
-			if (toSystem instanceof AngleTypeCentesimal) {return value;}
-			else if (toSystem instanceof AngleTypeHexadecinal) {return value * CENTESIMAL_TO_HEXADECIMAL;}
-			else if (toSystem instanceof AngleTypeRadian) {return value * CENTESIMAL_TO_RADIAN;}
-			else return null; 
+		if ((fromSystem != null) && (toSystem != null)) {
+			if (fromSystem instanceof AngleTypeCentesimal) {
+				if (toSystem instanceof AngleTypeCentesimal) {return value;}
+				else if (toSystem instanceof AngleTypeHexadecinal) {return value * CENTESIMAL_TO_HEXADECIMAL;}
+				else if (toSystem instanceof AngleTypeRadian) {return value * CENTESIMAL_TO_RADIAN;}
+			}
+			else if (fromSystem instanceof AngleTypeHexadecinal) {
+				if (toSystem instanceof AngleTypeHexadecinal) {return value;}
+				else if (toSystem instanceof AngleTypeCentesimal) {return value * HEXADECIMAL_TO_CENTESIMAL; }
+				else if (toSystem instanceof AngleTypeRadian) {return value * HEXADECIMAL_TO_RADIAN;}
+			}
+			else if (fromSystem instanceof AngleTypeRadian) {
+				if (toSystem instanceof AngleTypeRadian) {return value;}
+				else if (toSystem instanceof AngleTypeCentesimal) {return value * RADIAN_TO_CENTESIMAL;}
+				else if (toSystem instanceof AngleTypeHexadecinal) {return value* RADIAN_TO_HEXADECIMAL;}
+			}
 		}
-		else if (fromSystem instanceof AngleTypeHexadecinal) {
-			if (toSystem instanceof AngleTypeHexadecinal) {return value;}
-			else if (toSystem instanceof AngleTypeCentesimal) {return value * HEXADECIMAL_TO_CENTESIMAL; }
-			else if (toSystem instanceof AngleTypeRadian) {return value * HEXADECIMAL_TO_RADIAN;}
-			else return null;
-		}
-		else if (fromSystem instanceof AngleTypeRadian) {
-			if (toSystem instanceof AngleTypeRadian) {return value;}
-			else if (toSystem instanceof AngleTypeCentesimal) {return value * RADIAN_TO_CENTESIMAL;}
-			else if (toSystem instanceof AngleTypeHexadecinal) {return value* RADIAN_TO_HEXADECIMAL;}
-			else return null;
-		}
-		else return null;
+		return null;
 	}
 	
 	/**
@@ -79,35 +77,20 @@ public class Angle {
 	 * @return angular value in second system
 	 */
 	public static Double transformAngleFromSystemToSystem(Angle fromSystem, Angle toSystem) {
-		Double value;
+		Double value = null;
 		AngleType from, to;
 		
-		from = fromSystem.getAngleType();
-		to = toSystem.getAngleType();
-		value = fromSystem.getValue();
-		
-		// TODO se apeleaza metoda de mai sus si se elimina bucata de cod care se aseamana
-		if (from instanceof AngleTypeCentesimal) {
-			if (to instanceof AngleTypeCentesimal) {}
-			else if (to instanceof AngleTypeHexadecinal) {value *= CENTESIMAL_TO_HEXADECIMAL;}
-			else if (to instanceof AngleTypeRadian) {value *= CENTESIMAL_TO_RADIAN;}
-			else value = null;
+		if ((fromSystem != null) && (toSystem != null)) {
+			from = fromSystem.getAngleType();
+			to = toSystem.getAngleType();
+			value = fromSystem.getValue();
+			
+			if ((from != null) && (to != null) && (value != null))
+				value = transformAngleFromSystemToSystem(from, to, value);
+			
+			toSystem.setValue(value);
 		}
-		else if (from instanceof AngleTypeHexadecinal) {
-			if (to instanceof AngleTypeHexadecinal) {}
-			else if (to instanceof AngleTypeCentesimal) {value *= HEXADECIMAL_TO_CENTESIMAL;}
-			else if (to instanceof AngleTypeRadian) {value *= HEXADECIMAL_TO_RADIAN;}
-			else value = null;
-		}
-		else if (from instanceof AngleTypeRadian) {
-			if (to instanceof AngleTypeRadian) {}
-			else if (to instanceof AngleTypeCentesimal) {value *= RADIAN_TO_CENTESIMAL;}
-			else if (to instanceof AngleTypeHexadecinal) {value *= RADIAN_TO_HEXADECIMAL;}
-			else value = null;
-		}
-		else value = null;
-		
-		toSystem.setValue(value);
+
 		return value;
 	}
 	
@@ -126,10 +109,8 @@ public class Angle {
 	 * @return angular value in current system
 	 */
 	public Double transformAngleFromAnotherToCurrentSystem (Angle angle) {
-		// return transformAngleFromSystemToSystem(angle.getAngleType(), this.angleType, angle.getValue());
 		return transformAngleFromSystemToSystem(angle, this);
 	}
-	
 	
 	// Getters and Setters
 	public synchronized Double getValue() {

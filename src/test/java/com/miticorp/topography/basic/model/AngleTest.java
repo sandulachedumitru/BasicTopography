@@ -86,6 +86,9 @@ public class AngleTest {
 		loop1(rad, rad, 1);
 		loop1(rad, cent, Angle.RADIAN_TO_CENTESIMAL);
 		loop1(rad, hex, Angle.RADIAN_TO_HEXADECIMAL);
+		
+		// test null case
+		Angle.transformAngleFromSystemToSystem(null, null, null);
 	}
 	
 	private static void loop1(AngleType from, AngleType to, double factor) {
@@ -141,6 +144,9 @@ public class AngleTest {
 		loop3(angleRad, angleRad, 1);
 		loop3(angleRad, angleCent, Angle.RADIAN_TO_CENTESIMAL);
 		loop3(angleRad, angleHex, Angle.RADIAN_TO_HEXADECIMAL);
+		
+		// test null case
+		Angle.transformAngleFromSystemToSystem(null, null);
 	}
 	
 	private void loop3(Angle from, Angle to, double factor) {
@@ -195,6 +201,9 @@ public class AngleTest {
 		loop2(rad, rad, 1);
 		loop2(rad, cent, Angle.RADIAN_TO_CENTESIMAL);
 		loop2(rad, hex, Angle.RADIAN_TO_HEXADECIMAL);
+		
+		// test null case
+		assertNull(new Angle().transformAngleFromCurrentToAnotherSystem(null));
 	}
 
 	private static void loop2(AngleType from, AngleType to, double factor) {
@@ -252,6 +261,9 @@ public class AngleTest {
 		loop4(angleRad, angleRad, 1);
 		loop4(angleCent, angleRad, Angle.CENTESIMAL_TO_RADIAN);
 		loop4(angleHex, angleRad, Angle.HEXADECIMAL_TO_RADIAN);
+		
+		// test null case
+		assertNull(new Angle().transformAngleFromAnotherToCurrentSystem(null));
 	}
 	
 	private void loop4(Angle another, Angle current, double factor) {
