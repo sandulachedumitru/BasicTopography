@@ -2,6 +2,13 @@ package com.miticorp.topography.basic.model;
 
 import com.miticorp.topography.basic.utils.Utils;
 
+/**
+ * 
+ * Base class for distance representation (distance value, distance point1/point2, distance type (ex; metric, imperial))
+ * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
+ * 
+ * @param <T> point's coordinates type
+ */
 public class Distance<T extends CoordinatesRectangular> {
 	private static final DistanceTypeMetric metricKm = new DistanceTypeMetricKilometer();
 	private static final DistanceTypeMetric metricCm = new DistanceTypeMetricCentimeter();
@@ -58,7 +65,7 @@ public class Distance<T extends CoordinatesRectangular> {
 	// method used by constructors
 	private void setDistanceValue(Point<T> from, Point<T> to) {
 		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, new AngleTypeRadian()); 
-		this.value = coordinatesPolar.getDistance().getValue();
+		if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
 	}
 	
 	/**

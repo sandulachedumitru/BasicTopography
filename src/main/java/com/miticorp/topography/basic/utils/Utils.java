@@ -20,6 +20,15 @@ public class Utils {
 			double north2, east2;
 			double height1, height2;
 			
+			if ( (T) from.getCoord() == null ) return null;
+			else if ( (((T) from.getCoord()).getNorth() == null)
+			|| (((T) from.getCoord()).getEast() == null)
+			|| (((T) from.getCoord()).getHeight() == null) ) return null;
+			if ( (T) to.getCoord() == null ) return null;
+			else if ( (((T) to.getCoord()).getNorth() == null)
+			|| (((T) to.getCoord()).getEast() == null)
+			|| (((T) to.getCoord()).getHeight() == null) ) return null;
+			
 			north1 	= ((T) from.getCoord()).getNorth() 	* from.getScaleFactor();
 			north2 	= ((T) to.getCoord()).getNorth() 	* to.getScaleFactor();
 			east1 	= ((T) from.getCoord()).getEast() 	* from.getScaleFactor();
