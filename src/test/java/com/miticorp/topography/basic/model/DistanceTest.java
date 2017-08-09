@@ -9,6 +9,9 @@ import org.junit.Test;
 // TODO de terminat clasele de test
 public class DistanceTest {
 
+	/**
+	 * Test constructor Distance(Point<T> from, Point<T> to, DistanceType distanceType)
+	 */
 	@Test
 	public void testDistancePointOfTPointOfTDistanceType() {
 		// setup
@@ -17,11 +20,11 @@ public class DistanceTest {
 		N1 = random.nextDouble(); N1 *= 200; N1 -= 100;
 		E1 = random.nextDouble(); E1 *= 200; E1 -= 100;
 		H1 = random.nextDouble(); H1 *= 200; H1 -= 100;
-		System.out.println(N1 + " / " + E1 + " / " + H1);
+		//System.out.println(N1 + " / " + E1 + " / " + H1);
 		N2 = random.nextDouble(); N2 *= 200; N2 -= 100;
 		E2 = random.nextDouble(); E2 *= 200; E2 -= 100;
 		H2 = random.nextDouble(); H2 *= 200; H2 -= 100;
-		System.out.println(N2 + " / " + E2 + " / " + H2);
+		//System.out.println(N2 + " / " + E2 + " / " + H2);
 
 		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
 		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
@@ -40,7 +43,7 @@ public class DistanceTest {
 		// test
 		assertTrue(distance1.getDistanceType() == type1 && distance1.getFrom() == from1 && distance1.getTo() == to1);
 		assertNotNull(distance1.getValue());
-		System.out.println(distance1.getValue());
+		//System.out.println(distance1.getValue());
 		
 		assertTrue(distance2.getDistanceType() == type2 && distance2.getFrom() == from2 && distance2.getTo() == to2);
 		assertNull(distance2.getValue());
@@ -51,29 +54,215 @@ public class DistanceTest {
 		//System.out.println(distance3.getValue());
 	}
 
+	/**
+	 * Test constructor Distance(Point<T> from, Point<T> to)
+	 */
 	@Test
 	public void testDistancePointOfTPointOfT() {
-		//fail("Not yet implemented");
+		// setup
+		double N1, E1, H1, N2, E2, H2;
+		Random random = new Random();
+		N1 = random.nextDouble(); N1 *= 200; N1 -= 100;
+		E1 = random.nextDouble(); E1 *= 200; E1 -= 100;
+		H1 = random.nextDouble(); H1 *= 200; H1 -= 100;
+		//System.out.println(N1 + " / " + E1 + " / " + H1);
+		N2 = random.nextDouble(); N2 *= 200; N2 -= 100;
+		E2 = random.nextDouble(); E2 *= 200; E2 -= 100;
+		H2 = random.nextDouble(); H2 *= 200; H2 -= 100;
+		//System.out.println(N2 + " / " + E2 + " / " + H2);
+
+		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
+		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
+		Point<CoordinatesRectangular> from1 = new Point<>((CoordinatesRectangular) coord1);
+		Point<CoordinatesRectangular> to1 = new Point<>((CoordinatesRectangular) coord2);
+		
+		Point<CoordinatesRectangular> from2 = new Point<>(null);
+		Point<CoordinatesRectangular> to2 = new Point<>(null);
+		
+		Distance<CoordinatesRectangular> distance1 = new Distance<>(from1, to1);
+		Distance<CoordinatesRectangular> distance2 = new Distance<>(from2, to2);
+		Distance<CoordinatesRectangular> distance3 = new Distance<>((Point<CoordinatesRectangular>) null, null);
+		
+		// test
+		assertTrue(distance1.getDistanceType() instanceof DistanceTypeMetricMeter && distance1.getFrom() == from1 && distance1.getTo() == to1);
+		assertNotNull(distance1.getValue());
+		//System.out.println(distance1.getValue());
+		
+		assertTrue(distance2.getDistanceType() instanceof DistanceTypeMetricMeter && distance2.getFrom() == from2 && distance2.getTo() == to2);
+		assertNull(distance2.getValue());
+		//System.out.println(distance2.getValue());
+
+		assertTrue(distance3.getDistanceType() instanceof DistanceTypeMetricMeter && distance3.getFrom() == null && distance3.getTo() == null);
+		assertNull(distance3.getValue());
+		//System.out.println(distance3.getValue());
 	}
 
+	/**
+	 * Test constructor Distance(Double value, DistanceType distanceType)
+	 */
 	@Test
 	public void testDistanceDoubleDistanceType() {
-		//fail("Not yet implemented");
+		// setup
+		Double value = (new Random().nextDouble()) * 100;
+		DistanceType distanceType = new DistanceTypeImperialInch();
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(value, distanceType);
+		Distance<CoordinatesRectangular> distance2 = new Distance<>((Double) null, null);
+		
+		// test
+		assertTrue(distance.getValue() == value && distance.getDistanceType() == distanceType);
+		assertNull(distance.getFrom());
+		assertNull(distance.getTo());
+		
+		assertNull(distance2.getValue());
+		assertNull(distance2.getDistanceType());
+		assertNull(distance2.getFrom());
+		assertNull(distance2.getTo());
 	}
 
+	/**
+	 * Test constructor Distance(Double value)
+	 */
 	@Test
 	public void testDistanceDouble() {
-		//fail("Not yet implemented");
+		// setup
+		Double value1 = (new Random().nextDouble()) * 100;
+		Double value2 = null;
+		
+		Distance<CoordinatesRectangular> distance1 = new Distance<>(value1);
+		Distance<CoordinatesRectangular> distance2 = new Distance<>(value2);
+		
+		
+		// test
+		assertTrue(distance1.getValue() == value1 && distance1.getDistanceType() instanceof DistanceTypeMetricMeter);
+		assertNull(distance1.getFrom());
+		assertNull(distance1.getTo());
+		
+		assertTrue(distance2.getValue() == value2 && distance2.getDistanceType() instanceof DistanceTypeMetricMeter);
+		assertNull(distance2.getFrom());
+		assertNull(distance2.getTo());
 	}
 
+	/**
+	 * Test constructor Distance()
+	 */
 	@Test
 	public void testDistance() {
-		//fail("Not yet implemented");
+		// setup
+		Distance<CoordinatesRectangular> distance = new Distance<>();
+		
+		// test
+		assertTrue(distance.getDistanceType() instanceof DistanceTypeMetricMeter);
+		assertNull(distance.getValue());
+		assertNull(distance.getFrom());
+		assertNull(distance.getTo());
 	}
 
+	/**
+	 * Test method for Distance's transformDistanceFromSystemToSystem(DistanceType fromSystem, DistanceType toSystem, Double value)
+	 */
 	@Test
 	public void testTransformDistanceFromSystemToSystemDistanceTypeDistanceTypeDouble() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceTypeMetric fromMetricSystem;
+		DistanceTypeMetric toMetricSystem;
+		DistanceTypeImperial fromImperialSystem;
+		DistanceTypeImperial toImperialSystem;
+		Double value = 1D, rez;
+		Double newValue, newRez;
+		
+		fromMetricSystem = null;
+		toMetricSystem = null;
+		rez = Distance.transformDistanceFromSystemToSystem(fromMetricSystem, toMetricSystem, value);
+		System.out.println("rez(" + rez + ") / value(" + value + ")");
+		assertFalse(value.equals(rez));
+		assertNull(rez);
+
+		// test metrics
+		System.out.println("===========METRICS TO ...=============");
+		fromMetricSystem = new DistanceTypeMetricKilometer(); combinesWithAll(fromMetricSystem, value);
+		System.out.println("===========METRICS TO ...=============");
+		fromMetricSystem = new DistanceTypeMetricMeter(); combinesWithAll(fromMetricSystem, value);
+		System.out.println("===========METRICS TO ...=============");
+		fromMetricSystem = new DistanceTypeMetricCentimeter(); combinesWithAll(fromMetricSystem, value);
+		System.out.println("===========METRICS TO ...=============");
+		fromMetricSystem = new DistanceTypeMetricMillimeter(); combinesWithAll(fromMetricSystem, value);
+		
+		// test imperials
+		System.out.println("===========IMPERIALS TO ...=============");
+		fromImperialSystem = new DistanceTypeImperialMile(); combinesWithAll(fromImperialSystem, value);
+		System.out.println("===========IMPERIALS TO ...=============");
+		fromImperialSystem = new DistanceTypeImperialYard(); combinesWithAll(fromImperialSystem, value);
+		System.out.println("===========IMPERIALS TO ...=============");
+		fromImperialSystem = new DistanceTypeImperialInch(); combinesWithAll(fromImperialSystem, value);
+	}
+	
+	private static void combinesWithAll(DistanceType fromSystem, Double value) {
+		DistanceTypeMetric toMetricSystem;
+		DistanceTypeImperial toImperialSystem;
+		
+		toMetricSystem = new DistanceTypeMetricKilometer();
+		transform(fromSystem, toMetricSystem, value);
+		
+		toMetricSystem = new DistanceTypeMetricMeter();
+		transform(fromSystem, toMetricSystem, value);
+		
+		toMetricSystem = new DistanceTypeMetricCentimeter();
+		transform(fromSystem, toMetricSystem, value);
+		
+		toMetricSystem = new DistanceTypeMetricMillimeter();
+		transform(fromSystem, toMetricSystem, value);
+		
+		toImperialSystem = new DistanceTypeImperialMile();
+		transform(fromSystem, toImperialSystem, value);
+		
+		toImperialSystem = new DistanceTypeImperialYard();
+		transform(fromSystem, toImperialSystem, value);
+		
+		toImperialSystem = new DistanceTypeImperialInch();
+		transform(fromSystem, toImperialSystem, value);
+	}
+	
+	private static void transform(DistanceType from, DistanceType to, Double value) {
+		if (from instanceof DistanceTypeMetric) {
+			if (to instanceof DistanceTypeMetric) {
+				Double rez = Distance.transformDistanceFromSystemToSystem(from, to, value);
+				System.out.println("rez(" + rez + ") / value(" + value + ")");
+				Double newValue = (double) Math.round(value * ((DistanceTypeMetric) from).getConversionToMeter());
+				Double newRez = (double) Math.round(rez * ((DistanceTypeMetric) to).getConversionToMeter());
+				System.out.println("newrez(" + newRez + ") / newvalue(" + newValue + ")");
+				assertTrue(newValue.equals(newRez));
+			}
+			else if (to instanceof DistanceTypeImperial) {
+				Double rez = Distance.transformDistanceFromSystemToSystem(from, to, value);
+				System.out.println("rez(" + rez + ") / value(" + value + ")");
+				Double newValue = (double) Math.round(value * ((DistanceTypeMetric) from).getConversionToMeter());
+				Double newRez = (double) Math.round(rez * ((DistanceTypeImperial) to).getConversionToYard() * Distance.YARD_TO_METER);
+				System.out.println("newrez(" + newRez + ") / newvalue(" + newValue + ")");
+				assertTrue(newValue.equals(newRez));
+			}
+			else fail("Unknown DistanceType object for 'to'");
+		} 
+		else if (from instanceof DistanceTypeImperial) {
+			if (to instanceof DistanceTypeMetric) {
+				Double rez = Distance.transformDistanceFromSystemToSystem(from, to, value);
+				System.out.println("rez(" + rez + ") / value(" + value + ")");
+				Double newValue = (double) Math.round(value * ((DistanceTypeImperial) from).getConversionToYard());
+				Double newRez = (double) Math.round(rez * ((DistanceTypeMetric) to).getConversionToMeter() * Distance.METER_TO_YARD);
+				System.out.println("newrez(" + newRez + ") / newvalue(" + newValue + ")");
+				assertTrue(newValue.equals(newRez));
+			}
+			else if (to instanceof DistanceTypeImperial) {
+				Double rez = Distance.transformDistanceFromSystemToSystem(from, to, value);
+				System.out.println("rez(" + rez + ") / value(" + value + ")");
+				Double newValue = (double) Math.round(value * ((DistanceTypeImperial) from).getConversionToYard());
+				Double newRez = (double) Math.round(rez * ((DistanceTypeImperial) to).getConversionToYard());
+				System.out.println("newrez(" + newRez + ") / newvalue(" + newValue + ")");
+				assertTrue(newValue.equals(newRez));
+			}
+			else fail("Unknown DistanceType object for 'to'");
+		}
+		else fail("Unknown DistanceType object for 'from'");
 	}
 
 	@Test
