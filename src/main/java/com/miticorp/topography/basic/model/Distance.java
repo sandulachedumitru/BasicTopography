@@ -133,12 +133,15 @@ public class Distance<T extends CoordinatesRectangular> {
 	 * @param value value of the first distance expressed in a unit system
 	 * @return value of the transformed value parameter
 	 */
-	public static Double transformDistanceFromSystemToSystem(Distance<?> from, Distance<?> to, Double value) {
+	public static Double transformDistanceFromSystemToSystem(Distance<?> from, Distance<?> to) {
 		if ((from != null) && (to != null)) {
 			DistanceType fromSystem = from.getDistanceType();
 			DistanceType toSystem = to.getDistanceType();
-			value = from.getValue();
-			return transformDistanceFromSystemToSystem(fromSystem, toSystem, value);
+			Double value = from.getValue();
+			value = transformDistanceFromSystemToSystem(fromSystem, toSystem, value);
+			to.setValue(value);
+			
+			return value;
 		}
 		return null;
 	}
