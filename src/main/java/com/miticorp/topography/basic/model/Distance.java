@@ -163,8 +163,9 @@ public class Distance<T extends CoordinatesRectangular> {
 	 * @return distance value in current distance system
 	 */
 	public Double transformDistanceFromAnotherToCurrentUnitSystem(Distance<?> another) {
-		if (another != null)
+		if (another != null) {
 			return transformDistanceFromSystemToSystem(another.getDistanceType(), this.getDistanceType(), another.getValue());
+		}
 		return null;
 	}
 	

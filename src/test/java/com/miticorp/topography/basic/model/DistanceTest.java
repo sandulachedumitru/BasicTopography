@@ -267,6 +267,9 @@ public class DistanceTest {
 		assertTrue(newValue.equals(newRez));
 	}
 
+	/**
+	 * Test method for Distance's transformDistanceFromSystemToSystem(Distance<?> from, Distance<?> to)
+	 */
 	@Test
 	public void testTransformDistanceFromSystemToSystemDistanceOfQDistanceOfQ() {
 		// setup
@@ -298,14 +301,62 @@ public class DistanceTest {
 		assertNull(rez2);
 	}
 
+	/**
+	 * Test method for Distance's transformDistanceFromCurrentToAnotherUnitSystem(DistanceType another)
+	 */
 	@Test
 	public void testTransformDistanceFromCurrentToAnotherUnitSystem() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType anotherType = new DistanceTypeImperialYard();
+		DistanceType currentType = new DistanceTypeMetricMeter();
+		Double value = 1D;
+		Double rez = null;
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>();
+		distance.setDistanceType(currentType);
+		distance.setValue(value);
+		rez = distance.transformDistanceFromCurrentToAnotherUnitSystem(anotherType);
+		
+		// test
+		assertEquals(rez, value * Distance.METER_TO_YARD, 0.00001);
 	}
 
+	/**
+	 * transformDistanceFromAnotherToCurrentUnitSystem(Distance<?> another)
+	 */
 	@Test
 	public void testTransformDistanceFromAnotherToCurrentUnitSystem() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType currentType = new DistanceTypeMetricMeter();
+		DistanceType anotherType = new DistanceTypeImperialYard();
+		Double anotherValue = 1D;
+		Double rez = null, rez2 = null, rez3 = null;
+		
+		Distance<CoordinatesRectangular> distanceCurrent = new Distance<>();
+		distanceCurrent.setDistanceType(currentType);
+		distanceCurrent.setValue(null);
+		
+		Distance<CoordinatesRectangular> distanceAnother = new Distance<>();
+		distanceAnother.setDistanceType(anotherType);
+		distanceAnother.setValue(anotherValue);
+		
+		Distance<CoordinatesRectangular> distanceCurrent2 = new Distance<>();
+		distanceCurrent2.setDistanceType(null);
+		distanceCurrent2.setValue(null);
+		
+		Distance<CoordinatesRectangular> distanceAnother2 = new Distance<>();
+		distanceAnother2.setDistanceType(null);
+		distanceAnother2.setValue(null);
+		
+		rez = distanceCurrent.transformDistanceFromAnotherToCurrentUnitSystem(distanceAnother);
+		rez2 = distanceCurrent2.transformDistanceFromAnotherToCurrentUnitSystem(distanceAnother);
+		rez3 = distanceCurrent.transformDistanceFromAnotherToCurrentUnitSystem(distanceAnother2);
+		
+		// test
+		//System.out.println("rez(" + rez + ") / anotherValue(" + anotherValue + ") / " + "getValue(" + distanceCurrent.getValue() + ")");
+		assertEquals(anotherValue, rez * Distance.METER_TO_YARD, 0.00001);
+		assertNull(rez2);
+		assertNull(rez3);
 	}
 
 	@Test
