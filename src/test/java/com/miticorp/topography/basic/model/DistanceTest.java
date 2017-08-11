@@ -8,6 +8,7 @@ import org.junit.Test;
 
 // TODO de terminat clasele de test
 public class DistanceTest {
+	private static final double DELTA_TOLERANCE = 0.001;
 
 	/**
 	 * Test constructor Distance(Point<T> from, Point<T> to, DistanceType distanceType)
@@ -294,8 +295,8 @@ public class DistanceTest {
 		// test
 		assertNotNull(value1);
 		assertNotNull(rez1);
-		assertEquals(rez1, value1 * Distance.METER_TO_YARD, 0.0001);
-		assertEquals(value1 * Distance.METER_TO_YARD, to1.getValue(), 0.0001);
+		assertEquals(rez1, value1 * Distance.METER_TO_YARD, DELTA_TOLERANCE);
+		assertEquals(value1 * Distance.METER_TO_YARD, to1.getValue(), DELTA_TOLERANCE);
 		
 		assertNull(value2);
 		assertNull(rez2);
@@ -318,11 +319,11 @@ public class DistanceTest {
 		rez = distance.transformDistanceFromCurrentToAnotherUnitSystem(anotherType);
 		
 		// test
-		assertEquals(rez, value * Distance.METER_TO_YARD, 0.00001);
+		assertEquals(rez, value * Distance.METER_TO_YARD, DELTA_TOLERANCE);
 	}
 
 	/**
-	 * transformDistanceFromAnotherToCurrentUnitSystem(Distance<?> another)
+	 * Test method for Distance's transformDistanceFromAnotherToCurrentUnitSystem(Distance<?> another)
 	 */
 	@Test
 	public void testTransformDistanceFromAnotherToCurrentUnitSystem() {
@@ -354,49 +355,182 @@ public class DistanceTest {
 		
 		// test
 		//System.out.println("rez(" + rez + ") / anotherValue(" + anotherValue + ") / " + "getValue(" + distanceCurrent.getValue() + ")");
-		assertEquals(anotherValue, rez * Distance.METER_TO_YARD, 0.00001);
+		assertEquals(anotherValue, rez * Distance.METER_TO_YARD, DELTA_TOLERANCE);
 		assertNull(rez2);
 		assertNull(rez3);
 	}
 
+	/**
+	 * Test method for Distance's getFrom()
+	 */
 	@Test
 	public void testGetFrom() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType distanceType = null;
+		CoordinatesRectangular coord = new CoordinatesRectangular();
+		
+		Point<CoordinatesRectangular> from1 = new Point<>(coord);
+		Point<CoordinatesRectangular> to1 = new Point<>(coord);
+		Point<CoordinatesRectangular> from2 = null;
+		Point<CoordinatesRectangular> to2 = null;
+		
+		Distance<CoordinatesRectangular> distance1 = new Distance<>(from1, to1, distanceType);
+		Distance<CoordinatesRectangular> distance2 = new Distance<>(from2, to2, distanceType);
+		
+		// test
+		assertEquals(distance1.getFrom(), from1);
+		assertEquals(distance2.getFrom(), from2);
 	}
 
+	/**
+	 * Test method for Distance's setFrom(Point<T> from)
+	 */
 	@Test
 	public void testSetFrom() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType distanceType = null;
+		CoordinatesRectangular coord = new CoordinatesRectangular();
+		Point<CoordinatesRectangular> from = new Point<>(coord);
+		Point<CoordinatesRectangular> to = new Point<>(coord);
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(null, to, distanceType); distance.setFrom(from);
+		
+		// test
+		assertEquals(distance.getFrom(), from);
 	}
 
+	/**
+	 * Test method for Distance's getTo()
+	 */
 	@Test
 	public void testGetTo() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType distanceType = null;
+		CoordinatesRectangular coord = new CoordinatesRectangular();
+		
+		Point<CoordinatesRectangular> from1 = new Point<>(coord);
+		Point<CoordinatesRectangular> to1 = new Point<>(coord);
+		Point<CoordinatesRectangular> from2 = null;
+		Point<CoordinatesRectangular> to2 = null;
+		
+		Distance<CoordinatesRectangular> distance1 = new Distance<>(from1, to1, distanceType);
+		Distance<CoordinatesRectangular> distance2 = new Distance<>(from2, to2, distanceType);
+		
+		// test
+		assertEquals(distance1.getTo(), to1);
+		assertEquals(distance2.getTo(), to2);
 	}
 
+	/**
+	 * Test method for Distance's setTo(Point<T> to)
+	 */
 	@Test
 	public void testSetTo() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType distanceType = null;
+		CoordinatesRectangular coord = new CoordinatesRectangular();
+		Point<CoordinatesRectangular> from = new Point<>(coord);
+		Point<CoordinatesRectangular> to = new Point<>(coord);
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(from, null, distanceType); distance.setTo(to);
+		
+		// test
+		assertEquals(distance.getTo(), to);
 	}
 
+	/**
+	 * Test method for Distance's getValue()
+	 */
 	@Test
 	public void testGetValue() {
-		//fail("Not yet implemented");
+		// setup
+		double N1, E1, H1, N2, E2, H2;
+		Random random = new Random();
+		N1 = random.nextDouble(); N1 *= 200; N1 -= 100;
+		E1 = random.nextDouble(); E1 *= 200; E1 -= 100;
+		H1 = random.nextDouble(); H1 *= 200; H1 -= 100;
+		//System.out.println(N1 + " / " + E1 + " / " + H1);
+		N2 = random.nextDouble(); N2 *= 200; N2 -= 100;
+		E2 = random.nextDouble(); E2 *= 200; E2 -= 100;
+		H2 = random.nextDouble(); H2 *= 200; H2 -= 100;
+		//System.out.println(N2 + " / " + E2 + " / " + H2);
+
+		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
+		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
+		Point<CoordinatesRectangular> from = new Point<>((CoordinatesRectangular) coord1);
+		Point<CoordinatesRectangular> to = new Point<>((CoordinatesRectangular) coord2);
+		DistanceType type = new DistanceTypeImperialInch();
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(from, to, type);
+		
+		// test
+		assertNotNull(distance.getValue());
 	}
 
+	/**
+	 * Test method for Distance's setValue(Double value)
+	 */
 	@Test
 	public void testSetValue() {
-		//fail("Not yet implemented");
+		// setup
+		double N1, E1, H1, N2, E2, H2;
+		Random random = new Random();
+		N1 = random.nextDouble(); N1 *= 200; N1 -= 100;
+		E1 = random.nextDouble(); E1 *= 200; E1 -= 100;
+		H1 = random.nextDouble(); H1 *= 200; H1 -= 100;
+		//System.out.println(N1 + " / " + E1 + " / " + H1);
+		N2 = random.nextDouble(); N2 *= 200; N2 -= 100;
+		E2 = random.nextDouble(); E2 *= 200; E2 -= 100;
+		H2 = random.nextDouble(); H2 *= 200; H2 -= 100;
+		//System.out.println(N2 + " / " + E2 + " / " + H2);
+
+		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
+		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
+		Point<CoordinatesRectangular> from = new Point<>((CoordinatesRectangular) coord1);
+		Point<CoordinatesRectangular> to = new Point<>((CoordinatesRectangular) coord2);
+		DistanceType type = new DistanceTypeImperialInch();
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(from, to, type);
+		
+		// test
+		assertNotNull(distance.getValue());
+		distance.setValue(null);
+		assertNull(distance.getValue());
+		distance.setValue(1D);
+		assertEquals(1D, distance.getValue(), DELTA_TOLERANCE);
 	}
 
+	/**
+	 * Test method for Distance's getDistanceType()
+	 */
 	@Test
 	public void testGetDistanceType() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType distanceType = new DistanceTypeMetricMeter();
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(null, distanceType);
+		
+		// test
+		assertEquals(distance.getDistanceType(), distanceType);
 	}
 
+	/**
+	 * Test method for Distance's setDistanceType(DistanceType distanceType)
+	 */
 	@Test
 	public void testSetDistanceType() {
-		//fail("Not yet implemented");
+		// setup
+		DistanceType distanceType = new DistanceTypeMetricMeter();
+		
+		Distance<CoordinatesRectangular> distance = new Distance<>(null, distanceType);
+		
+		// test
+		assertNotNull(distance.getDistanceType());
+		assertEquals(distance.getDistanceType(), distanceType);
+		
+		distance.setDistanceType(null);
+		
+		assertNull(distance.getDistanceType());
 	}
 
 }
