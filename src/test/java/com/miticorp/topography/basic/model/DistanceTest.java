@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-// TODO de terminat clasele de test
+// TODO implements test for polar and geographic coordinates
 public class DistanceTest {
 	private static final double DELTA_TOLERANCE = 0.001;
 

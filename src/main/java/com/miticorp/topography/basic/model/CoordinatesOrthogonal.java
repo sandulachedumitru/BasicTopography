@@ -1,5 +1,5 @@
 package com.miticorp.topography.basic.model;
 
-public class CoordinatesOrthogonal extends Coordinates {
+public abstract class CoordinatesOrthogonal extends Coordinates {
 
 }

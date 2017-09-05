@@ -6,7 +6,7 @@ package com.miticorp.topography.basic.model;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
  */
-public class Angle {
+public class Angle extends Shape {
 	private static final AngleType angleTypeCentesimal = new AngleTypeCentesimal();
 	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecinal();
 	private static final AngleType angleTypeRadian = new AngleTypeRadian();

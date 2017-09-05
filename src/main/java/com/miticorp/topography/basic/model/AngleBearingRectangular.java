@@ -37,7 +37,7 @@ public class AngleBearingRectangular<T extends CoordinatesRectangular> extends A
 	}
 	
 	private void setAngleValue(Point<T> from, Point<T> to, AngleType angleType) {
-		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, getAngleType());
+		CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates(from, to, getAngleType());
 		setValue(coordinatesPolar.getAngle().getValue());
 	}
 }

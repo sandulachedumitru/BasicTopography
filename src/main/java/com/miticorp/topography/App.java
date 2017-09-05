@@ -53,12 +53,20 @@ public class App
         Point<CoordinatesRectangular> from = new Point<>(coord1, 1D, "first");
         Point<CoordinatesRectangular> to = new Point<>(coord2, 1D, "second");
         AngleType angleType = new AngleTypeCentesimal();
-        coordinatesPolar = Utils.calculateCoordinatePolar(from, to, angleType);
+        coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates(from, to, angleType);
         r = coordinatesPolar.getDistance().getValue();
         thet = coordinatesPolar.getAngle().getValue();
         DecimalFormat df3 = new DecimalFormat(".###m"); df3.setRoundingMode(RoundingMode.UP);
         DecimalFormat df4 = new DecimalFormat(".####g"); df4.setRoundingMode(RoundingMode.UP);
         System.out.println("P(r,thet) = P(" + df3.format(r) + "," + df4.format(thet) + ")");
+        
+        Point<CoordinatesPolar> polar = new Point<>(coordinatesPolar, 1D, "polar");
+        if (polar.equals(from)) System.out.println("Imposibil: coord polare nu sunt coordonate rectangulare !");
+        else System.out.println("Nu sunt egale");
+        
+        if (from.equals(to)) System.out.println("Sunt egale !");
+        else System.out.println("Nu sunt egale");
+
     }
     
     public static void main() {

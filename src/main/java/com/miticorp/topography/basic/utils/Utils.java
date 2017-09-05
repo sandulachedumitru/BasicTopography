@@ -10,8 +10,8 @@ import com.miticorp.topography.basic.model.Point;
 
 public class Utils {
 	
-	// Calculate the bearing and distance
-	public static <T extends CoordinatesRectangular> CoordinatesPolar calculateCoordinatePolar(Point<T> from, Point<T> to, AngleType angleType) {
+	// Calculates the bearing and distance (polar coordinates) from rectangular coordinates
+	public static <T extends CoordinatesRectangular> CoordinatesPolar calculatesPolarfromRectangularCoordinates(Point<T> from, Point<T> to, AngleType angleType) {
 		if (from != null && to != null) {
 			CoordinatesPolar coordinatesPolar = new CoordinatesPolar();
 			

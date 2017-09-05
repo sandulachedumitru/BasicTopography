@@ -4,12 +4,13 @@ import com.miticorp.topography.basic.utils.Utils;
 
 /**
  * 
- * Base class for distance representation (distance value, distance point1/point2, distance type (ex; metric, imperial))
+ * Base class for distance representation (distance value, distance point1/point2, distance type (ex; metric, imperial)).
+ * Distance extends Shape because a distance is a line between two points.
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
  * @param <T> point's coordinates type
  */
-public class Distance<T extends CoordinatesRectangular> {
+public class Distance<T extends Coordinates> extends Shape {
 	private static final DistanceTypeMetric metricKm = new DistanceTypeMetricKilometer();
 	private static final DistanceTypeMetric metricCm = new DistanceTypeMetricCentimeter();
 	private static final DistanceTypeMetric metricMm = new DistanceTypeMetricMillimeter();
@@ -36,36 +37,71 @@ public class Distance<T extends CoordinatesRectangular> {
 	private DistanceType distanceType = new DistanceTypeMetricMeter();
 	
 	// Constructors
+	/**
+	 * value property will be automatically calculated from points ccordinates if possible.
+	 * @param from start point of the distance
+	 * @param to end point of the distance
+	 * @param distanceType type of distance (ex: metric, imperial).
+	 */
 	public Distance(Point<T> from, Point<T> to, DistanceType distanceType) {
 		super();
 		this.from = from;
 		this.to = to;
 		this.distanceType = distanceType;
-		if (from != null && to != null) setDistanceValue(from, to);
+		setDistanceValue(from, to);
 	}
+	
+	/**
+	 * value property will be automatically calculated from points ccordinates if possible. DistanceType property is of type DistanceTypeMetricMeter by default.
+	 * @param from start point of the distance
+	 * @param to end point of the distance
+	 */
 	public Distance(Point<T> from, Point<T> to) {
 		super();
 		this.from = from;
 		this.to = to;
-		if (from != null && to != null) setDistanceValue(from, to);
+		setDistanceValue(from, to);
 	}
+	
+	/**
+	 * Constructor for Distance class.
+	 * @param value value of distance
+	 * @param distanceType type of distance (ex: metric, imperial).
+	 */
 	public Distance(Double value, DistanceType distanceType) {
 		super();
 		this.value = value;
 		this.distanceType = distanceType;
 	}
+	
+	/**
+	 * Constructor for Distance class. DistanceType property is of type DistanceTypeMetricMeter by default.
+	 * @param value value of distance
+	 */
 	public Distance(Double value) {
 		super();
 		this.value = value;
 	}
+	
+	/**
+	 * Default constructor for Distance class.
+	 */
 	public Distance() {
 		super();
 	}
 	
 	// method used by constructors
+	@SuppressWarnings("unchecked")
 	private void setDistanceValue(Point<T> from, Point<T> to) {
-		CoordinatesPolar coordinatesPolar = Utils.calculateCoordinatePolar(from, to, new AngleTypeRadian()); 
-		if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
+		if (from != null && to != null && from.getCoord() != null && to.getCoord() != null)
+			if (from.getCoord().getClass().equals(CoordinatesRectangular.class) && to.getCoord().getClass().equals(CoordinatesRectangular.class)) {
+				CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates((Point<CoordinatesRectangular>) from, (Point<CoordinatesRectangular>) to, new AngleTypeRadian()); 
+				if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
+			} else if (from.getCoord().getClass().equals(CoordinatesGeographic.class) && to.getCoord().getClass().equals(CoordinatesGeographic.class)) {
+				// TODO implements geographic calculation in Utils class
+			} else if (from.getCoord().getClass().equals(CoordinatesGeographic.class) && to.getCoord().getClass().equals(CoordinatesGeographic.class)) {
+				// TODO implements polar calculation in Utils class
+			}
 	}
 	
 	/**
@@ -194,5 +230,51 @@ public class Distance<T extends CoordinatesRectangular> {
 	}
 	public synchronized void setDistanceType(DistanceType distanceType) {
 		this.distanceType = distanceType;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((distanceType == null) ? 0 : distanceType.hashCode());
+		result = prime * result + ((from == null) ? 0 : from.hashCode());
+		result = prime * result + ((to == null) ? 0 : to.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+	
+	/**
+	 * Two distances are equal if their value and distance type (ex: metric or imperial) are equals
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Distance<?> other = (Distance<?>) obj;
+		if (distanceType == null) {
+			if (other.distanceType != null)
+				return false;
+		} else if (!distanceType.equals(other.distanceType))
+			return false;
+//		if (from == null) {
+//			if (other.from != null)
+//				return false;
+//		} else if (!from.equals(other.from))
+//			return false;
+//		if (to == null) {
+//			if (other.to != null)
+//				return false;
+//		} else if (!to.equals(other.to))
+//			return false;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
 	}
 }

@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.model;
 
-public class Coordinates {
-
+public abstract class Coordinates {
+	
+	public abstract int hashCode();
+	public abstract boolean equals(Object obj);
 }
