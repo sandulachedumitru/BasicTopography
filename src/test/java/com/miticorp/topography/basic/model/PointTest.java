@@ -7,6 +7,8 @@ import java.util.Random;
 import org.junit.Test;
 
 public class PointTest {
+	private static final double DELTA_TOLERANCE = 0.0001;
+	private static final double SCALE_FACTOR_DEFAULT = 1D;
 
 	/**
 	 * Test constructor Point()
@@ -19,7 +21,7 @@ public class PointTest {
 		// test
 		assertNull(point.getCoord());
 		assertNotNull(point.getScaleFactor());
-		assertEquals(1D, point.getScaleFactor(), 0D);
+		assertEquals(SCALE_FACTOR_DEFAULT, point.getScaleFactor(), DELTA_TOLERANCE);
 		assertNull(point.getName());
 	}
 
@@ -36,7 +38,7 @@ public class PointTest {
 		
 		// test
 		assertEquals(coord.getClass(), point.getCoord().getClass());
-		assertEquals(scaleFactor, point.getScaleFactor(), 0D);
+		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
 		assertEquals(name, point.getName());
 	}
 
@@ -52,7 +54,7 @@ public class PointTest {
 		
 		// test
 		assertEquals(coord.getClass(), point.getCoord().getClass());
-		assertEquals(scaleFactor, point.getScaleFactor(), 0D);
+		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
 		assertNull(point.getName());
 	}
 
@@ -63,12 +65,12 @@ public class PointTest {
 	public void testPointT() {
 		// setup
 		CoordinatesRectangular coord = new CoordinatesRectangular();
-		Double scaleFactor = 1D;
+		Double scaleFactor = SCALE_FACTOR_DEFAULT;
 		Point<CoordinatesRectangular> point = new Point<>(coord);
 		
 		// test
 		assertEquals(coord.getClass(), point.getCoord().getClass());
-		assertEquals(scaleFactor, point.getScaleFactor(), 0D);
+		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
 		assertNull(point.getName());
 	}
 
@@ -108,11 +110,11 @@ public class PointTest {
 	public void testGetScaleFactor() {
 		// setup
 		CoordinatesRectangular coord = new CoordinatesRectangular();
-		Double scaleFactor = 1D;
+		Double scaleFactor = SCALE_FACTOR_DEFAULT;
 		Point<CoordinatesRectangular> point = new Point<>(coord, scaleFactor);
 		
 		// test
-		assertEquals(scaleFactor, point.getScaleFactor(), 0D);
+		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
 	}
 
 	/**
@@ -126,7 +128,7 @@ public class PointTest {
 		point.setScaleFactor(scaleFactor);
 		
 		// test
-		assertEquals(scaleFactor, point.getScaleFactor(), 0D);
+		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
 	}
 
 	/**
@@ -136,7 +138,7 @@ public class PointTest {
 	public void testGetName() {
 		// setup
 		CoordinatesRectangular coord = new CoordinatesRectangular();
-		Double scaleFactor = 1D;
+		Double scaleFactor = SCALE_FACTOR_DEFAULT;
 		String name = "control point";
 		Point<CoordinatesRectangular> point = new Point<>(coord, scaleFactor, name);
 		
@@ -151,7 +153,7 @@ public class PointTest {
 	public void testSetName() {
 		// setup
 		CoordinatesRectangular coord = new CoordinatesRectangular();
-		Double scaleFactor = 1D;
+		Double scaleFactor = SCALE_FACTOR_DEFAULT;
 		String name1 = "first", name2 = "second";
 		Point<CoordinatesRectangular> point = new Point<>(coord, scaleFactor, name1);
 		point.setName(name2);
@@ -192,7 +194,7 @@ public class PointTest {
 		Point<CoordinatesRectangular> point3 = new Point<>(coord3, scaleFactor, name1);
 		Point<CoordinatesGeographic> point4 = new Point<>(coord4, scaleFactor, name1);
 		Point<CoordinatesGeographic> point5 = new Point<>(coord5, scaleFactor, name1);
-		Point<CoordinatesGeographic> point6 = new Point<>(coord6, scaleFactor, name2);
+		Point<CoordinatesGeographic> point6 = new Point<>(coord6, scaleFactor*2, name2);
 		
 		// test
 		assertEquals(point1.hashCode(), point1.hashCode());
@@ -200,7 +202,7 @@ public class PointTest {
 		assertNotEquals(point1.hashCode(), point3.hashCode());
 		assertNotEquals(point1.hashCode(), point4.hashCode());
 		assertEquals(point4.hashCode(), point5.hashCode());
-		assertNotEquals(point4.hashCode(), point6.hashCode());
+		assertEquals(point4.hashCode(), point6.hashCode());
 	}
 
 	/**

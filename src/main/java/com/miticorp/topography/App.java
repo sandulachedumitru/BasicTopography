@@ -40,7 +40,7 @@ public class App
         
         
         Angle angle = new Angle(123.4567, new AngleTypeCentesimal());
-        Distance<CoordinatesRectangular> distance = new Distance<>(16D);
+        Distance distance = new Distance(16D);
         CoordinatesPolar coordinatesPolar = new CoordinatesPolar(angle, distance);
         double r = coordinatesPolar.getDistance().getValue();
         double thet = coordinatesPolar.getAngle().getValue();

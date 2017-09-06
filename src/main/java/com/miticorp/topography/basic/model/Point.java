@@ -7,11 +7,11 @@ package com.miticorp.topography.basic.model;
  *
  * @param <T> point's coordinates type
  */
-public class Point<T extends Coordinates> extends Shape {
+public class Point<T extends Coordinates> extends GeometricElements {
 	// Fields exposed by Point by getters and setters
 	private T coord;
-	private double scaleFactor = 1D;
-	private String name;
+//	private double scaleFactor = 1D;
+//	private String name;
 
 	// Constructors
 	public Point() {}
@@ -33,22 +33,12 @@ public class Point<T extends Coordinates> extends Shape {
 	public synchronized T getCoord() { return coord; }
 	public synchronized void setCoord(T coord) { this.coord = coord; }
 	
-	public synchronized double getScaleFactor() { return scaleFactor; }
-	public synchronized void setScaleFactor(double scaleFactor) { this.scaleFactor = scaleFactor; }
-	
-	public synchronized String getName() { return name; }
-	public synchronized void setName(String name) { this.name = name; }
-	
 	// hash
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((coord == null) ? 0 : coord.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(scaleFactor);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 	
@@ -70,13 +60,6 @@ public class Point<T extends Coordinates> extends Shape {
 				return false;
 		} else if (!coord.equals(other.coord))
 			return false;
-//		if (name == null) {
-//			if (other.name != null)
-//				return false;
-//		} else if (!name.equals(other.name))
-//			return false;
-//		if (Double.doubleToLongBits(scaleFactor) != Double.doubleToLongBits(other.scaleFactor))
-//			return false;
 		return true;
 	}
 }

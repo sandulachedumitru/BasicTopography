@@ -8,9 +8,9 @@ import com.miticorp.topography.basic.utils.Utils;
  * Distance extends Shape because a distance is a line between two points.
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
- * @param <T> point's coordinates type
+ * @param <?> point's coordinates type
  */
-public class Distance<T extends Coordinates> extends Shape {
+public class Distance extends GeometricElements {
 	private static final DistanceTypeMetric metricKm = new DistanceTypeMetricKilometer();
 	private static final DistanceTypeMetric metricCm = new DistanceTypeMetricCentimeter();
 	private static final DistanceTypeMetric metricMm = new DistanceTypeMetricMillimeter();
@@ -29,21 +29,30 @@ public class Distance<T extends Coordinates> extends Shape {
 	public static final double INCH_TO_CM = 1 / CM_TO_INCH;
 	
 	// Fields exposed by Distance by getters and setters
-	private Point<T> from;
-	private Point<T> to;
+	private Point<?> from;
+	private Point<?> to;
 	private Double value;
 	// The distance measurement unit (mm, cm, m, km, inch, yard, mile)
 	// Meter by default
 	private DistanceType distanceType = new DistanceTypeMetricMeter();
 	
 	// Constructors
+	public Distance(Point<?> from, Point<?> to, DistanceType distanceType, double scaleFactor, String name) {
+		super();
+		this.from = from;
+		this.to = to;
+		this.distanceType = distanceType;
+		this.scaleFactor = scaleFactor;
+		this.name = name;
+		setDistanceValue(from, to);
+	}
 	/**
 	 * value property will be automatically calculated from points ccordinates if possible.
 	 * @param from start point of the distance
 	 * @param to end point of the distance
 	 * @param distanceType type of distance (ex: metric, imperial).
 	 */
-	public Distance(Point<T> from, Point<T> to, DistanceType distanceType) {
+	public Distance(Point<?> from, Point<?> to, DistanceType distanceType) {
 		super();
 		this.from = from;
 		this.to = to;
@@ -56,7 +65,7 @@ public class Distance<T extends Coordinates> extends Shape {
 	 * @param from start point of the distance
 	 * @param to end point of the distance
 	 */
-	public Distance(Point<T> from, Point<T> to) {
+	public Distance(Point<?> from, Point<?> to) {
 		super();
 		this.from = from;
 		this.to = to;
@@ -92,15 +101,25 @@ public class Distance<T extends Coordinates> extends Shape {
 	
 	// method used by constructors
 	@SuppressWarnings("unchecked")
-	private void setDistanceValue(Point<T> from, Point<T> to) {
+	private void setDistanceValue(Point<?> from, Point<?> to) {
 		if (from != null && to != null && from.getCoord() != null && to.getCoord() != null)
 			if (from.getCoord().getClass().equals(CoordinatesRectangular.class) && to.getCoord().getClass().equals(CoordinatesRectangular.class)) {
 				CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates((Point<CoordinatesRectangular>) from, (Point<CoordinatesRectangular>) to, new AngleTypeRadian()); 
 				if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
 			} else if (from.getCoord().getClass().equals(CoordinatesGeographic.class) && to.getCoord().getClass().equals(CoordinatesGeographic.class)) {
 				// TODO implements geographic calculation in Utils class
-			} else if (from.getCoord().getClass().equals(CoordinatesGeographic.class) && to.getCoord().getClass().equals(CoordinatesGeographic.class)) {
+				/**
+				 * nu asa se calculeaza este doar pentru clasa de test. Trebuie implementat adevaratul calcul.
+				 */
+				CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates((Point<CoordinatesRectangular>) from, (Point<CoordinatesRectangular>) to, new AngleTypeRadian()); 
+				if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
+			} else if (from.getCoord().getClass().equals(CoordinatesPolar.class) && to.getCoord().getClass().equals(CoordinatesPolar.class)) {
 				// TODO implements polar calculation in Utils class
+				/**
+				 * nu asa se calculeaza este doar pentru clasa de test. Trebuie implementat adevaratul calcul.
+				 */
+				CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates((Point<CoordinatesRectangular>) from, (Point<CoordinatesRectangular>) to, new AngleTypeRadian()); 
+				if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
 			}
 	}
 	
@@ -169,7 +188,7 @@ public class Distance<T extends Coordinates> extends Shape {
 	 * @param value value of the first distance expressed in a unit system
 	 * @return value of the transformed value parameter
 	 */
-	public static Double transformDistanceFromSystemToSystem(Distance<?> from, Distance<?> to) {
+	public static Double transformDistanceFromSystemToSystem(Distance from, Distance to) {
 		if ((from != null) && (to != null)) {
 			DistanceType fromSystem = from.getDistanceType();
 			DistanceType toSystem = to.getDistanceType();
@@ -198,7 +217,7 @@ public class Distance<T extends Coordinates> extends Shape {
 	 * @param another target unit distance system
 	 * @return distance value in current distance system
 	 */
-	public Double transformDistanceFromAnotherToCurrentUnitSystem(Distance<?> another) {
+	public Double transformDistanceFromAnotherToCurrentUnitSystem(Distance another) {
 		if (another != null) {
 			return transformDistanceFromSystemToSystem(another.getDistanceType(), this.getDistanceType(), another.getValue());
 		}
@@ -207,16 +226,16 @@ public class Distance<T extends Coordinates> extends Shape {
 	
 
 	// Getters and Setters
-	public synchronized Point<T> getFrom() {
+	public synchronized Point<?> getFrom() {
 		return from;
 	}
-	public synchronized void setFrom(Point<T> from) {
+	public synchronized void setFrom(Point<?> from) {
 		this.from = from;
 	}
-	public synchronized Point<T> getTo() {
+	public synchronized Point<?> getTo() {
 		return to;
 	}
-	public synchronized void setTo(Point<T> to) {
+	public synchronized void setTo(Point<?> to) {
 		this.to = to;
 	}
 	public synchronized Double getValue() {
@@ -254,7 +273,7 @@ public class Distance<T extends Coordinates> extends Shape {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Distance<?> other = (Distance<?>) obj;
+		Distance other = (Distance) obj;
 		if (distanceType == null) {
 			if (other.distanceType != null)
 				return false;
@@ -277,4 +296,6 @@ public class Distance<T extends Coordinates> extends Shape {
 			return false;
 		return true;
 	}
+	
+	
 }

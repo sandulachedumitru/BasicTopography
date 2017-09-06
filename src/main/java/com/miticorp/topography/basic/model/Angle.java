@@ -6,7 +6,7 @@ package com.miticorp.topography.basic.model;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
  */
-public class Angle extends Shape {
+public class Angle extends GeometricElements {
 	private static final AngleType angleTypeCentesimal = new AngleTypeCentesimal();
 	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecinal();
 	private static final AngleType angleTypeRadian = new AngleTypeRadian();
@@ -28,6 +28,14 @@ public class Angle extends Shape {
 	
 	// Constructors
 	public Angle() {}
+	public Angle(Double value, AngleType angleType, boolean clockwise, double scaleFactor, String name) {
+		super();
+		this.value = value;
+		this.angleType = angleType;
+		this.clockwise = clockwise;
+		this.scaleFactor = scaleFactor;
+		this.name = name;
+	}
 	public Angle(Double value, AngleType angleType, boolean clockwise) {
 		super();
 		this.value = value;

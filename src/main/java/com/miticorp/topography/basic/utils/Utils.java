@@ -67,7 +67,7 @@ public class Utils {
 			
 			// Prepare return
 			Angle angleRez = new Angle(theta, angleType);
-			Distance<T> distanceRez = new Distance<>();
+			Distance distanceRez = new Distance();
 			
 			distanceRez.setValue(distance);
 			distanceRez.setFrom(from);

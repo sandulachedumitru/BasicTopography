@@ -12,6 +12,8 @@ import org.junit.Test;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  */
 public class AngleTest {
+	private static final double DELTA_TOLERANCE = 0.0001;
+	private static final double SCALE_FACTOR_DEFAULT = 1D;
 
 	/**
 	 * Test constructor Angle()
@@ -23,6 +25,34 @@ public class AngleTest {
 		
 		// test
 		assertTrue((angle.getValue() == null) && (angle.getAngleType() == null) && angle.isClockwise());
+		
+		assertNull(angle.getValue());
+		assertNull(angle.getAngleType());
+		assertTrue(angle.isClockwise());
+		assertTrue(angle.getScaleFactor() == SCALE_FACTOR_DEFAULT);
+		assertNull(angle.getName());
+	}
+	
+	/**
+	 * Test constructor Angle(Double value, AngleType angleType, boolean clockwise, double scaleFactor, String name)
+	 */
+	@Test
+	public void testAngleDoubleAngleTypeBooleanDoubleString() {
+		// setup
+		AngleType angleType = new AngleTypeCentesimal();
+		Double value = (new Random()).nextDouble() * angleType.getMaxNumberOfCircleDegrees();
+		boolean clockwise = false;
+		double scaleFactor = (new Random()).nextDouble() * 100;
+		String name = "test point";
+		
+		Angle angle = new Angle(value, angleType, clockwise, scaleFactor, name);
+		
+		// test
+		assertTrue(angle.getValue().equals(value));
+		assertTrue(angle.getAngleType().equals(angleType));
+		assertFalse(angle.isClockwise());
+		assertTrue(angle.getScaleFactor() == scaleFactor);
+		assertTrue(angle.getName().equals(name));
 	}
 
 	/**
@@ -41,7 +71,11 @@ public class AngleTest {
 		
 		// test
 		// clockwise == true by default
-		assertTrue((angle.getValue().equals(value)) && (angle.getAngleType().equals(current)) && angle.isClockwise());
+		assertTrue(angle.getValue().equals(value));
+		assertTrue(angle.getAngleType().equals(current));
+		assertTrue(angle.isClockwise());
+		assertTrue(angle.getScaleFactor() == SCALE_FACTOR_DEFAULT);
+		assertTrue(angle.getName() == null);
 	}
 	
 	/**
@@ -61,7 +95,11 @@ public class AngleTest {
 		Angle angle = new Angle(value, current, clockwise);
 		
 		// test
-		assertTrue((angle.getValue().equals(value)) && (angle.getAngleType().equals(current)) && (!angle.isClockwise()));
+		assertTrue(angle.getValue().equals(value));
+		assertTrue(angle.getAngleType().equals(current));
+		assertFalse(angle.isClockwise());
+		assertTrue(angle.getScaleFactor() == SCALE_FACTOR_DEFAULT);
+		assertTrue(angle.getName() == null);
 	}
 
 	/**
@@ -420,4 +458,6 @@ public class AngleTest {
 		assertFalse(angle3.equals(angle5));
 		assertFalse(angle3.equals(angle6));
 	}
+	
+	// TODO implements test for hashcode()
 }
