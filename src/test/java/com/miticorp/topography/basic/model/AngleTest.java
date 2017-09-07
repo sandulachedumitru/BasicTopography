@@ -3,6 +3,7 @@ package com.miticorp.topography.basic.model;
 import static org.junit.Assert.*;
 
 import java.util.Random;
+import java.util.function.Function;
 
 import org.junit.Test;
 
@@ -13,7 +14,10 @@ import org.junit.Test;
  */
 public class AngleTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
-	private static final double SCALE_FACTOR_DEFAULT = 1D;
+	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
+		@Override public int hashCode() {return 0;}
+		@Override public boolean equals(Object obj) {return false;}
+	}).getScaleFactor();
 
 	/**
 	 * Test constructor Angle()
@@ -431,6 +435,64 @@ public class AngleTest {
 		assertTrue(angleTrue.isClockwise());
 		assertFalse(angleFalse.isClockwise());
 	}
+
+	/**
+	 * Test method for Angle's getScaleFactor()
+	 */
+	@Test
+	public void testGetScaleFactor() {
+		// setup
+		Double scaleFactor = SCALE_FACTOR_DEFAULT;
+		Angle angle = new Angle();
+
+		// test
+		assertEquals(scaleFactor, angle.getScaleFactor(), DELTA_TOLERANCE);
+	}
+
+	/**
+	 * Test method for Angle's setScaleFactor(double scaleFactor)
+	 */
+	@Test
+	public void testSetScaleFactor() {
+		// setup
+		Angle angle = new Angle();
+		Double scaleFactor = SCALE_FACTOR_DEFAULT * 2 + 1;
+		angle.setScaleFactor(scaleFactor);
+
+		// test
+		assertEquals(scaleFactor, angle.getScaleFactor(), DELTA_TOLERANCE);
+	}
+
+	/**
+	 * Test method for Angle's getName()
+	 */
+	@Test
+	public void testGetName() {
+		// setup
+		String name = "angle name";
+		Double scaleFactor = SCALE_FACTOR_DEFAULT * 2 + 1;
+		boolean flag = (new Angle()).isClockwise();
+		Angle angle = new Angle(null, null, !flag, scaleFactor, name);
+
+		// test
+		assertEquals(name, angle.getName());
+	}
+
+	/**
+	 * Test method for Angle's setName(String name)
+	 */
+	@Test
+	public void testSetName() {
+		// setup
+		String name1 = "angle name1", name2 = "angle name2";
+		Double scaleFactor = SCALE_FACTOR_DEFAULT * 2 + 1;
+		boolean flag = (new Angle()).isClockwise();
+		Angle angle = new Angle(null, null, !flag, scaleFactor, name1);
+		angle.setName(name2);
+
+		// test
+		assertEquals(name2, angle.getName());
+	}
 	
 	/**
 	 * Test method for Angle's equals(Object obj)
@@ -459,5 +521,28 @@ public class AngleTest {
 		assertFalse(angle3.equals(angle6));
 	}
 	
-	// TODO implements test for hashcode()
+	/**
+	 * Test method for Angle's hashCode()
+	 */
+	@Test
+	public void testHashCode() {
+		AngleType angleType = new AngleTypeCentesimal();
+		Double value = (new Random()).nextDouble() * angleType.getMaxNumberOfCircleDegrees();
+		
+		Angle angle1 = new Angle();
+		Angle angle2 = new Angle();
+		Angle angle3 = new Angle(value, angleType);
+		Angle angle4 = new Angle(value, angleType, false);
+		Angle angle5 = new Angle(value*2, angleType);
+		Angle angle6 = new Angle(value, new AngleTypeHexadecinal());
+		
+		// test
+		assertEquals(angle1.hashCode(), angle1.hashCode());
+		assertEquals(angle1.hashCode(), angle2.hashCode());
+		
+		assertNotEquals(angle1.hashCode(), angle3.hashCode());
+		assertNotEquals(angle3.hashCode(), angle4.hashCode());
+		assertNotEquals(angle3.hashCode(), angle5.hashCode());
+		assertNotEquals(angle3.hashCode(), angle6.hashCode());
+	}
 }

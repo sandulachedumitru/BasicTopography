@@ -6,7 +6,6 @@ public abstract class GeometricElements {
 	protected String name;
 	
 	// Setters and Getters
-	// TODO de facut test in clasele de test care mostenesc metodele
 	public double getScaleFactor() {
 		return scaleFactor;
 	}

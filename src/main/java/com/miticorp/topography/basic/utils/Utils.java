@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.utils;
 
+import java.util.Random;
+
 import com.miticorp.topography.basic.model.Angle;
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.AngleTypeRadian;
@@ -79,5 +81,21 @@ public class Utils {
 		}
 		else return null;
 	} // method
+	
+	public static String getRandString(int length) {
+        String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder sb = new StringBuilder();
+        Random rnd = new Random();
+        while (sb.length() < length) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * alphaNumeric.length());
+            sb.append(alphaNumeric.charAt(index));
+        }
+        String str = sb.toString();
+        return str;
+    }
+	
+	public static String getRandString() {
+		return getRandString(100);
+	}
 
 } // class
