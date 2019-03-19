@@ -1,11 +1,10 @@
 package com.miticorp.topography.basic.model;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Random;
-import java.util.function.Function;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Test class for Angle class.
@@ -83,7 +82,7 @@ public class AngleTest {
 	}
 	
 	/**
-	 * Test constructor Angle(Double value, AngleType angleType, boolean clockwize)
+	 * Test constructor Angle(Double value, AngleType angleType, boolean clockwise)
 	 */
 	@Test
 	public void testAngleDoubleAngleTypeBoolean() {
@@ -113,7 +112,7 @@ public class AngleTest {
 	public void testTransformAngleFromSystemToSystem() {
 		// setup
 		AngleType cent = new AngleTypeCentesimal();
-		AngleType hex = new AngleTypeHexadecinal();
+		AngleType hex = new AngleTypeHexadecimal();
 		AngleType rad = new AngleTypeRadian();
 		
 		// test
@@ -136,22 +135,22 @@ public class AngleTest {
 	private static void loop1(AngleType from, AngleType to, double factor) {
 		Double rez;
 		Random random = new Random();
-		double lenght, value;
+		double length, value;
 
-		lenght = from.getMaxNumberOfCircleDegrees();
+		length = from.getMaxNumberOfCircleDegrees();
 		if (!(from instanceof AngleTypeRadian)) {
-			for (int i = 0; i <= lenght; i += 10 ) {
-				value = (double) i;
+			for (int i = 0; i <= length; i += 10 ) {
+				value = i;
 				double temp = random.nextInt(99999); temp /= 10000;
-				if ((value % (lenght/4)) != 0D ) value += temp;
+				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to, value);
 				assertTrue(rez.equals(value*factor));
 			}
 
 		} else {
-			for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-				value = (double) i;
+			for (double i = 0; i <= length; i += (length / 400) ) {
+				value = i;
 				// System.out.println(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to, value);
 				assertTrue(rez.equals(value * factor));
@@ -167,7 +166,7 @@ public class AngleTest {
 	public void testTransformAngleFromSystemToSystem2() {
 		// setup
 		AngleType cent = new AngleTypeCentesimal();
-		AngleType hex = new AngleTypeHexadecinal();
+		AngleType hex = new AngleTypeHexadecimal();
 		AngleType rad = new AngleTypeRadian();
 		
 		Angle angleCent = new Angle(null, cent);
@@ -194,14 +193,14 @@ public class AngleTest {
 	private void loop3(Angle from, Angle to, double factor) {
 		Double rez;
 		Random random = new Random();
-		double lenght, value;
+		double length, value;
 
-		lenght = from.getAngleType().getMaxNumberOfCircleDegrees();
+		length = from.getAngleType().getMaxNumberOfCircleDegrees();
 		if (!(from.getAngleType() instanceof AngleTypeRadian)) {
-			for (int i = 0; i <= lenght; i += 10 ) {
+			for (int i = 0; i <= length; i += 10 ) {
 				value = (double) i;
 				double temp = random.nextInt(99999); temp /= 10000;
-				if ((value % (lenght/4)) != 0D ) value += temp;
+				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
 				from.setValue(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to);
@@ -210,8 +209,8 @@ public class AngleTest {
 			}
 
 		} else {
-			for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-				value = (double) i;
+			for (double i = 0; i <= length; i += (length / 400) ) {
+				value = i;
 				// System.out.println(value);
 				from.setValue(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to);
@@ -228,7 +227,7 @@ public class AngleTest {
 	public void testTransformAngleFromCurrentToAnotherSystem() {
 		// setup
 		AngleType cent = new AngleTypeCentesimal();
-		AngleType hex = new AngleTypeHexadecinal();
+		AngleType hex = new AngleTypeHexadecimal();
 		AngleType rad = new AngleTypeRadian();
 		
 		// test
@@ -252,14 +251,14 @@ public class AngleTest {
 		Angle angle;
 		Double rez;
 		Random random = new Random();
-		double lenght, value;
+		double length, value;
 
-		lenght = from.getMaxNumberOfCircleDegrees();
+		length = from.getMaxNumberOfCircleDegrees();
 		if (!(from instanceof AngleTypeRadian)) {
-			for (int i = 0; i <= lenght; i += 10 ) {
+			for (int i = 0; i <= length; i += 10 ) {
 				value = (double) i;
 				double temp = random.nextInt(99999); temp /= 10000;
-				if ((value % (lenght/4)) != 0D ) value += temp;
+				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
 				angle = new Angle(value, from);
 				rez = angle.transformAngleFromCurrentToAnotherSystem(to);
@@ -267,8 +266,8 @@ public class AngleTest {
 			}
 
 		} else {
-			for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-				value = (double) i;
+			for (double i = 0; i <= length; i += (length / 400) ) {
+				value = i;
 				// System.out.println(value);
 				angle = new Angle(value, from);
 				rez = angle.transformAngleFromCurrentToAnotherSystem(to);
@@ -284,7 +283,7 @@ public class AngleTest {
 	public void testTransformAngleFromAnotherToCurrentSystem() {
 		// setup
 		AngleType cent = new AngleTypeCentesimal();
-		AngleType hex = new AngleTypeHexadecinal();
+		AngleType hex = new AngleTypeHexadecimal();
 		AngleType rad = new AngleTypeRadian();
 		
 		Angle angleCent = new Angle(null, cent);
@@ -311,14 +310,14 @@ public class AngleTest {
 	private void loop4(Angle another, Angle current, double factor) {
 		Double rez;
 		Random random = new Random();
-		double lenght, value;
+		double length, value;
 
-		lenght = another.getAngleType().getMaxNumberOfCircleDegrees();
+		length = another.getAngleType().getMaxNumberOfCircleDegrees();
 		if (!(another.getAngleType() instanceof AngleTypeRadian)) {
-			for (int i = 0; i <= lenght; i += 10 ) {
+			for (int i = 0; i <= length; i += 10 ) {
 				value = (double) i;
 				double temp = random.nextInt(99999); temp /= 10000;
-				if ((value % (lenght/4)) != 0D ) value += temp;
+				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
 				another.setValue(value);
 				rez = current.transformAngleFromAnotherToCurrentSystem(another);
@@ -328,8 +327,8 @@ public class AngleTest {
 			}
 
 		} else {
-			for (double i = 0; i <= lenght; i += (lenght / 400) ) {
-				value = (double) i;
+			for (double i = 0; i <= length; i += (length / 400) ) {
+				value = i;
 				// System.out.println(value);
 				another.setValue(value);
 				rez = current.transformAngleFromAnotherToCurrentSystem(another);
@@ -509,10 +508,9 @@ public class AngleTest {
 		Angle angle3 = new Angle(value, angle);
 		Angle angle4 = new Angle(value, angle, false);
 		Angle angle5 = new Angle(value*2, angle);
-		Angle angle6 = new Angle(value, new AngleTypeHexadecinal());
+		Angle angle6 = new Angle(value, new AngleTypeHexadecimal());
 		
 		// test
-		assertTrue(angle1.equals(angle1));
 		assertTrue(angle1.equals(angle2));
 		
 		assertFalse(angle1.equals(angle3));
@@ -534,7 +532,7 @@ public class AngleTest {
 		Angle angle3 = new Angle(value, angleType);
 		Angle angle4 = new Angle(value, angleType, false);
 		Angle angle5 = new Angle(value*2, angleType);
-		Angle angle6 = new Angle(value, new AngleTypeHexadecinal());
+		Angle angle6 = new Angle(value, new AngleTypeHexadecimal());
 		
 		// test
 		assertEquals(angle1.hashCode(), angle1.hashCode());

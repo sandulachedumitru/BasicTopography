@@ -44,7 +44,7 @@ public class Point<T extends Coordinates> extends GeometricElements {
 	
 	// equals
 	/**
-	 * Two points are equals if their coordinates are equals. They coud have different name and scale factor.
+	 * Two points are equals if their coordinates are equals. They could have different name and scale factor.
 	 */
 	@Override
 	public boolean equals(Object obj) {

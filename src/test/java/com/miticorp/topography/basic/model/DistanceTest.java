@@ -1,10 +1,10 @@
 package com.miticorp.topography.basic.model;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Random;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class DistanceTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
@@ -270,7 +270,7 @@ public class DistanceTest {
 		Double value = 1D, rez;
 		
 		// test NULL
-		rez = Distance.transformDistanceFromSystemToSystem((DistanceTypeMetricMeter) null, (DistanceTypeMetricMeter) null, value);
+		rez = Distance.transformDistanceFromSystemToSystem(null, null, value);
 		//System.out.println("rez(" + rez + ") / value(" + value + ")");
 		assertFalse(value.equals(rez));
 		assertNull(rez);
@@ -377,7 +377,7 @@ public class DistanceTest {
 		Distance from1, from2;
 		Distance to1, to2;
 		Double value1 = 1D, value2 = null;
-		Double rez1 = null, rez2 = null;
+		Double rez1, rez2;
 		
 		DistanceType distanceType1 = new DistanceTypeMetricMeter();
 		DistanceType distanceType2 = new DistanceTypeImperialYard();
@@ -398,7 +398,6 @@ public class DistanceTest {
 		assertEquals(rez1, value1 * Distance.METER_TO_YARD, DELTA_TOLERANCE);
 		assertEquals(value1 * Distance.METER_TO_YARD, to1.getValue(), DELTA_TOLERANCE);
 		
-		assertNull(value2);
 		assertNull(rez2);
 	}
 
@@ -411,7 +410,7 @@ public class DistanceTest {
 		DistanceType anotherType = new DistanceTypeImperialYard();
 		DistanceType currentType = new DistanceTypeMetricMeter();
 		Double value = 1D;
-		Double rez = null;
+		Double rez;
 		
 		Distance distance = new Distance();
 		distance.setDistanceType(currentType);
@@ -431,7 +430,7 @@ public class DistanceTest {
 		DistanceType currentType = new DistanceTypeMetricMeter();
 		DistanceType anotherType = new DistanceTypeImperialYard();
 		Double anotherValue = 1D;
-		Double rez = null, rez2 = null, rez3 = null;
+		Double rez, rez2, rez3;
 		
 		Distance distanceCurrent = new Distance();
 		distanceCurrent.setDistanceType(currentType);
@@ -786,8 +785,6 @@ public class DistanceTest {
 		Distance distance8 = new Distance(null, null, null, scaleFactor, null);
 		
 		// test
-		assertTrue(distance1.equals(distance1));
-		assertTrue(distance2.equals(distance2));
 		assertTrue(distance2.equals(distance3));
 		assertTrue(distance2.equals(distance5));
 		assertTrue(distance2.equals(distance6));

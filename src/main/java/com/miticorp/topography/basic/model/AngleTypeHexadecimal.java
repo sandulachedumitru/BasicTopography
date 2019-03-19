@@ -1,6 +1,6 @@
 package com.miticorp.topography.basic.model;
 
-public class AngleTypeHexadecinal extends AngleType {
+public class AngleTypeHexadecimal extends AngleType {
 	private final double degree = 360;
 
 	@Override
@@ -26,9 +26,7 @@ public class AngleTypeHexadecinal extends AngleType {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AngleTypeHexadecinal other = (AngleTypeHexadecinal) obj;
-		if (Double.doubleToLongBits(degree) != Double.doubleToLongBits(other.degree))
-			return false;
-		return true;
+		AngleTypeHexadecimal other = (AngleTypeHexadecimal) obj;
+		return Double.doubleToLongBits(degree) == Double.doubleToLongBits(other.degree);
 	}
 }

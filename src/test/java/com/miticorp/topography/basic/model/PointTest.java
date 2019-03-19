@@ -1,10 +1,10 @@
 package com.miticorp.topography.basic.model;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Random;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class PointTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
@@ -245,14 +245,12 @@ public class PointTest {
 		Point<Coordinates> point8 = null;
 		
 		// test
-		assertTrue(point1.equals(point1));
 		assertTrue(point1.equals(point2));
 		assertFalse(point1.equals(point3));
 		assertFalse(point1.equals(point4));
 		assertTrue(point4.equals(point5));
 		assertTrue(point4.equals(point6));
 		assertFalse(point1.equals(point7));
-		assertTrue(point7.equals(point7));
 		assertFalse(point1.equals(point8));
 	}
 }

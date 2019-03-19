@@ -8,7 +8,6 @@ import com.miticorp.topography.basic.utils.Utils;
  * Distance extends Shape because a distance is a line between two points.
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  * 
- * @param <?> point's coordinates type
  */
 public class Distance extends GeometricElements {
 	private static final DistanceTypeMetric metricKm = new DistanceTypeMetricKilometer();
@@ -47,7 +46,7 @@ public class Distance extends GeometricElements {
 		setDistanceValue(from, to);
 	}
 	/**
-	 * value property will be automatically calculated from points ccordinates if possible.
+	 * value property will be automatically calculated from points coordinates if possible.
 	 * @param from start point of the distance
 	 * @param to end point of the distance
 	 * @param distanceType type of distance (ex: metric, imperial).
@@ -61,7 +60,7 @@ public class Distance extends GeometricElements {
 	}
 	
 	/**
-	 * value property will be automatically calculated from points ccordinates if possible. DistanceType property is of type DistanceTypeMetricMeter by default.
+	 * value property will be automatically calculated from points coordinates if possible. DistanceType property is of type DistanceTypeMetricMeter by default.
 	 * @param from start point of the distance
 	 * @param to end point of the distance
 	 */
@@ -108,14 +107,14 @@ public class Distance extends GeometricElements {
 				if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
 			} else if (from.getCoord().getClass().equals(CoordinatesGeographic.class) && to.getCoord().getClass().equals(CoordinatesGeographic.class)) {
 				// TODO implements geographic calculation in Utils class
-				/**
+				/*
 				 * nu asa se calculeaza este doar pentru clasa de test. Trebuie implementat adevaratul calcul.
 				 */
 				CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates((Point<CoordinatesRectangular>) from, (Point<CoordinatesRectangular>) to, new AngleTypeRadian()); 
 				if (coordinatesPolar != null) this.value = coordinatesPolar.getDistance().getValue();
 			} else if (from.getCoord().getClass().equals(CoordinatesPolar.class) && to.getCoord().getClass().equals(CoordinatesPolar.class)) {
 				// TODO implements polar calculation in Utils class
-				/**
+				/*
 				 * nu asa se calculeaza este doar pentru clasa de test. Trebuie implementat adevaratul calcul.
 				 */
 				CoordinatesPolar coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates((Point<CoordinatesRectangular>) from, (Point<CoordinatesRectangular>) to, new AngleTypeRadian()); 
@@ -185,7 +184,6 @@ public class Distance extends GeometricElements {
 	 * (ex: metric to imperial, meter to yard, km to mm, yard to inch, etc)
 	 * @param from first distance witch contain value and must be transformed in another unit system
 	 * @param to second distance witch will be transformed from first
-	 * @param value value of the first distance expressed in a unit system
 	 * @return value of the transformed value parameter
 	 */
 	public static Double transformDistanceFromSystemToSystem(Distance from, Distance to) {

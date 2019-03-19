@@ -1,14 +1,8 @@
 package com.miticorp.topography.basic.utils;
 
-import java.util.Random;
+import com.miticorp.topography.basic.model.*;
 
-import com.miticorp.topography.basic.model.Angle;
-import com.miticorp.topography.basic.model.AngleType;
-import com.miticorp.topography.basic.model.AngleTypeRadian;
-import com.miticorp.topography.basic.model.CoordinatesPolar;
-import com.miticorp.topography.basic.model.CoordinatesRectangular;
-import com.miticorp.topography.basic.model.Distance;
-import com.miticorp.topography.basic.model.Point;
+import java.util.Random;
 
 public class Utils {
 	
@@ -22,46 +16,46 @@ public class Utils {
 			double north2, east2;
 			double height1, height2;
 			
-			if ( (T) from.getCoord() == null ) return null;
-			else if ( (((T) from.getCoord()).getNorth() == null)
-			|| (((T) from.getCoord()).getEast() == null)
-			|| (((T) from.getCoord()).getHeight() == null) ) return null;
-			if ( (T) to.getCoord() == null ) return null;
-			else if ( (((T) to.getCoord()).getNorth() == null)
-			|| (((T) to.getCoord()).getEast() == null)
-			|| (((T) to.getCoord()).getHeight() == null) ) return null;
+			if ( from.getCoord() == null ) return null;
+			else if ( 	(from.getCoord().getNorth() == null)
+			|| 			(from.getCoord().getEast() == null)
+			|| 			(from.getCoord().getHeight() == null) ) return null;
+			if ( to.getCoord() == null ) return null;
+			else if ( 	(to.getCoord().getNorth() == null)
+			|| 			(to.getCoord().getEast() == null)
+			|| 			(to.getCoord().getHeight() == null) ) return null;
 			
-			north1 	= ((T) from.getCoord()).getNorth() 	* from.getScaleFactor();
-			north2 	= ((T) to.getCoord()).getNorth() 	* to.getScaleFactor();
-			east1 	= ((T) from.getCoord()).getEast() 	* from.getScaleFactor();
-			east2 	= ((T) to.getCoord()).getEast() 	* to.getScaleFactor();
-			height1	= ((T) from.getCoord()).getHeight() * from.getScaleFactor();
-			height2	= ((T) to.getCoord()).getHeight()	* to.getScaleFactor();
+			north1 	= from.getCoord().getNorth() 	* from.getScaleFactor();
+			north2 	= to.getCoord().getNorth() 		* to.getScaleFactor();
+			east1 	= from.getCoord().getEast() 	* from.getScaleFactor();
+			east2 	= to.getCoord().getEast() 		* to.getScaleFactor();
+			height1	= from.getCoord().getHeight() 	* from.getScaleFactor();
+			height2	= to.getCoord().getHeight()		* to.getScaleFactor();
 			
 			deltaNorth 	= north2 - north1;
 			deltaEast 	= east2 - east1;
 			
 			// Calculate angle
-			double theta = 0D, omega = 0D;
+			double theta = 0D, omega;
 			
 			AngleType angleTypeRadian = new AngleTypeRadian();
-			double cadran = angleType.getMaxNumberOfCircleDegrees() / 4;
+			double quadrant = angleType.getMaxNumberOfCircleDegrees() / 4;
 			
 			if ((deltaNorth > 0) && (deltaEast >= 0)) {
 				omega = Math.atan(deltaEast/deltaNorth);
-				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 0 * cadran;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 0 * quadrant;
 			}
 			else if ((deltaNorth <= 0) && (deltaEast > 0)) {
 				omega = Math.atan(deltaNorth/deltaEast);
-				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 1 * cadran;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 1 * quadrant;
 			}
 			else if ((deltaNorth < 0) && (deltaEast <= 0)) {
 				omega = Math.atan(deltaEast/deltaNorth);
-				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 2 * cadran;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 2 * quadrant;
 			}
 			else if ((deltaNorth >= 0) && (deltaEast < 0)) {
 				omega = Math.atan(deltaNorth/deltaEast);
-				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 3 * cadran;
+				theta = omega * angleTypeRadian.getAngleChangeSystemFactor(angleType) + 3 * quadrant;
 			}
 			
 			// Calculate distance
@@ -90,8 +84,7 @@ public class Utils {
             int index = (int) (rnd.nextFloat() * alphaNumeric.length());
             sb.append(alphaNumeric.charAt(index));
         }
-        String str = sb.toString();
-        return str;
+        return sb.toString();
     }
 	
 	public static String getRandString() {
