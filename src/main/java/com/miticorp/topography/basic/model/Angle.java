@@ -8,7 +8,7 @@ package com.miticorp.topography.basic.model;
  */
 public class Angle extends GeometricElements {
 	private static final AngleType angleTypeCentesimal = new AngleTypeCentesimal();
-	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecinal();
+	private static final AngleType angleTypeHexadecimal = new AngleTypeHexadecimal();
 	private static final AngleType angleTypeRadian = new AngleTypeRadian();
 	
 	// Transformation parameters between two angular systems
@@ -59,18 +59,18 @@ public class Angle extends GeometricElements {
 		if ((fromSystem != null) && (toSystem != null)) {
 			if (fromSystem instanceof AngleTypeCentesimal) {
 				if (toSystem instanceof AngleTypeCentesimal) {return value;}
-				else if (toSystem instanceof AngleTypeHexadecinal) {return value * CENTESIMAL_TO_HEXADECIMAL;}
+				else if (toSystem instanceof AngleTypeHexadecimal) {return value * CENTESIMAL_TO_HEXADECIMAL;}
 				else if (toSystem instanceof AngleTypeRadian) {return value * CENTESIMAL_TO_RADIAN;}
 			}
-			else if (fromSystem instanceof AngleTypeHexadecinal) {
-				if (toSystem instanceof AngleTypeHexadecinal) {return value;}
+			else if (fromSystem instanceof AngleTypeHexadecimal) {
+				if (toSystem instanceof AngleTypeHexadecimal) {return value;}
 				else if (toSystem instanceof AngleTypeCentesimal) {return value * HEXADECIMAL_TO_CENTESIMAL; }
 				else if (toSystem instanceof AngleTypeRadian) {return value * HEXADECIMAL_TO_RADIAN;}
 			}
 			else if (fromSystem instanceof AngleTypeRadian) {
 				if (toSystem instanceof AngleTypeRadian) {return value;}
 				else if (toSystem instanceof AngleTypeCentesimal) {return value * RADIAN_TO_CENTESIMAL;}
-				else if (toSystem instanceof AngleTypeHexadecinal) {return value* RADIAN_TO_HEXADECIMAL;}
+				else if (toSystem instanceof AngleTypeHexadecimal) {return value* RADIAN_TO_HEXADECIMAL;}
 			}
 		}
 		return null;

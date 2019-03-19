@@ -27,8 +27,6 @@ public class AngleTypeRadian extends AngleType {
 		if (getClass() != obj.getClass())
 			return false;
 		AngleTypeRadian other = (AngleTypeRadian) obj;
-		if (Double.doubleToLongBits(degree) != Double.doubleToLongBits(other.degree))
-			return false;
-		return true;
+		return Double.doubleToLongBits(degree) == Double.doubleToLongBits(other.degree);
 	}
 }

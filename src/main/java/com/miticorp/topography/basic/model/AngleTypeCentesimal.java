@@ -27,8 +27,6 @@ public class AngleTypeCentesimal extends AngleType {
 		if (getClass() != obj.getClass())
 			return false;
 		AngleTypeCentesimal other = (AngleTypeCentesimal) obj;
-		if (Double.doubleToLongBits(degree) != Double.doubleToLongBits(other.degree))
-			return false;
-		return true;
+		return Double.doubleToLongBits(degree) == Double.doubleToLongBits(other.degree);
 	}
 }

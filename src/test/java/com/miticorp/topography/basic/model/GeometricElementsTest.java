@@ -1,12 +1,10 @@
 package com.miticorp.topography.basic.model;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.Random;
 
-import org.junit.Test;
-
-import com.miticorp.topography.basic.utils.Utils;
+import static org.junit.Assert.assertEquals;
 
 public class GeometricElementsTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
