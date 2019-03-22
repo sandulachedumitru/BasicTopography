@@ -67,4 +67,13 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "CoordinatesRectangular{" +
+				"north=" + north +
+				", east=" + east +
+				", height=" + height +
+				'}';
+	}
 }

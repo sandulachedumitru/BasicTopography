@@ -1,5 +1,8 @@
 package com.miticorp.topography.BasicTopography;
 
+import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilder;
+import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilderFactory;
+import com.miticorp.topography.basic.builder.PointBuilderFactory;
 import com.miticorp.topography.basic.model.*;
 import com.miticorp.topography.basic.utils.Utils;
 import org.slf4j.Logger;
@@ -77,8 +80,8 @@ public class BasicTopographyBootApplication {
 
 			Point<CoordinatesPolar> polar = new Point<>(coordinatesPolar, 1D, "polar");
 
-			if (from.equals(to)) LOG.info("'from' and 'to' are equals !");
-			else LOG.info("'from' and 'to' are NOT equals !");
+			CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(100D).setEast(100D).setHeight(0D).build();
+			Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Baze Point").build();
 
 		};
 	}

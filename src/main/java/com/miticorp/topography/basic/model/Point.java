@@ -12,6 +12,7 @@ public class Point<T extends Coordinates> extends GeometricElements {
 	private T coord;
 //	private double scaleFactor = 1D;
 //	private String name;
+	//TODO must have a DistanceType
 
 	// Constructors
 	public Point() {}
