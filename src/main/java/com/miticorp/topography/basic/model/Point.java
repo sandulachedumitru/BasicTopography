@@ -1,18 +1,20 @@
 package com.miticorp.topography.basic.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 
- * Base class for point reprezentation. Point extends Shape class.
+ * Base class for point reprezentation.
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  *
  * @param <T> point's coordinates type
  */
 public class Point<T extends Coordinates> extends GeometricElements {
+	private static final Logger LOG = LoggerFactory.getLogger(Point.class);
+
 	// Fields exposed by Point by getters and setters
 	private T coord;
-//	private double scaleFactor = 1D;
-//	private String name;
-	//TODO must have a DistanceType
 
 	// Constructors
 	public Point() {}
@@ -33,7 +35,7 @@ public class Point<T extends Coordinates> extends GeometricElements {
 	// Getters and Setters
 	public synchronized T getCoord() { return coord; }
 	public synchronized void setCoord(T coord) { this.coord = coord; }
-	
+
 	// hash
 	@Override
 	public int hashCode() {

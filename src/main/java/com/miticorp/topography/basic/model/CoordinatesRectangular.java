@@ -1,7 +1,15 @@
 package com.miticorp.topography.basic.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	private Double north, east, height;
+
+	@Autowired
+	private DistanceType distanceTypeMetricMeter;
+
+	@Autowired
+	private AngleType angleTypeCentesimal;
 	
 	// constructors
 	public CoordinatesRectangular() {}
@@ -9,6 +17,16 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 		this.north = northValue;
 		this.east = estValue;
 		this.height = heightValue;
+		this.distanceType = distanceTypeMetricMeter;
+		this.angleType = angleTypeCentesimal;
+	}
+
+	public CoordinatesRectangular(double northValue, double estValue, double heightValue, DistanceType distanceType, AngleType angleType) {
+		this.north = northValue;
+		this.east = estValue;
+		this.height = heightValue;
+		this.distanceType = distanceType;
+		this.angleType = angleType;
 	}
 
 	// setters and getters

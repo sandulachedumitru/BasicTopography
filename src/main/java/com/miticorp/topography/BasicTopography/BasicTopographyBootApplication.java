@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 @SpringBootApplication
 public class BasicTopographyBootApplication {
@@ -25,32 +26,23 @@ public class BasicTopographyBootApplication {
 
 	private static final Logger LOG = LoggerFactory.getLogger(BasicTopographyBootApplication.class);
 
+
+
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-
-//			System.out.println("Let's inspect the beans provided by Spring Boot:");
-//
-//
-//			String[] beanNames = ctx.getBeanDefinitionNames();
-//			Arrays.sort(beanNames);
-//			for (String beanName : beanNames) {
-//				System.out.println(beanName);
-//			}
-
 			LOG.info("TEST ...");
 
-			double cent2rad = 2*Math.PI/400;
-			double rad2cent = 400/(2*Math.PI);
-			double rad = Math.PI/2;
+			double cent2rad = 2 * Math.PI / 400;
+			double rad2cent = 400 / (2 * Math.PI);
+			double rad = Math.PI / 2;
 			double cent = rad * rad2cent;
 			double dN = 123.456, dE = 45.678;
-			LOG.info( "rad = " + rad + " --> " + cent);
-			LOG.info( "sin(" + rad + ") = " + Math.sin(rad));
-			LOG.info( "sin(" + cent + ") = " + Math.sin(cent * cent2rad));
-			LOG.info("arctang(dn/de) = " + Math.atan(dN/dE) * rad2cent);
+			LOG.info("rad = " + rad + " --> " + cent);
+			LOG.info("sin(" + rad + ") = " + Math.sin(rad));
+			LOG.info("sin(" + cent + ") = " + Math.sin(cent * cent2rad));
+			LOG.info("arctang(dn/de) = " + Math.atan(dN / dE) * rad2cent);
 			LOG.info("cent2rad = " + Angle.CENTESIMAL_TO_RADIAN);
-
 
 
 			double base = 2, pow = 20;
@@ -74,14 +66,27 @@ public class BasicTopographyBootApplication {
 			coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates(from, to, angleType);
 			r = coordinatesPolar.getDistance().getValue();
 			thet = coordinatesPolar.getAngle().getValue();
-			DecimalFormat df3 = new DecimalFormat(".###m"); df3.setRoundingMode(RoundingMode.UP);
-			DecimalFormat df4 = new DecimalFormat(".####g"); df4.setRoundingMode(RoundingMode.UP);
+			DecimalFormat df3 = new DecimalFormat(".###m");
+			df3.setRoundingMode(RoundingMode.UP);
+			DecimalFormat df4 = new DecimalFormat(".####g");
+			df4.setRoundingMode(RoundingMode.UP);
 			LOG.info("P(r,thet) = P(" + df3.format(r) + "," + df4.format(thet) + ")");
 
 			Point<CoordinatesPolar> polar = new Point<>(coordinatesPolar, 1D, "polar");
 
-			CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(100D).setEast(100D).setHeight(0D).build();
-			Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Baze Point").build();
+			CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(north1).setEast(east1).setHeight(height1).build();
+			Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Base Point").build();
+			LOG.info("Point --> DistanceType:{}, \tAngleType:{}", point.getCoord().getDistanceType(), point.getCoord().getAngleType());
+
+
+
+
+			System.out.println("Let's inspect the beans provided by Spring Boot:");
+			String[] beanNames = ctx.getBeanDefinitionNames();
+			Arrays.sort(beanNames);
+			for (String beanName : beanNames) {
+				System.out.println(beanName);
+			}
 
 		};
 	}
