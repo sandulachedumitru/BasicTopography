@@ -6,6 +6,7 @@ import com.miticorp.topography.basic.model.*;
 import com.miticorp.topography.basic.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,11 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class BasicTopographyBootApplication {
+	@Autowired
+	DistanceType distanceTypeMetricMeter;
+
+	@Autowired
+	AngleType angleTypeCentesimal;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BasicTopographyBootApplication.class, args);
@@ -66,7 +72,8 @@ public class BasicTopographyBootApplication {
 
 		Point<CoordinatesPolar> polar = new Point<>(coordinatesPolar, 1D, "polar");
 
-		CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(north1).setEast(east1).setHeight(height1).build();
+
+		CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(north1).setEast(east1).setHeight(height1).setAngleType(new AngleTypeCentesimal()).setDistanceType(new DistanceTypeMetricMeter()).build();
 		Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Base Point").build();
 		LOG.info("Point --> DistanceType:{}, \tAngleType:{}", point.getCoord().getDistanceType(), point.getCoord().getAngleType());
 	}

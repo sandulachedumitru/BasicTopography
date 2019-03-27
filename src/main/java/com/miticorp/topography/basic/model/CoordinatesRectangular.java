@@ -6,10 +6,10 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	private Double north, east, height;
 
 	@Autowired
-	private DistanceType distanceTypeMetricMeter;
+	DistanceType distanceTypeMetricMeter;
 
 	@Autowired
-	private AngleType angleTypeCentesimal;
+	AngleType angleTypeCentesimal;
 	
 	// constructors
 	public CoordinatesRectangular() {}
