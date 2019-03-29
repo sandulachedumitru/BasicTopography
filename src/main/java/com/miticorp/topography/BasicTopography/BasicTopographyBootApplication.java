@@ -1,23 +1,26 @@
 package com.miticorp.topography.BasicTopography;
 
-import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilder;
 import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilderFactory;
 import com.miticorp.topography.basic.builder.PointBuilderFactory;
 import com.miticorp.topography.basic.model.*;
 import com.miticorp.topography.basic.utils.Utils;
+import com.miticorp.topography.service.BasicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.miticorp.topography")
 public class BasicTopographyBootApplication {
 
 	public static void main(String[] args) {
@@ -26,7 +29,14 @@ public class BasicTopographyBootApplication {
 
 	private static final Logger LOG = LoggerFactory.getLogger(BasicTopographyBootApplication.class);
 
+	@Autowired
+	BasicService basicService;
 
+	@Autowired
+	DistanceType distanceTypeImperialYard;
+
+	@Autowired
+	AngleType angleTypeHexadecimal;
 
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
@@ -72,21 +82,27 @@ public class BasicTopographyBootApplication {
 			df4.setRoundingMode(RoundingMode.UP);
 			LOG.info("P(r,thet) = P(" + df3.format(r) + "," + df4.format(thet) + ")");
 
-			Point<CoordinatesPolar> polar = new Point<>(coordinatesPolar, 1D, "polar");
 
-			CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(north1).setEast(east1).setHeight(height1).build();
+			basicService.pointService();
+
+			CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder()
+					.setNorth(north1)
+					.setEast(east1)
+					.setHeight(height1)
+					.setAngleType(angleTypeHexadecimal)
+					.setDistanceType(distanceTypeImperialYard)
+					.build();
 			Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Base Point").build();
 			LOG.info("Point --> DistanceType:{}, \tAngleType:{}", point.getCoord().getDistanceType(), point.getCoord().getAngleType());
 
 
 
-
-			System.out.println("Let's inspect the beans provided by Spring Boot:");
-			String[] beanNames = ctx.getBeanDefinitionNames();
-			Arrays.sort(beanNames);
-			for (String beanName : beanNames) {
-				System.out.println(beanName);
-			}
+//			System.out.println("Let's inspect the beans provided by Spring Boot:");
+//			String[] beanNames = ctx.getBeanDefinitionNames();
+//			Arrays.sort(beanNames);
+//			for (String beanName : beanNames) {
+//				System.out.println(beanName);
+//			}
 
 		};
 	}

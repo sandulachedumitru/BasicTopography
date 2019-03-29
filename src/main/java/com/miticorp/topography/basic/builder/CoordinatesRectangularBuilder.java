@@ -6,21 +6,37 @@ import com.miticorp.topography.basic.model.DistanceType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Dumitru Sandulache on 22/3/19.
  * sandulachedumitru@hotmail.com
  */
 public class CoordinatesRectangularBuilder {
+    // https://stackoverflow.com/questions/19896870/why-is-my-spring-autowired-field-null
+    // google search: autowired instance is null
     private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangularBuilder.class);
 
     private double north, east, height;
     private DistanceType distanceType;
     private AngleType angleType;
 
+    @Autowired
+    private CoordinatesRectangular coordinatesRectangular;
+
     public CoordinatesRectangular build() {
-        LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}]", north, east, height);
-        return new CoordinatesRectangular(north, east, height, distanceType, angleType);
+//        CoordinatesRectangular coordinatesRectangular = new CoordinatesRectangular(north, east, height);
+
+
+        if (distanceType != null) coordinatesRectangular.setDistanceType(distanceType);
+        else distanceType = coordinatesRectangular.getDistanceType();
+
+        if (angleType != null) coordinatesRectangular.setAngleType(angleType);
+        else angleType = coordinatesRectangular.getAngleType();
+
+        LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
+
+        return coordinatesRectangular;
     }
 
     public CoordinatesRectangularBuilder setNorth(double north) {

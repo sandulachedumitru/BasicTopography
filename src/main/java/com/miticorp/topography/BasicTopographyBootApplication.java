@@ -1,9 +1,8 @@
 package com.miticorp.topography;
 
-import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilderFactory;
-import com.miticorp.topography.basic.builder.PointBuilderFactory;
 import com.miticorp.topography.basic.model.*;
 import com.miticorp.topography.basic.utils.Utils;
+import com.miticorp.topography.service.BasicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,9 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class BasicTopographyBootApplication {
-	@Autowired
-	DistanceType distanceTypeMetricMeter;
 
 	@Autowired
-	AngleType angleTypeCentesimal;
+	BasicService basicService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BasicTopographyBootApplication.class, args);
@@ -69,13 +66,6 @@ public class BasicTopographyBootApplication {
 		DecimalFormat df4 = new DecimalFormat(".####g");
 		df4.setRoundingMode(RoundingMode.UP);
 		LOG.info("P(r,thet) = P(" + df3.format(r) + "," + df4.format(thet) + ")");
-
-		Point<CoordinatesPolar> polar = new Point<>(coordinatesPolar, 1D, "polar");
-
-
-		CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilderFactory.getBuilder().setNorth(north1).setEast(east1).setHeight(height1).setAngleType(new AngleTypeCentesimal()).setDistanceType(new DistanceTypeMetricMeter()).build();
-		Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Base Point").build();
-		LOG.info("Point --> DistanceType:{}, \tAngleType:{}", point.getCoord().getDistanceType(), point.getCoord().getAngleType());
 	}
 
 	private static final Logger LOG = LoggerFactory.getLogger(BasicTopographyBootApplication.class);
@@ -91,56 +81,8 @@ public class BasicTopographyBootApplication {
 			for (String beanName : beanNames) {
 				System.out.println(beanName);
 			}
+
+			basicService.pointService();
 		};
 	}
-
-//	@Bean
-//	public AngleType angleTypeCentesimal() {
-//		return new AngleTypeCentesimal();
-//	}
-//
-//	@Bean
-//	public AngleType angleTypeHexadecimal() {
-//		return new AngleTypeHexadecimal();
-//	}
-//
-//	@Bean
-//	public AngleType angleTypeRadian() {
-//		return new AngleTypeRadian();
-//	}
-//
-//	@Bean
-//	public DistanceType distanceTypeMetricKilometer() {
-//		return new DistanceTypeMetricKilometer();
-//	}
-//
-//	@Bean
-//	public DistanceType distanceTypeMetricMeter() {
-//		return new DistanceTypeMetricMeter();
-//	}
-//
-//	@Bean
-//	public DistanceType distanceTypeMetricCentimeter() {
-//		return new DistanceTypeMetricCentimeter();
-//	}
-//
-//	@Bean
-//	public DistanceType DistanceTypeMetricMillimeter() {
-//		return new DistanceTypeMetricMillimeter();
-//	}
-//
-//	@Bean
-//	public DistanceType distanceTypeImperialMile() {
-//		return new DistanceTypeImperialMile();
-//	}
-//
-//	@Bean
-//	public DistanceType distanceTypeImperialYard() {
-//		return new DistanceTypeImperialYard();
-//	}
-//
-//	@Bean
-//	public DistanceType distanceTypeImperialInch() {
-//		return new DistanceTypeImperialInch();
-//	}
 }

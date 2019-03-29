@@ -38,7 +38,7 @@ public class BeanConfig {
     }
 
     @Bean
-    public DistanceType DistanceTypeMetricMillimeter() {
+    public DistanceType distanceTypeMetricMillimeter() {
         return new DistanceTypeMetricMillimeter();
     }
 

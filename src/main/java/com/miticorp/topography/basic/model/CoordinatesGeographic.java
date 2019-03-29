@@ -2,6 +2,7 @@ package com.miticorp.topography.basic.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 public class CoordinatesGeographic extends CoordinatesOrthogonal {
 	private Double latitude, longitude, height;
 
