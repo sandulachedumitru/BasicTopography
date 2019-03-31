@@ -32,4 +32,11 @@ public class DistanceTypeImperialMile extends DistanceTypeImperial  {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "DistanceTypeImperialMile{" +
+				"conversionToYard=" + conversionToYard +
+				'}';
+	}
 }

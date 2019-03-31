@@ -11,6 +11,7 @@ public class GeometricElementsTest {
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
+		@Override public String  toString() {return "";}
 	}).getScaleFactor();
 
 	@Test
@@ -19,6 +20,7 @@ public class GeometricElementsTest {
 		GeometricElements geoElem = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
+			@Override public String  toString() {return "";}
 		};
 		
 		// test
@@ -31,10 +33,12 @@ public class GeometricElementsTest {
 		GeometricElements geoElem1 = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
+			@Override public String  toString() {return "";}
 		};
 		GeometricElements geoElem2 = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
+			@Override public String  toString() {return "";}
 		};
 		double factor = SCALE_FACTOR_DEFAULT * (new Random()).nextDouble(); geoElem2.setScaleFactor(factor);
 		
@@ -49,6 +53,7 @@ public class GeometricElementsTest {
 		GeometricElements geoElem = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
+			@Override public String  toString() {return "";}
 		};
 		
 		// test
@@ -61,10 +66,12 @@ public class GeometricElementsTest {
 		GeometricElements geoElem1 = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
+			@Override public String  toString() {return "";}
 		};
 		GeometricElements geoElem2 = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
+			@Override public String  toString() {return "";}
 		};
 		// String name = Utils.getRandString(); geoElem2.setName(name);
 		String name = "name"; geoElem2.setName(name);

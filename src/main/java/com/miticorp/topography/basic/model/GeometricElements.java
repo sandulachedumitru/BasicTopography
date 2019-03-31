@@ -21,4 +21,5 @@ public abstract class GeometricElements {
 	
 	public abstract int hashCode();
 	public abstract boolean equals(Object obj);
+	public abstract String toString();
 }

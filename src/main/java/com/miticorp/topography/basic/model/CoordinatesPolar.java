@@ -56,4 +56,14 @@ public class CoordinatesPolar extends Coordinates {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "CoordinatesPolar{" +
+				"angle=" + angle +
+				", distance=" + distance +
+				", distanceType=" + distanceType +
+				", angleType=" + angleType +
+				'}';
+	}
 }

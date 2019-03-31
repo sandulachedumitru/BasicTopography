@@ -1,16 +1,13 @@
 package com.miticorp.topography.basic.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.miticorp.topography.basic.factory.AngleTypeCentesimalFactory;
+import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
+
+import java.util.Objects;
 
 
 public class CoordinatesGeographic extends CoordinatesOrthogonal {
-	private Double latitude, longitude, height;
-
-	@Autowired
-	private DistanceType distanceTypeMetricMeter;
-
-	@Autowired
-	private AngleType angleTypeCentesimal;
+	private double latitude, longitude, height;
 
 	// Constructors
 	public CoordinatesGeographic() {}
@@ -18,8 +15,8 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.height = height;
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeCentesimal;
+		this.distanceType = DistanceTypeMetricMeterFactory.getInstance();
+		this.angleType = AngleTypeCentesimalFactory.getInstance();
 	}
 	public CoordinatesGeographic(double latitude,double longitude,double height, DistanceType distanceType, AngleType angleType) {
 		this.latitude = latitude;
@@ -33,61 +30,45 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 	public Double getLatitude() {
 		return latitude;
 	}
-
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
-
 	public Double getLongitude() {
 		return longitude;
 	}
-
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-
 	public Double getHeight() {
 		return height;
 	}
-
 	public void setHeight(Double height) {
 		this.height = height;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CoordinatesGeographic that = (CoordinatesGeographic) o;
+		return Double.compare(that.latitude, latitude) == 0 &&
+				Double.compare(that.longitude, longitude) == 0 &&
+				Double.compare(that.height, height) == 0;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((height == null) ? 0 : height.hashCode());
-		result = prime * result + ((latitude == null) ? 0 : latitude.hashCode());
-		result = prime * result + ((longitude == null) ? 0 : longitude.hashCode());
-		return result;
+		return Objects.hash(latitude, longitude, height);
 	}
-	
+
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CoordinatesGeographic other = (CoordinatesGeographic) obj;
-		if (height == null) {
-			if (other.height != null)
-				return false;
-		} else if (!height.equals(other.height))
-			return false;
-		if (latitude == null) {
-			if (other.latitude != null)
-				return false;
-		} else if (!latitude.equals(other.latitude))
-			return false;
-		if (longitude == null) {
-			if (other.longitude != null)
-				return false;
-		} else if (!longitude.equals(other.longitude))
-			return false;
-		return true;
+	public String toString() {
+		return "CoordinatesGeographic{" +
+				"latitude=" + latitude +
+				", longitude=" + longitude +
+				", height=" + height +
+				", distanceType=" + distanceType +
+				", angleType=" + angleType +
+				'}';
 	}
 }

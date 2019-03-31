@@ -173,4 +173,15 @@ public class Angle extends GeometricElements {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Angle{" +
+				"value=" + value +
+				", angleType=" + angleType +
+				", clockwise=" + clockwise +
+				", scaleFactor=" + scaleFactor +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

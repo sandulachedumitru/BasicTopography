@@ -5,29 +5,19 @@ import com.miticorp.topography.basic.model.CoordinatesRectangular;
 import com.miticorp.topography.basic.model.DistanceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * Created by Dumitru Sandulache on 22/3/19.
  * sandulachedumitru@hotmail.com
  */
-@Component
 public class CoordinatesRectangularBuilder {
-    // https://stackoverflow.com/questions/19896870/why-is-my-spring-autowired-field-null
-    // google search: autowired instance is null
     private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangularBuilder.class);
-    @Autowired
-    private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
     private double north, east, height;
     private DistanceType distanceType;
     private AngleType angleType;
-
-
-//    @Autowired
-//    private CoordinatesRectangular coordinatesRectangular;
 
     public CoordinatesRectangular build() {
         CoordinatesRectangular coordinatesRectangular = new CoordinatesRectangular(north, east, height);
@@ -38,9 +28,7 @@ public class CoordinatesRectangularBuilder {
         if (angleType != null) coordinatesRectangular.setAngleType(angleType);
         else angleType = coordinatesRectangular.getAngleType();
 
-        LOG.info("Build a rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
-
-        autowireCapableBeanFactory.autowireBean(coordinatesRectangular);
+        LOG.info("Build rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
 
         return coordinatesRectangular;
     }
@@ -78,5 +66,33 @@ public class CoordinatesRectangularBuilder {
     	LOG.info("Set AngleType[{}] in a rectangular coordinate", angleType);
     	
     	return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CoordinatesRectangularBuilder that = (CoordinatesRectangularBuilder) o;
+        return Double.compare(that.north, north) == 0 &&
+                Double.compare(that.east, east) == 0 &&
+                Double.compare(that.height, height) == 0 &&
+                Objects.equals(distanceType, that.distanceType) &&
+                Objects.equals(angleType, that.angleType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(north, east, height, distanceType, angleType);
+    }
+
+    @Override
+    public String toString() {
+        return "CoordinatesRectangularBuilder{" +
+                "north=" + north +
+                ", east=" + east +
+                ", height=" + height +
+                ", distanceType=" + distanceType +
+                ", angleType=" + angleType +
+                '}';
     }
 }

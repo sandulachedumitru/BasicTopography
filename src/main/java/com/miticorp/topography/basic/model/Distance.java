@@ -294,6 +294,16 @@ public class Distance extends GeometricElements {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Distance{" +
+				"from=" + from +
+				", to=" + to +
+				", value=" + value +
+				", distanceType=" + distanceType +
+				", scaleFactor=" + scaleFactor +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

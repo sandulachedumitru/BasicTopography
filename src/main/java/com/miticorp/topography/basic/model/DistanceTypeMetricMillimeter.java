@@ -32,4 +32,11 @@ public class DistanceTypeMetricMillimeter extends DistanceTypeMetric {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "DistanceTypeMetricMillimeter{" +
+				"conversionToMeter=" + conversionToMeter +
+				'}';
+	}
 }

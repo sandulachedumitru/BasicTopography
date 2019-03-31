@@ -65,4 +65,13 @@ public class Point<T extends Coordinates> extends GeometricElements {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Point{" +
+				"coord=" + coord +
+				", scaleFactor=" + scaleFactor +
+				", name='" + name + '\'' +
+				'}';
+	}
 }
