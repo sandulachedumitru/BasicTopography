@@ -1,32 +1,41 @@
 package com.miticorp.topography.basic.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
+@Scope("prototype")
 public class CoordinatesRectangular extends CoordinatesOrthogonal {
-	private double north, east, height;
+	private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangular.class);
+
+	private Double north, east, height;
 
 	// https://stackoverflow.com/questions/19896870/why-is-my-spring-autowired-field-null
 	// google search: autowired instance is null
 
 	@Autowired
-	private DistanceType distanceTypeMetricMeter;
+	private DistanceType distanceTypeImperialInch;
 
 	@Autowired
-	private AngleType angleTypeCentesimal;
-	
+	private AngleType angleTypeRadian;
+
 	// constructors
-	public CoordinatesRectangular() {}
+	public CoordinatesRectangular() {
+		LOG.info("Create a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], defaultAngleType[{}]", north, east, height, distanceType, angleType);
+	}
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue) {
 		this.north = northValue;
 		this.east = estValue;
 		this.height = heightValue;
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeCentesimal;
+		this.distanceType = distanceTypeImperialInch;
+		this.angleType = angleTypeRadian;
+
+		LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}], default DistanceType[{}], defaultAngleType[{}]", north, east, height, distanceType, angleType);
 	}
 
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue, DistanceType distanceType, AngleType angleType) {
@@ -35,6 +44,7 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 		this.height = heightValue;
 		this.distanceType = distanceType;
 		this.angleType = angleType;
+		LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 
 	// setters and getters
@@ -56,42 +66,59 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	public void setHeight(Double height) {
 		this.height = height;
 	}
-	
+
+
+//	public double getNorth() {
+//		return north;
+//	}
+//
+//	public void setNorth(double north) {
+//		this.north = north;
+//	}
+//
+//	public double getEast() {
+//		return east;
+//	}
+//
+//	public void setEast(double east) {
+//		this.east = east;
+//	}
+//
+//	public double getHeight() {
+//		return height;
+//	}
+//
+//	public void setHeight(double height) {
+//		this.height = height;
+//	}
+
 //	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		result = prime * result + ((east == null) ? 0 : east.hashCode());
-//		result = prime * result + ((height == null) ? 0 : height.hashCode());
-//		result = prime * result + ((north == null) ? 0 : north.hashCode());
-//		return result;
+//	public boolean equals(Object o) {
+//		if (this == o) return true;
+//		if (o == null || getClass() != o.getClass()) return false;
+//
+//		CoordinatesRectangular that = (CoordinatesRectangular) o;
+//
+//		if (Double.compare(that.north, north) != 0) return false;
+//		if (Double.compare(that.east, east) != 0) return false;
+//		if (Double.compare(that.height, height) != 0) return false;
+//		if (distanceTypeMetricMeter != null ? !distanceTypeMetricMeter.equals(that.distanceTypeMetricMeter) : that.distanceTypeMetricMeter != null) return false;
+//		return angleTypeCentesimal != null ? angleTypeCentesimal.equals(that.angleTypeCentesimal) : that.angleTypeCentesimal == null;
 //	}
 //
 //	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		CoordinatesRectangular other = (CoordinatesRectangular) obj;
-//		if (east == null) {
-//			if (other.east != null)
-//				return false;
-//		} else if (!east.equals(other.east))
-//			return false;
-//		if (height == null) {
-//			if (other.height != null)
-//				return false;
-//		} else if (!height.equals(other.height))
-//			return false;
-//		if (north == null) {
-//			if (other.north != null)
-//				return false;
-//		} else if (!north.equals(other.north))
-//			return false;
-//		return true;
+//	public int hashCode() {
+//		int result;
+//		long temp;
+//		temp = Double.doubleToLongBits(north);
+//		result = (int) (temp ^ (temp >>> 32));
+//		temp = Double.doubleToLongBits(east);
+//		result = 31 * result + (int) (temp ^ (temp >>> 32));
+//		temp = Double.doubleToLongBits(height);
+//		result = 31 * result + (int) (temp ^ (temp >>> 32));
+//		result = 31 * result + (distanceTypeMetricMeter != null ? distanceTypeMetricMeter.hashCode() : 0);
+//		result = 31 * result + (angleTypeCentesimal != null ? angleTypeCentesimal.hashCode() : 0);
+//		return result;
 //	}
 //
 //	@Override
@@ -100,6 +127,8 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 //				"north=" + north +
 //				", east=" + east +
 //				", height=" + height +
+//				", distanceType=" + distanceTypeMetricMeter +
+//				", angleType=" + angleTypeCentesimal +
 //				'}';
 //	}
 
@@ -108,30 +137,16 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		CoordinatesRectangular that = (CoordinatesRectangular) o;
-
-		if (Double.compare(that.north, north) != 0) return false;
-		if (Double.compare(that.east, east) != 0) return false;
-		if (Double.compare(that.height, height) != 0) return false;
-		if (distanceTypeMetricMeter != null ? !distanceTypeMetricMeter.equals(that.distanceTypeMetricMeter) : that.distanceTypeMetricMeter != null)
-			return false;
-		return angleTypeCentesimal != null ? angleTypeCentesimal.equals(that.angleTypeCentesimal) : that.angleTypeCentesimal == null;
+		return Objects.equals(north, that.north) &&
+				Objects.equals(east, that.east) &&
+				Objects.equals(height, that.height) &&
+				Objects.equals(distanceTypeImperialInch, that.distanceTypeImperialInch);
 	}
 
 	@Override
 	public int hashCode() {
-		int result;
-		long temp;
-		temp = Double.doubleToLongBits(north);
-		result = (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(east);
-		result = 31 * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(height);
-		result = 31 * result + (int) (temp ^ (temp >>> 32));
-		result = 31 * result + (distanceTypeMetricMeter != null ? distanceTypeMetricMeter.hashCode() : 0);
-		result = 31 * result + (angleTypeCentesimal != null ? angleTypeCentesimal.hashCode() : 0);
-		return result;
+		return Objects.hash(north, east, height);
 	}
 
 	@Override
@@ -140,8 +155,8 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 				"north=" + north +
 				", east=" + east +
 				", height=" + height +
-				", distanceTypeMetricMeter=" + distanceTypeMetricMeter +
-				", angleTypeCentesimal=" + angleTypeCentesimal +
+				", distanceTypeImperialInch=" + distanceTypeImperialInch +
+				", angleTypeRadian=" + angleTypeRadian +
 				'}';
 	}
 }

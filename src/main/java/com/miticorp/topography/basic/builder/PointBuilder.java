@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * sandulachedumitru@hotmail.com
  */
 public class PointBuilder <T extends Coordinates> {
-    private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangularBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PointBuilder.class);
 
     private T coord;
     private Scale scale = new Scale();
