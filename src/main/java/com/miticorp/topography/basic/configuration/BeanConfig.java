@@ -1,8 +1,8 @@
 package com.miticorp.topography.basic.configuration;
 
 import com.miticorp.topography.basic.model.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
 
 @Configuration
 public class BeanConfig {
@@ -56,4 +56,17 @@ public class BeanConfig {
     public DistanceType distanceTypeImperialInch() {
         return new DistanceTypeImperialInch();
     }
+
+//    @Bean
+//    @DependsOn({"distanceTypeMetricMeter", "angleTypeCentesimal"})
+//    public Coordinates coordinatesRectangular() {
+//        return new CoordinatesRectangular();
+//    }
+
+    @Bean
+    public Coordinates coordinatesRectangularWithCardinalPoints() {
+        return new CoordinatesRectangular(0, 0, 0);
+    }
+
+
 }

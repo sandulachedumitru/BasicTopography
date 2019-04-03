@@ -1,10 +1,12 @@
 package com.miticorp.topography.basic.builder;
 
-import com.miticorp.topography.basic.model.AngleType;
-import com.miticorp.topography.basic.model.CoordinatesRectangular;
-import com.miticorp.topography.basic.model.DistanceType;
+import com.miticorp.topography.basic.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -12,6 +14,9 @@ import java.util.Objects;
  * Created by Dumitru Sandulache on 22/3/19.
  * sandulachedumitru@hotmail.com
  */
+@Component
+@Scope("prototype")
+//@ComponentScan(basePackages = "com.miticorp.topography.basic.model")
 public class CoordinatesRectangularBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangularBuilder.class);
 
@@ -19,8 +24,19 @@ public class CoordinatesRectangularBuilder {
     private DistanceType distanceType;
     private AngleType angleType;
 
+    @Autowired
+    private Coordinates coordinatesRectangularWithCardinalPoints;
+
+    @Autowired
+    private DistanceType distanceTypeMetricMeter;
+
+    @Autowired
+    private AngleType angleTypeCentesimal;
+
     public CoordinatesRectangular build() {
-        CoordinatesRectangular coordinatesRectangular = new CoordinatesRectangular(north, east, height);
+        CoordinatesRectangular coordinatesRectangular = new CoordinatesRectangular(north, east, height, distanceTypeMetricMeter, angleTypeCentesimal);
+        coordinatesRectangular.setDistanceType(coordinatesRectangularWithCardinalPoints.getDistanceType());
+        coordinatesRectangular.setAngleType(coordinatesRectangularWithCardinalPoints.getAngleType());
 
         if (distanceType != null) coordinatesRectangular.setDistanceType(distanceType);
         else distanceType = coordinatesRectangular.getDistanceType();

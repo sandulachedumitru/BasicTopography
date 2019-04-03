@@ -2,26 +2,47 @@ package com.miticorp.topography.basic.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
+@Component
+@Scope("prototype")
+//@ComponentScan(basePackages = "com.miticorp.topography.basic.configuration")
 public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangular.class);
 
 	// TODO change 'Double' to 'double'. This change have deep impact in code.
 	private Double north, east, height;
 
+	private DistanceType distanceTypeMetricMeter;
+
+	private AngleType angleTypeCentesimal;
+
 	// constructors
+	@Autowired
+	public CoordinatesRectangular(DistanceType distanceTypeMetricMeter, AngleType angleTypeCentesimal) {
+		this.distanceTypeMetricMeter = distanceTypeMetricMeter;
+		this.angleTypeCentesimal = angleTypeCentesimal;
+		LOG.info(">>>>>> Create a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
+	}
+
 	public CoordinatesRectangular() {
+		this.distanceType = distanceTypeMetricMeter;
+		this.angleType = angleTypeCentesimal;
 		LOG.info("Create a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue) {
 		this.north = northValue;
 		this.east = estValue;
 		this.height = heightValue;
-		this.distanceType = new DistanceTypeMetricMeter();
-		this.angleType = new AngleTypeCentesimal();
-
+		this.distanceType = distanceTypeMetricMeter;
+		this.angleType = angleTypeCentesimal;
 		LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 
