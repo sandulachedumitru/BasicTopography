@@ -16,7 +16,6 @@ import java.util.Objects;
  */
 @Component
 @Scope("prototype")
-//@ComponentScan(basePackages = "com.miticorp.topography.basic.model")
 public class CoordinatesRectangularBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangularBuilder.class);
 
@@ -25,28 +24,21 @@ public class CoordinatesRectangularBuilder {
     private AngleType angleType;
 
     @Autowired
-    private Coordinates coordinatesRectangularWithCardinalPoints;
-
-    @Autowired
     private DistanceType distanceTypeMetricMeter;
 
     @Autowired
     private AngleType angleTypeCentesimal;
 
+    @Autowired
+    private CoordinatesRectangular coordinatesRectangular;
+
     public CoordinatesRectangular build() {
-        CoordinatesRectangular coordinatesRectangular = new CoordinatesRectangular(north, east, height, distanceTypeMetricMeter, angleTypeCentesimal);
-        coordinatesRectangular.setDistanceType(coordinatesRectangularWithCardinalPoints.getDistanceType());
-        coordinatesRectangular.setAngleType(coordinatesRectangularWithCardinalPoints.getAngleType());
-
-        if (distanceType != null) coordinatesRectangular.setDistanceType(distanceType);
-        else distanceType = coordinatesRectangular.getDistanceType();
-
-        if (angleType != null) coordinatesRectangular.setAngleType(angleType);
-        else angleType = coordinatesRectangular.getAngleType();
+        if (distanceType == null) distanceType = coordinatesRectangular.getDistanceType();
+        if (angleType == null) angleType = coordinatesRectangular.getAngleType();
 
         LOG.info("Build rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
 
-        return coordinatesRectangular;
+        return new CoordinatesRectangular(north, east, height, distanceType, angleType);
     }
 
     public CoordinatesRectangularBuilder setNorth(double north) {

@@ -27,13 +27,13 @@ public class BasicService {
     private AngleType angleTypeHexadecimal;
 
     @Autowired
-    CoordinatesRectangularBuilder CoordinatesRectangularBuilder;
+    CoordinatesRectangularBuilder coordinatesRectangularBuilder;
 
     public void pointService() {
         double north1 = 4003446.030, east1 = 435488.969, height1 = 101.101;
         double north2 = 4003249.436, east2 = 435452.215, height2 = 101.101;
 
-        CoordinatesRectangular coordinatesRectangular = CoordinatesRectangularBuilder
+        CoordinatesRectangular coordinatesRectangular = coordinatesRectangularBuilder
                 .setNorth(north1)
                 .setEast(east1)
                 .setHeight(height1)

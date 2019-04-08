@@ -70,8 +70,6 @@ public class BasicTopographyBootApplication {
 
 	private static final Logger LOG = LoggerFactory.getLogger(BasicTopographyBootApplication.class);
 
-
-
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {

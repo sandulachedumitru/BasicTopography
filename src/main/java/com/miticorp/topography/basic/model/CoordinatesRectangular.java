@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.model;
 
+import com.miticorp.topography.basic.factory.AngleTypeCentesimalFactory;
+import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,48 +13,44 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Objects;
 
+// TODO reflect changes in tests classes
 @Component
 @Scope("prototype")
-//@ComponentScan(basePackages = "com.miticorp.topography.basic.configuration")
 public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangular.class);
 
 	// TODO change 'Double' to 'double'. This change have deep impact in code.
 	private Double north, east, height;
 
-	private DistanceType distanceTypeMetricMeter;
-
-	private AngleType angleTypeCentesimal;
+	private DistanceType distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
+	private AngleType angleTypeCentesimal = AngleTypeCentesimalFactory.getInstance();
 
 	// constructors
 	@Autowired
 	public CoordinatesRectangular(DistanceType distanceTypeMetricMeter, AngleType angleTypeCentesimal) {
-		this.distanceTypeMetricMeter = distanceTypeMetricMeter;
-		this.angleTypeCentesimal = angleTypeCentesimal;
-		LOG.info(">>>>>> Create a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
+		this.distanceType = distanceTypeMetricMeter;
+		this.angleType = angleTypeCentesimal;
+		LOG.info("Creates a rectangular coordinate bean with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
-
 	public CoordinatesRectangular() {
 		this.distanceType = distanceTypeMetricMeter;
 		this.angleType = angleTypeCentesimal;
-		LOG.info("Create a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
+		LOG.info("Creates a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue) {
+		this();
 		this.north = northValue;
 		this.east = estValue;
 		this.height = heightValue;
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeCentesimal;
-		LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
+		LOG.info("Creates a rectangular coordinate with values: North[{}], East[{}], Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
-
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue, DistanceType distanceType, AngleType angleType) {
 		this.north = northValue;
 		this.east = estValue;
 		this.height = heightValue;
 		this.distanceType = distanceType;
 		this.angleType = angleType;
-		LOG.info("Create a rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
+		LOG.info("Creates a rectangular coordinate with values: North[{}], East[{}], Height[{}], DistanceType[{}], AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 
 	// setters and getters

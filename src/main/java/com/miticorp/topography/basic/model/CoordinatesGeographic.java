@@ -1,22 +1,46 @@
 package com.miticorp.topography.basic.model;
 
 import com.miticorp.topography.basic.factory.AngleTypeCentesimalFactory;
+import com.miticorp.topography.basic.factory.AngleTypeHexadecimalFactory;
 import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-
+// TODO reflect changes in tests classes
+@Component
+@Scope("prototype")
 public class CoordinatesGeographic extends CoordinatesOrthogonal {
+	private static final Logger LOG = LoggerFactory.getLogger(CoordinatesRectangular.class);
+
+	// TODO change 'Double' to 'double'. This change have deep impact in code.
 	private double latitude, longitude, height;
 
+	private DistanceType distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
+	private AngleType angleTypeHexadecimal = AngleTypeHexadecimalFactory.getInstance();
+
 	// Constructors
-	public CoordinatesGeographic() {}
+	@Autowired
+	public CoordinatesGeographic(DistanceType distanceTypeMetricMeter, AngleType angleTypeHexadecimal) {
+		this.distanceType = distanceTypeMetricMeter;
+		this.angleType = angleTypeHexadecimal;
+		LOG.info("Creates a geographic coordinate bean with values: default Latitude[{}], default Longitude[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", latitude, longitude, height, distanceType, angleType);
+	}
+	public CoordinatesGeographic() {
+		this.distanceType = distanceTypeMetricMeter;
+		this.angleType = angleTypeHexadecimal;
+		LOG.info("Creates a geographic coordinate with values: default Latitude[{}], default Longitude[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", latitude, longitude, height, distanceType, angleType);
+	}
 	public CoordinatesGeographic(double latitude,double longitude,double height) {
+		this();
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.height = height;
-		this.distanceType = DistanceTypeMetricMeterFactory.getInstance();
-		this.angleType = AngleTypeCentesimalFactory.getInstance();
+		LOG.info("Creates a geographic coordinate with values: Latitude[{}], Longitude[{}], Height[{}], default DistanceType[{}], default AngleType[{}]", latitude, longitude, height, distanceType, angleType);
 	}
 	public CoordinatesGeographic(double latitude,double longitude,double height, DistanceType distanceType, AngleType angleType) {
 		this.latitude = latitude;
@@ -24,6 +48,7 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 		this.height = height;
 		this.distanceType = distanceType;
 		this.angleType = angleType;
+		LOG.info("Creates a geographic coordinate with values: Latitude[{}], Longitude[{}], Height[{}], DistanceType[{}], AngleType[{}]", latitude, longitude, height, distanceType, angleType);
 	}
 
 	// Getters and Setters
