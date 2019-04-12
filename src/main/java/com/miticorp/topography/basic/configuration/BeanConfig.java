@@ -8,52 +8,52 @@ import org.springframework.stereotype.Component;
 public class BeanConfig {
 
     @Bean
-    public AngleType angleTypeCentesimal() {
+    public AngleType angleTypeCentesimalBean() {
         return new AngleTypeCentesimal();
     }
 
     @Bean
-    public AngleType angleTypeHexadecimal() {
+    public AngleType angleTypeHexadecimalBean() {
         return new AngleTypeHexadecimal();
     }
 
     @Bean
-    public AngleType angleTypeRadian() {
+    public AngleType angleTypeRadianBean() {
         return new AngleTypeRadian();
     }
 
     @Bean
-    public DistanceType distanceTypeMetricKilometer() {
+    public DistanceType distanceTypeMetricKilometerBean() {
         return new DistanceTypeMetricKilometer();
     }
 
     @Bean
-    public DistanceType distanceTypeMetricMeter() {
+    public DistanceType distanceTypeMetricMeterBean() {
         return new DistanceTypeMetricMeter();
     }
 
     @Bean
-    public DistanceType distanceTypeMetricCentimeter() {
+    public DistanceType distanceTypeMetricCentimeterBean() {
         return new DistanceTypeMetricCentimeter();
     }
 
     @Bean
-    public DistanceType distanceTypeMetricMillimeter() {
+    public DistanceType distanceTypeMetricMillimeterBean() {
         return new DistanceTypeMetricMillimeter();
     }
 
     @Bean
-    public DistanceType distanceTypeImperialMile() {
+    public DistanceType distanceTypeImperialMileBean() {
         return new DistanceTypeImperialMile();
     }
 
     @Bean
-    public DistanceType distanceTypeImperialYard() {
+    public DistanceType distanceTypeImperialYardBean() {
         return new DistanceTypeImperialYard();
     }
 
     @Bean
-    public DistanceType distanceTypeImperialInch() {
+    public DistanceType distanceTypeImperialInchBean() {
         return new DistanceTypeImperialInch();
     }
 }

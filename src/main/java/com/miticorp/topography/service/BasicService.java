@@ -21,10 +21,10 @@ public class BasicService {
     private static final Logger LOG = LoggerFactory.getLogger(BasicService.class);
 
     @Autowired
-    private DistanceType distanceTypeImperialYard;
+    private DistanceType distanceTypeImperialYardBean;
 
     @Autowired
-    private AngleType angleTypeHexadecimal;
+    private AngleType angleTypeHexadecimalBean;
 
     @Autowired
     CoordinatesRectangularBuilder coordinatesRectangularBuilder;
@@ -37,11 +37,13 @@ public class BasicService {
                 .setNorth(north1)
                 .setEast(east1)
                 .setHeight(height1)
-//                .setAngleType(angleTypeHexadecimal)
-//                .setDistanceType(distanceTypeImperialYard)
+//                .setAngleType(angleTypeHexadecimalBean)
+//                .setDistanceType(distanceTypeImperialYardBean)
                 .build();
         LOG.info("Rectangular coordinate [{}]", coordinatesRectangular);
         Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Base Point").build();
         LOG.info("Point --> DistanceType:{}, \tAngleType:{}", point.getCoord().getDistanceType(), point.getCoord().getAngleType());
+
+        //TODO test CoordinatesGeographicBuilder
     }
 }

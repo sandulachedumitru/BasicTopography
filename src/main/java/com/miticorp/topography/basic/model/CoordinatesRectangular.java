@@ -5,12 +5,9 @@ import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 // TODO reflect changes in tests classes
@@ -27,9 +24,9 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 
 	// constructors
 	@Autowired
-	public CoordinatesRectangular(DistanceType distanceTypeMetricMeter, AngleType angleTypeCentesimal) {
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeCentesimal;
+	private CoordinatesRectangular(DistanceType distanceTypeMetricMeterBean, AngleType angleTypeCentesimalBean) {
+		this.distanceType = distanceTypeMetricMeterBean;
+		this.angleType = angleTypeCentesimalBean;
 		LOG.info("Creates a rectangular coordinate bean with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 	public CoordinatesRectangular() {
@@ -55,21 +52,27 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 
 	// setters and getters
 	public Double getNorth() {
+		LOG.info("Get value of North: [{}]", north);
 		return north;
 	}
 	public void setNorth(Double north) {
+		LOG.info("Set value of North: [{}]", north);
 		this.north = north;
 	}
 	public Double getEast() {
+		LOG.info("Get value of East: [{}]", east);
 		return east;
 	}
 	public void setEast(Double east) {
+		LOG.info("Set value of East: [{}]", east);
 		this.east = east;
 	}
 	public Double getHeight() {
+		LOG.info("Get value of Height: [{}]", height);
 		return height;
 	}
 	public void setHeight(Double height) {
+		LOG.info("Set value of Height: [{}]", height);
 		this.height = height;
 	}
 

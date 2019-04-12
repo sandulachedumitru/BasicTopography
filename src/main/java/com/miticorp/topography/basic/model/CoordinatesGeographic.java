@@ -1,6 +1,5 @@
 package com.miticorp.topography.basic.model;
 
-import com.miticorp.topography.basic.factory.AngleTypeCentesimalFactory;
 import com.miticorp.topography.basic.factory.AngleTypeHexadecimalFactory;
 import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import org.slf4j.Logger;
@@ -25,9 +24,9 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 
 	// Constructors
 	@Autowired
-	public CoordinatesGeographic(DistanceType distanceTypeMetricMeter, AngleType angleTypeHexadecimal) {
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeHexadecimal;
+	private CoordinatesGeographic(DistanceType distanceTypeMetricMeterBean, AngleType angleTypeHexadecimalBean) {
+		this.distanceType = distanceTypeMetricMeterBean;
+		this.angleType = angleTypeHexadecimalBean;
 		LOG.info("Creates a geographic coordinate bean with values: default Latitude[{}], default Longitude[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", latitude, longitude, height, distanceType, angleType);
 	}
 	public CoordinatesGeographic() {
@@ -53,21 +52,27 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 
 	// Getters and Setters
 	public Double getLatitude() {
+		LOG.info("Get value of Latitude: [{}]", latitude);
 		return latitude;
 	}
 	public void setLatitude(Double latitude) {
+		LOG.info("Set value of Latitude: [{}]", latitude);
 		this.latitude = latitude;
 	}
 	public Double getLongitude() {
+		LOG.info("Get value of Longitude: [{}]", longitude);
 		return longitude;
 	}
 	public void setLongitude(Double longitude) {
+		LOG.info("Set value of Longitude: [{}]", longitude);
 		this.longitude = longitude;
 	}
 	public Double getHeight() {
+		LOG.info("Get value of Height: [{}]", height);
 		return height;
 	}
 	public void setHeight(Double height) {
+		LOG.info("Set value of Height: [{}]", height);
 		this.height = height;
 	}
 

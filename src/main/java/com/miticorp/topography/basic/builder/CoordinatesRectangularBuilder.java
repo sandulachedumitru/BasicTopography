@@ -24,12 +24,6 @@ public class CoordinatesRectangularBuilder {
     private AngleType angleType;
 
     @Autowired
-    private DistanceType distanceTypeMetricMeter;
-
-    @Autowired
-    private AngleType angleTypeCentesimal;
-
-    @Autowired
     private CoordinatesRectangular coordinatesRectangular;
 
     public CoordinatesRectangular build() {
