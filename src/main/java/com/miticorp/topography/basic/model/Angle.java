@@ -28,6 +28,7 @@ public class Angle extends GeometricElements {
 	
 	// Constructors
 	public Angle() {}
+	// TODO scaleFactor should be of type Scale
 	public Angle(Double value, AngleType angleType, boolean clockwise, double scaleFactor, String name) {
 		super();
 		this.value = value;

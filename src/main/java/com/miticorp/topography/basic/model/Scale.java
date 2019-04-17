@@ -1,9 +1,14 @@
 package com.miticorp.topography.basic.model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 /**
  * Created by Dumitru Sandulache on 3/22/19.
  * sandulachedumitru@hotmail.com
  */
+@Component
+@Scope("prototype")
 public class Scale {
     private double scale = 1D; // value 1 is by default
     //TODO analyze if scale could be 0;

@@ -81,6 +81,15 @@ public class Distance extends GeometricElements {
 		this.value = value;
 		this.distanceType = distanceType;
 	}
+
+	// TODO javadoc and remove unnecessary constructors
+	public Distance(Double value, DistanceType distanceType, Scale scale, String name) {
+		super();
+		this.value = value;
+		this.distanceType = distanceType;
+		this.scaleFactor = scale.getScale();
+		this.name = name;
+	}
 	
 	/**
 	 * Constructor for Distance class. DistanceType property is of type DistanceTypeMetricMeter by default.

@@ -1,7 +1,6 @@
 package com.miticorp.topography.service;
 
 import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilder;
-import com.miticorp.topography.basic.factory.CoordinatesRectangularBuilderFactory;
 import com.miticorp.topography.basic.factory.PointBuilderFactory;
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.CoordinatesRectangular;

@@ -1,6 +1,8 @@
 package com.miticorp.topography.basic.model;
 
+import com.miticorp.topography.basic.factory.AngleFactory;
 import com.miticorp.topography.basic.factory.AngleTypeCentesimalFactory;
+import com.miticorp.topography.basic.factory.DistanceFactory;
 import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,8 @@ import org.springframework.stereotype.Component;
 public class CoordinatesPolar extends Coordinates {
 	private static final Logger LOG = LoggerFactory.getLogger(CoordinatesPolar.class);
 
-	private Angle angle;
-	private Distance distance;
+	private Angle angle = AngleFactory.getInstance();
+	private Distance distance = DistanceFactory.getInstance();
 
 	private DistanceType distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
 	private AngleType angleTypeCentesimal = AngleTypeCentesimalFactory.getInstance();
