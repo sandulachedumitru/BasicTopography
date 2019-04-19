@@ -18,10 +18,11 @@ import org.springframework.stereotype.Component;
 public class AngleBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(AngleBuilder.class);
 
-    private double value = 0;
+    private double value = 0D;
     private AngleType angleType;
     private boolean clockwise = true; // true by default
     private String name = "";
+    @Autowired
     private Scale scale; // is 1 by default
 
     @Autowired
@@ -32,7 +33,7 @@ public class AngleBuilder {
 
         LOG.info("Build Angle with values: Value[{}], AngleType[{}], Clockwise[{}], Name[{}], Scale[{}]", value, angleType, clockwise, name, scale);
 
-        return new Angle(value, angleType, clockwise, scale.getScale(), name);
+        return new Angle(value, angleType, clockwise, scale, name);
     }
 
     public AngleBuilder setValue(double value) {

@@ -10,21 +10,25 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class Scale {
-    private double scale = 1D; // value 1 is by default
-    //TODO analyze if scale could be 0;
+    private double scaleFactor = 1D; // value 1 is by default
+    //TODO analyze if scaleFactor could be 0;
 
-    public double getScale() {
-        return scale;
+    public Scale(){}
+    public Scale(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
     }
 
-    public void setScale(double scale) {
-        this.scale = scale;
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
     }
 
     @Override
     public String toString() {
         return "Scale{" +
-                "scale=" + scale +
+                "scaleFactor=" + scaleFactor +
                 '}';
     }
 
@@ -35,12 +39,12 @@ public class Scale {
 
         Scale scale1 = (Scale) o;
 
-        return Double.compare(scale1.scale, scale) == 0;
+        return Double.compare(scale1.scaleFactor, scaleFactor) == 0;
     }
 
     @Override
     public int hashCode() {
-        long temp = Double.doubleToLongBits(scale);
+        long temp = Double.doubleToLongBits(scaleFactor);
         return (int) (temp ^ (temp >>> 32));
     }
 }

@@ -44,8 +44,8 @@ public class BasicTopographyBootApplication {
 		LOG.info(base + "^" + pow + " = " + Math.pow(base, pow));
 
 
-		Angle angle = new Angle(123.4567, new AngleTypeCentesimal());
-		Distance distance = new Distance(16D);
+		Angle angle = new Angle(123.4567, new AngleTypeCentesimal(), true, new Scale(), "Angle123");
+		Distance distance = new Distance(16D, new DistanceTypeMetricMeter(), new Scale(), "Distance12");
 		CoordinatesPolar coordinatesPolar = new CoordinatesPolar(angle, distance);
 		double r = coordinatesPolar.getDistance().getValue();
 		double thet = coordinatesPolar.getAngle().getValue();
@@ -55,10 +55,10 @@ public class BasicTopographyBootApplication {
 		double north2 = 4003249.436, east2 = 435452.215, height2 = 101.101;
 		CoordinatesRectangular coord1 = new CoordinatesRectangular(north1, east1, height1);
 		CoordinatesRectangular coord2 = new CoordinatesRectangular(north2, east2, height2);
-		Point<CoordinatesRectangular> from = new Point<>(coord1, 1D, "first");
-		Point<CoordinatesRectangular> to = new Point<>(coord2, 1D, "second");
+		Point from = new Point(coord1, new Scale(), "first");
+		Point to = new Point(coord2, new Scale(), "second");
 		AngleType angleType = new AngleTypeCentesimal();
-		coordinatesPolar = Utils.calculatesPolarfromRectangularCoordinates(from, to, angleType);
+		coordinatesPolar = Utils.calculatesPolarFromRectangularCoordinates(from, to, angleType);
 		r = coordinatesPolar.getDistance().getValue();
 		thet = coordinatesPolar.getAngle().getValue();
 		DecimalFormat df3 = new DecimalFormat(".###m");

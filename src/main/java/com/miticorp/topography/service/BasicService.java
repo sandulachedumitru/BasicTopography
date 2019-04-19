@@ -1,7 +1,7 @@
 package com.miticorp.topography.service;
 
 import com.miticorp.topography.basic.builder.CoordinatesRectangularBuilder;
-import com.miticorp.topography.basic.factory.PointBuilderFactory;
+import com.miticorp.topography.basic.builder.PointBuilder;
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.CoordinatesRectangular;
 import com.miticorp.topography.basic.model.DistanceType;
@@ -9,6 +9,8 @@ import com.miticorp.topography.basic.model.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class BasicService {
     private static final Logger LOG = LoggerFactory.getLogger(BasicService.class);
 
+    ApplicationContext ctx = new AnnotationConfigApplicationContext();
+
     @Autowired
     private DistanceType distanceTypeImperialYardBean;
 
@@ -27,6 +31,10 @@ public class BasicService {
 
     @Autowired
     CoordinatesRectangularBuilder coordinatesRectangularBuilder;
+
+    @Autowired
+    PointBuilder pointBuilder;
+//    PointBuilder pointBuilder = ctx.getBean("pointBuilder", PointBuilder.class);
 
     public void pointService() {
         double north1 = 4003446.030, east1 = 435488.969, height1 = 101.101;
@@ -40,7 +48,7 @@ public class BasicService {
 //                .setDistanceType(distanceTypeImperialYardBean)
                 .build();
         LOG.info("Rectangular coordinate [{}]", coordinatesRectangular);
-        Point<CoordinatesRectangular> point = PointBuilderFactory.getBuilder().setCoord(coordinatesRectangular).setName("Base Point").build();
+        Point point = pointBuilder.setCoord(coordinatesRectangular).setName("Base Point").build();
         LOG.info("Point --> DistanceType:{}, \tAngleType:{}", point.getCoord().getDistanceType(), point.getCoord().getAngleType());
 
         //TODO test CoordinatesGeographicBuilder

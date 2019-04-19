@@ -35,7 +35,7 @@ public class DistanceBuilder {
         if (distanceType == null) distanceType = distanceTypeMetricMeterBean;
 
         if (from != null || to != null)
-            if (from.getCoord() != null || to.getCoord() != null) distance = new Distance(from, to, distanceType, scale.getScale(), name);
+            if (from.getCoord() != null || to.getCoord() != null) distance = new Distance(from, to, distanceType, scale, name);
 
         LOG.info("Build Distance with values: PointFrom[{}], PointTo[{}], Value[{}], DistanceType[{}], Name[{}]", from, to, value, distanceType, name);
 

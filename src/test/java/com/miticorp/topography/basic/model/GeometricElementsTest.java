@@ -12,10 +12,10 @@ public class GeometricElementsTest {
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
 		@Override public String  toString() {return "";}
-	}).getScaleFactor();
+	}).getScale().getScaleFactor();
 
 	@Test
-	public void testGetScaleFactor() {
+	public void testGetDefaultScaleFactor() {
 		// setup
 		GeometricElements geoElem = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
@@ -24,11 +24,11 @@ public class GeometricElementsTest {
 		};
 		
 		// test
-		assertEquals(geoElem.getScaleFactor(), SCALE_FACTOR_DEFAULT, DELTA_TOLERANCE);
+		assertEquals(geoElem.getScale().getScaleFactor(), SCALE_FACTOR_DEFAULT, DELTA_TOLERANCE);
 	}
 
 	@Test
-	public void testSetScaleFactor() {
+	public void testSetDefaultScaleFactor() {
 		// setup
 		GeometricElements geoElem1 = new GeometricElements() {
 			@Override public int hashCode() {return 0;}
@@ -40,11 +40,12 @@ public class GeometricElementsTest {
 			@Override public boolean equals(Object obj) {return false;}
 			@Override public String  toString() {return "";}
 		};
-		double factor = SCALE_FACTOR_DEFAULT * (new Random()).nextDouble(); geoElem2.setScaleFactor(factor);
+		double factor = SCALE_FACTOR_DEFAULT * (new Random()).nextDouble();
+		geoElem2.getScale().setScaleFactor(factor);
 		
 		// test
-		assertEquals(geoElem1.getScaleFactor(), SCALE_FACTOR_DEFAULT, DELTA_TOLERANCE);
-		assertEquals(geoElem2.getScaleFactor(), factor, DELTA_TOLERANCE);
+		assertEquals(geoElem1.getScale().getScaleFactor(), SCALE_FACTOR_DEFAULT, DELTA_TOLERANCE);
+		assertEquals(geoElem2.getScale().getScaleFactor(), factor, DELTA_TOLERANCE);
 	}
 	
 	@Test

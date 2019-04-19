@@ -1,7 +1,6 @@
 package com.miticorp.topography.basic.factory;
 
 import com.miticorp.topography.basic.builder.PointBuilder;
-import com.miticorp.topography.basic.model.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

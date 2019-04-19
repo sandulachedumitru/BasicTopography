@@ -25,28 +25,20 @@ public class Angle extends GeometricElements {
 	private Double value;
 	private AngleType angleType;
 	private boolean clockwise = true; // true by default
-	
+
+	{
+		scale = new Scale();
+		name = "";
+	}
+
 	// Constructors
 	public Angle() {}
-	// TODO scaleFactor should be of type Scale
-	public Angle(Double value, AngleType angleType, boolean clockwise, double scaleFactor, String name) {
-		super();
+	public Angle(Double value, AngleType angleType, boolean clockwise, Scale scale, String name) {
 		this.value = value;
 		this.angleType = angleType;
 		this.clockwise = clockwise;
-		this.scaleFactor = scaleFactor;
+		this.scale = scale;
 		this.name = name;
-	}
-	public Angle(Double value, AngleType angleType, boolean clockwise) {
-		super();
-		this.value = value;
-		this.angleType = angleType;
-		this.clockwise = clockwise;
-	}
-	public Angle(Double value, AngleType angleType) {
-		super();
-		this.value = value;
-		this.angleType = angleType;
 	}
 
 	/**
@@ -122,67 +114,61 @@ public class Angle extends GeometricElements {
 	}
 	
 	// Getters and Setters
-	public synchronized Double getValue() {
+	public Double getValue() {
 		return value;
 	}
-	public synchronized void setValue(Double value) {
+
+	public void setValue(Double value) {
 		this.value = value;
 	}
-	public synchronized AngleType getAngleType() {
+
+	public AngleType getAngleType() {
 		return angleType;
 	}
-	public synchronized void setAngleType(AngleType angleType) {
+
+	public void setAngleType(AngleType angleType) {
 		this.angleType = angleType;
 	}
-	public synchronized boolean isClockwise() {
+
+	public boolean isClockwise() {
 		return clockwise;
 	}
-	public synchronized void setClockwise(boolean clockwise) {
+
+	public void setClockwise(boolean clockwise) {
 		this.clockwise = clockwise;
 	}
-	
+
+	/**
+	 * Two angles are equals if parameters: value, angleType are equals
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Angle angle = (Angle) o;
+
+		if (clockwise != angle.clockwise) return false;
+		if (value != null ? !value.equals(angle.value) : angle.value != null) return false;
+		return angleType != null ? angleType.equals(angle.angleType) : angle.angleType == null;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((angleType == null) ? 0 : angleType.hashCode());
-		result = prime * result + (clockwise ? 1231 : 1237);
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		int result = value != null ? value.hashCode() : 0;
+		result = 31 * result + (angleType != null ? angleType.hashCode() : 0);
+		result = 31 * result + (clockwise ? 1 : 0);
 		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Angle other = (Angle) obj;
-		if (angleType == null) {
-			if (other.angleType != null)
-				return false;
-		} else if (!angleType.equals(other.angleType))
-			return false;
-		if (clockwise != other.clockwise)
-			return false;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
-		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "Angle{" +
-				"value=" + value +
+				"scale=" + scale +
+				", name='" + name + '\'' +
+				", value=" + value +
 				", angleType=" + angleType +
 				", clockwise=" + clockwise +
-				", scaleFactor=" + scaleFactor +
-				", name='" + name + '\'' +
 				'}';
 	}
 }
