@@ -7,12 +7,14 @@ import java.util.Random;
 import static org.junit.Assert.*;
 
 public class PointTest {
+	private static final String DEFAULT_NAME = "";
 	private static final double DELTA_TOLERANCE = 0.0001;
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
+		{ scale = new Scale(); name = ""; }
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
 		@Override public String  toString() {return "";}
-	}).getScaleFactor();
+	}).getScale().getScaleFactor();
 
 	/**
 	 * Test constructor Point()
@@ -20,62 +22,32 @@ public class PointTest {
 	@Test
 	public void testPoint() {
 		// setup
-		Point<Coordinates> point = new Point<>();
+		Point point = new Point();
 		
 		// test
 		assertNull(point.getCoord());
-		assertNotNull(point.getScaleFactor());
-		assertEquals(SCALE_FACTOR_DEFAULT, point.getScaleFactor(), DELTA_TOLERANCE);
-		assertNull(point.getName());
+		assertNotNull(point.getScale());
+		assertEquals(SCALE_FACTOR_DEFAULT, point.getScale().getScaleFactor(), DELTA_TOLERANCE);
+		assertNotNull(point.getName());
+		assertEquals(point.getName(), DEFAULT_NAME);
 	}
 
 	/**
-	 * Test constructor Point(T coord, double scaleFactor, String name)
+	 * Test constructor Point(Coordinates coord, double scaleFactor, String name)
 	 */
 	@Test
 	public void testPointTDoubleString() {
 		// setup
 		Coordinates coord = new CoordinatesRectangular();
 		Double scaleFactor = (new Random()).nextDouble() * 100;
+		Scale scale = new Scale(scaleFactor);
 		String name = "first point";
-		Point<Coordinates> point = new Point<>(coord, scaleFactor, name);
+		Point point = new Point(coord, scale, name);
 		
 		// test
 		assertEquals(coord.getClass(), point.getCoord().getClass());
-		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
+		assertEquals(scaleFactor, point.getScale().getScaleFactor(), DELTA_TOLERANCE);
 		assertEquals(name, point.getName());
-	}
-
-	/**
-	 * Test constructor Point(T coord, double scaleFactor)
-	 */
-	@Test
-	public void testPointTDouble() {
-		// setup
-		Coordinates coord = new CoordinatesRectangular();
-		Double scaleFactor = (new Random()).nextDouble() * 100;
-		Point<Coordinates> point = new Point<>(coord, scaleFactor);
-		
-		// test
-		assertEquals(coord.getClass(), point.getCoord().getClass());
-		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
-		assertNull(point.getName());
-	}
-
-	/**
-	 * Test constructor Point(T coord)
-	 */
-	@Test
-	public void testPointT() {
-		// setup
-		Coordinates coord = new CoordinatesRectangular();
-		Double scaleFactor = SCALE_FACTOR_DEFAULT;
-		Point<Coordinates> point = new Point<>(coord);
-		
-		// test
-		assertEquals(coord.getClass(), point.getCoord().getClass());
-		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
-		assertNull(point.getName());
 	}
 
 	/**
@@ -85,7 +57,7 @@ public class PointTest {
 	public void testGetCoord() {
 		// setup
 		Coordinates coord = new CoordinatesRectangular();
-		Point<Coordinates> point = new Point<>(coord);
+		Point point = new Point(coord, null, null);
 		
 		// test
 		assertEquals(coord.getClass(), point.getCoord().getClass());
@@ -93,13 +65,13 @@ public class PointTest {
 	}
 
 	/**
-	 * Test method setCoord(T coord)
+	 * Test method setCoord(Coordinates coord)
 	 */
 	@Test
 	public void testSetCoord() {
 		// setup
 		Coordinates coord = new CoordinatesRectangular();
-		Point<Coordinates> point = new Point<>();
+		Point point = new Point();
 		point.setCoord(coord);
 		
 		// test
@@ -115,10 +87,11 @@ public class PointTest {
 		// setup
 		Coordinates coord = new CoordinatesRectangular();
 		Double scaleFactor = SCALE_FACTOR_DEFAULT;
-		Point<Coordinates> point = new Point<>(coord, scaleFactor);
+		Scale scale = new Scale(scaleFactor);
+		Point point = new Point(coord, scale, null);
 		
 		// test
-		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
+		assertEquals(scaleFactor, point.getScale().getScaleFactor(), DELTA_TOLERANCE);
 	}
 
 	/**
@@ -128,11 +101,12 @@ public class PointTest {
 	public void testSetScaleFactor() {
 		// setup
 		Double scaleFactor = (new Random()).nextDouble() * 100;
-		Point<Coordinates> point = new Point<>();
-		point.setScaleFactor(scaleFactor);
+		Scale scale = new Scale(scaleFactor);
+		Point point = new Point();
+		point.setScale(scale);
 		
 		// test
-		assertEquals(scaleFactor, point.getScaleFactor(), DELTA_TOLERANCE);
+		assertEquals(scaleFactor, point.getScale().getScaleFactor(), DELTA_TOLERANCE);
 	}
 
 	/**
@@ -141,10 +115,8 @@ public class PointTest {
 	@Test
 	public void testGetName() {
 		// setup
-		Coordinates coord = new CoordinatesRectangular();
-		Double scaleFactor = SCALE_FACTOR_DEFAULT;
 		String name = "control point";
-		Point<Coordinates> point = new Point<>(coord, scaleFactor, name);
+		Point point = new Point(null, null, name);
 		
 		// test
 		assertEquals(name, point.getName());
@@ -156,10 +128,8 @@ public class PointTest {
 	@Test
 	public void testSetName() {
 		// setup
-		Coordinates coord = new CoordinatesRectangular();
-		Double scaleFactor = SCALE_FACTOR_DEFAULT;
 		String name1 = "first", name2 = "second";
-		Point<Coordinates> point = new Point<>(coord, scaleFactor, name1);
+		Point point = new Point(null, null, name1);
 		point.setName(name2);
 		
 		// test
@@ -184,6 +154,8 @@ public class PointTest {
 		//System.out.println(N2 + " / " + E2 + " / " + H2);
 		
 		Double scaleFactor = (new Random()).nextDouble() * 100;
+		Scale scale = new Scale(scaleFactor);
+		Scale scale2 = new Scale(scale.getScaleFactor() * 2);
 		String name1 = "point1", name2 = "point2";
 		
 		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
@@ -193,18 +165,18 @@ public class PointTest {
 		Coordinates coord5 = new CoordinatesGeographic(N1, E1, H1);
 		Coordinates coord6 = new CoordinatesGeographic(N1, E1, H1);
 		
-		Point<Coordinates> point1 = new Point<>(coord1, scaleFactor, name1);
-		Point<Coordinates> point2 = new Point<>(coord2, scaleFactor, name1);
-		Point<Coordinates> point3 = new Point<>(coord3, scaleFactor, name1);
-		Point<Coordinates> point4 = new Point<>(coord4, scaleFactor, name1);
-		Point<Coordinates> point5 = new Point<>(coord5, scaleFactor, name1);
-		Point<Coordinates> point6 = new Point<>(coord6, scaleFactor*2, name2);
+		Point point1 = new Point(coord1, scale, name1);
+		Point point2 = new Point(coord2, scale, name1);
+		Point point3 = new Point(coord3, scale, name1);
+		Point point4 = new Point(coord4, scale, name1);
+		Point point5 = new Point(coord5, scale, name1);
+		Point point6 = new Point(coord6, scale2, name2);
 		
 		// test
 		assertEquals(point1.hashCode(), point1.hashCode());
 		assertEquals(point1.hashCode(), point2.hashCode());
 		assertNotEquals(point1.hashCode(), point3.hashCode());
-		assertNotEquals(point1.hashCode(), point4.hashCode());
+		assertEquals(point1.hashCode(), point4.hashCode());
 		assertEquals(point4.hashCode(), point5.hashCode());
 		assertEquals(point4.hashCode(), point6.hashCode());
 	}
@@ -227,6 +199,8 @@ public class PointTest {
 		//System.out.println(N2 + " / " + E2 + " / " + H2);
 		
 		Double scaleFactor = (new Random()).nextDouble() * 100;
+		Scale scale1 = new Scale(scaleFactor);
+		Scale scale2 = new Scale(scale1.getScaleFactor() * 10);
 		String name1 = "point1", name2 = "point2";
 		
 		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
@@ -235,15 +209,15 @@ public class PointTest {
 		Coordinates coord4 = new CoordinatesGeographic(N1, E1, H1);
 		Coordinates coord5 = new CoordinatesGeographic(N1, E1, H1);
 		Coordinates coord6 = new CoordinatesGeographic(N1, E1, H1);
-		
-		Point<Coordinates> point1 = new Point<>(coord1, scaleFactor, name1);
-		Point<Coordinates> point2 = new Point<>(coord2, scaleFactor, name1);
-		Point<Coordinates> point3 = new Point<>(coord3, scaleFactor, name1);
-		Point<Coordinates> point4 = new Point<>(coord4, scaleFactor, name1);
-		Point<Coordinates> point5 = new Point<>(coord5, scaleFactor, name1);
-		Point<Coordinates> point6 = new Point<>(coord6, scaleFactor * 10, name2);
-		Point<Coordinates> point7 = new Point<>(null, scaleFactor, name1);
-		Point<Coordinates> point8 = null;
+
+		Point point1 = new Point(coord1, scale1, name1);
+		Point point2 = new Point(coord2, scale1, name1);
+		Point point3 = new Point(coord3, scale1, name1);
+		Point point4 = new Point(coord4, scale1, name1);
+		Point point5 = new Point(coord5, scale1, name1);
+		Point point6 = new Point(coord6, scale2, name2);
+		Point point7 = new Point(null, scale1, name1);
+		Point point8 = null;
 		
 		// test
 		assertTrue(point1.equals(point2));

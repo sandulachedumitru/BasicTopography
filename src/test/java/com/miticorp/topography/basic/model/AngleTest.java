@@ -12,8 +12,10 @@ import static org.junit.Assert.*;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  */
 public class AngleTest {
+	private static final String DEFAULT_NAME = "";
 	private static final double DELTA_TOLERANCE = 0.0001;
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
+		{ scale = new Scale(); name = ""; }
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
 		@Override public String  toString() {return "";}
@@ -34,7 +36,8 @@ public class AngleTest {
 		assertNull(angle.getAngleType());
 		assertTrue(angle.isClockwise());
 		assertTrue(angle.getScale().getScaleFactor() == SCALE_FACTOR_DEFAULT);
-		assertNull(angle.getName());
+		assertNotNull(angle.getName());
+		assertEquals(angle.getName(), DEFAULT_NAME);
 	}
 	
 	/**
@@ -439,8 +442,9 @@ public class AngleTest {
 		angle1.setScale(scale);
 
 		// test
-		assertNotNull(angle1);
-		assertNotEquals(angle1, angle2);
+		assertNotNull(angle1.getScale());
+		assertNotNull(angle2.getScale());
+		assertNotEquals(angle1.getScale(), angle2.getScale());
 	}
 
 	/**

@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 public class DistanceTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
+		{ scale = new Scale(); name = ""; }
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
 		@Override public String  toString() {return "";}
@@ -84,7 +85,7 @@ public class DistanceTest {
 	public void testDistanceDoubleDistanceTypeScaleString() {
 		// setup
 		Scale scale = new Scale();
-		String name1 = "First", name2 = "Second";
+		String name1 = "First";
 
 		Double value = (new Random().nextDouble()) * 100;
 		DistanceType distanceType = new DistanceTypeImperialInch();
@@ -97,7 +98,7 @@ public class DistanceTest {
 				&& distance.getTo() == null
 				&& distance.getDistanceType().equals(distanceType)
 				&& distance.getScale().getScaleFactor() == SCALE_FACTOR_DEFAULT
-				&& distance.getName() == name1
+				&& distance.getName().equals(name1)
 				&& distance.getValue().equals(value));
 		
 		assertTrue(distance2.getFrom() == null
@@ -108,34 +109,6 @@ public class DistanceTest {
 				&& distance2.getValue() == null);
 	}
 
-	/**
-	 * Test constructor Distance(Double value)
-	 */
-	@Test
-	public void testDistanceDouble() {
-		// setup
-		Double value1 = (new Random().nextDouble()) * 100;
-		Double value2 = null;
-		
-		Distance distance1 = new Distance(value1);
-		Distance distance2 = new Distance(value2);
-		
-		
-		// test
-		assertTrue(distance1.getFrom() == null
-				&& distance1.getTo() == null
-				&& distance1.getDistanceType() instanceof DistanceTypeMetricMeter
-				&& distance1.getScaleFactor() == SCALE_FACTOR_DEFAULT 
-				&& distance1.getName() == null
-				&& distance1.getValue().equals(value1));
-		
-		assertTrue(distance2.getFrom() == null
-				&& distance2.getTo() == null
-				&& distance2.getDistanceType() instanceof DistanceTypeMetricMeter
-				&& distance2.getScaleFactor() == SCALE_FACTOR_DEFAULT 
-				&& distance2.getName() == null
-				&& distance2.getValue() == null);
-	}
 
 	/**
 	 * Test constructor Distance()
@@ -149,8 +122,8 @@ public class DistanceTest {
 		assertTrue(distance.getFrom() == null
 				&& distance.getTo() == null
 				&& distance.getDistanceType() instanceof DistanceTypeMetricMeter
-				&& distance.getScaleFactor() == SCALE_FACTOR_DEFAULT 
-				&& distance.getName() == null
+				&& distance.getScale().getScaleFactor() == SCALE_FACTOR_DEFAULT
+				&& distance.getName() == ""
 				&& distance.getValue() == null);
 	}
 
@@ -260,7 +233,7 @@ public class DistanceTest {
 		else fail("Unknown DistanceType object for 'from'");
 		
 		//System.out.println("newrez(" + newRez + ") / newvalue(" + newValue + ")");
-		assertTrue(newValue.equals(newRez));
+		assertEquals(newValue, newRez);
 	}
 
 	/**
@@ -277,10 +250,10 @@ public class DistanceTest {
 		DistanceType distanceType1 = new DistanceTypeMetricMeter();
 		DistanceType distanceType2 = new DistanceTypeImperialYard();
 		
-		from1 = new Distance(value1, distanceType1);
-		to1 = new Distance(null, distanceType2);
-		from2 = new Distance(value2, distanceType1);
-		to2 = new Distance(null, distanceType2);
+		from1 = new Distance(value1, distanceType1, null, null);
+		to1 = new Distance(null, distanceType2, null, null);
+		from2 = new Distance(value2, distanceType1, null, null);
+		to2 = new Distance(null, distanceType2, null, null);
 		
 		rez1 = Distance.transformDistanceFromSystemToSystem(from1, to1);
 		//System.out.println("rez1(" + rez1 + ") / value1(" + value1 + ")");
@@ -362,14 +335,14 @@ public class DistanceTest {
 		// setup
 		DistanceType distanceType = null;
 		Coordinates coord = new CoordinatesRectangular();
+
+		Point from1 = new Point(coord, null, null);
+		Point to1 = new Point(coord, null, null);
+		Point from2 = null;
+		Point to2 = null;
 		
-		Point<Coordinates> from1 = new Point<>(coord);
-		Point<Coordinates> to1 = new Point<>(coord);
-		Point<Coordinates> from2 = null;
-		Point<Coordinates> to2 = null;
-		
-		Distance distance1 = new Distance(from1, to1, distanceType);
-		Distance distance2 = new Distance(from2, to2, distanceType);
+		Distance distance1 = new Distance(from1, to1, distanceType, null, null);
+		Distance distance2 = new Distance(from2, to2, distanceType, null, null);
 		
 		// test
 		assertEquals(distance1.getFrom(), from1);
@@ -377,17 +350,18 @@ public class DistanceTest {
 	}
 
 	/**
-	 * Test method for Distance's setFrom(Point<T> from)
+	 * Test method for Distance's setFrom(Point from)
 	 */
 	@Test
 	public void testSetFrom() {
 		// setup
 		DistanceType distanceType = null;
 		Coordinates coord = new CoordinatesRectangular();
-		Point<Coordinates> from = new Point<>(coord);
-		Point<Coordinates> to = new Point<>(coord);
+		Point from = new Point(coord, null, null);
+		Point to = new Point(coord, null, null);
 		
-		Distance distance = new Distance(null, to, distanceType); distance.setFrom(from);
+		Distance distance = new Distance(null, to, distanceType, null, null);
+		distance.setFrom(from);
 		
 		// test
 		assertEquals(distance.getFrom(), from);
@@ -401,14 +375,14 @@ public class DistanceTest {
 		// setup
 		DistanceType distanceType = null;
 		Coordinates coord = new CoordinatesRectangular();
+
+		Point from1 = new Point(coord, null, null);
+		Point to1 = new Point(coord, null, null);
+		Point from2 = null;
+		Point to2 = null;
 		
-		Point<Coordinates> from1 = new Point<>(coord);
-		Point<Coordinates> to1 = new Point<>(coord);
-		Point<Coordinates> from2 = null;
-		Point<Coordinates> to2 = null;
-		
-		Distance distance1 = new Distance(from1, to1, distanceType);
-		Distance distance2 = new Distance(from2, to2, distanceType);
+		Distance distance1 = new Distance(from1, to1, distanceType, null, null);
+		Distance distance2 = new Distance(from2, to2, distanceType, null, null);
 		
 		// test
 		assertEquals(distance1.getTo(), to1);
@@ -416,17 +390,18 @@ public class DistanceTest {
 	}
 
 	/**
-	 * Test method for Distance's setTo(Point<T> to)
+	 * Test method for Distance's setTo(Point to)
 	 */
 	@Test
 	public void testSetTo() {
 		// setup
 		DistanceType distanceType = null;
 		Coordinates coord = new CoordinatesRectangular();
-		Point<Coordinates> from = new Point<>(coord);
-		Point<Coordinates> to = new Point<>(coord);
+		Point from = new Point(coord, null, null);
+		Point to = new Point(coord, null, null);
 		
-		Distance distance = new Distance(from, null, distanceType); distance.setTo(to);
+		Distance distance = new Distance(from, null, distanceType, null, null);
+		distance.setTo(to);
 		
 		// test
 		assertEquals(distance.getTo(), to);
@@ -451,11 +426,11 @@ public class DistanceTest {
 
 		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
 		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
-		Point<Coordinates> from = new Point<>(coord1);
-		Point<Coordinates> to = new Point<>(coord2);
+		Point from = new Point(coord1, null, null);
+		Point to = new Point(coord2, null, null);
 		DistanceType type = new DistanceTypeImperialInch();
 		
-		Distance distance = new Distance(from, to, type);
+		Distance distance = new Distance(from, to, type, null, null);
 		
 		// test
 		assertNotNull(distance.getValue());
@@ -480,12 +455,12 @@ public class DistanceTest {
 
 		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
 		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
-		Point<Coordinates> from = new Point<>(coord1);
-		Point<Coordinates> to = new Point<>(coord2);
+		Point from = new Point(coord1, null, null);
+		Point to = new Point(coord2, null, null);
 		DistanceType type = new DistanceTypeImperialInch();
 		Double value = random.nextDouble();
 		
-		Distance distance = new Distance(from, to, type);
+		Distance distance = new Distance(from, to, type, null, null);
 		
 		// test
 		assertNotNull(distance.getValue());
@@ -503,7 +478,7 @@ public class DistanceTest {
 		// setup
 		DistanceType distanceType = new DistanceTypeMetricMeter();
 		
-		Distance distance = new Distance(null, distanceType);
+		Distance distance = new Distance(null, distanceType, null, null);
 		
 		// test
 		assertEquals(distance.getDistanceType(), distanceType);
@@ -517,7 +492,7 @@ public class DistanceTest {
 		// setup
 		DistanceType distanceType = new DistanceTypeMetricMeter();
 		
-		Distance distance = new Distance(null, distanceType);
+		Distance distance = new Distance(null, distanceType, null, null);
 		
 		// test
 		assertNotNull(distance.getDistanceType());
@@ -538,7 +513,7 @@ public class DistanceTest {
 			Distance distance = new Distance();
 			
 			// test
-			assertEquals(scaleFactor, distance.getScaleFactor(), DELTA_TOLERANCE);
+			assertEquals(scaleFactor, distance.getScale().getScaleFactor(), DELTA_TOLERANCE);
 		}
 
 		/**
@@ -549,10 +524,10 @@ public class DistanceTest {
 			// setup
 			Distance distance = new Distance();
 			Double scaleFactor = SCALE_FACTOR_DEFAULT *2 + 1;
-			distance.setScaleFactor(scaleFactor);
+			distance.getScale().setScaleFactor(scaleFactor);
 			
 			// test
-			assertEquals(scaleFactor, distance.getScaleFactor(), DELTA_TOLERANCE);
+			assertEquals(scaleFactor, distance.getScale().getScaleFactor(), DELTA_TOLERANCE);
 		}
 
 		/**
@@ -561,12 +536,15 @@ public class DistanceTest {
 		@Test
 		public void testGetName() {
 			// setup
-			Double scaleFactor = SCALE_FACTOR_DEFAULT *2 +1;
 			String name = "name";
-			Distance distance = new Distance(null, null, null, scaleFactor, name);
+			Distance distance = new Distance(null, null, null, null, name);
+
+			String name2 = "";
+			Distance distance2 = new Distance();
 			
 			// test
 			assertEquals(name, distance.getName());
+			assertEquals(name2, distance2.getName());
 		}
 
 		/**
@@ -575,9 +553,8 @@ public class DistanceTest {
 		@Test
 		public void testSetName() {
 			// setup
-			Double scaleFactor = SCALE_FACTOR_DEFAULT *2 +1;
 			String name = "name";
-			Distance distance = new Distance(null, null, null, scaleFactor, null);
+			Distance distance = new Distance(null, null, null, null, null);
 			distance.setName(name);
 			
 			// test
@@ -603,29 +580,29 @@ public class DistanceTest {
 		
 		DistanceType distanceType = new DistanceTypeMetricMeter();
 		DistanceType distanceType4 =  new DistanceTypeImperialInch();
-		double scaleFactor = SCALE_FACTOR_DEFAULT;
+		Scale scale = new Scale();
 		String name = "name";
 		String name6 = "name6";
 		
 		Coordinates coord1 = new CoordinatesRectangular(N1, E1, H1);
 		Coordinates coord2 = new CoordinatesRectangular(N2, E2, H2);
 		
-		Point<Coordinates> from1 = new Point<>();
-		Point<Coordinates> to1 = new Point<>();
-		Point<Coordinates> from2 = new Point<>(coord1);
-		Point<Coordinates> to2 = new Point<>(coord2);
-		Point<Coordinates> from3 = new Point<>(coord1);
-		Point<Coordinates> to3 = new Point<>(coord2);
+		Point from1 = new Point();
+		Point to1 = new Point();
+		Point from2 = new Point(coord1, null, null);
+		Point to2 = new Point(coord2, null, null);
+		Point from3 = new Point(coord1, null, null);
+		Point to3 = new Point(coord2, null, null);
 		
 		// the scaleFactor and name parameters does not meet any importance in hashCode() method
-		Distance distance1 = new Distance(from1, to1, distanceType, scaleFactor, name);
-		Distance distance2 = new Distance(from2, to2, distanceType, scaleFactor, name);
-		Distance distance3 = new Distance(from3, to3, distanceType, scaleFactor, name);
-		Distance distance4 = new Distance(from2, to2, distanceType4, scaleFactor, name);
-		Distance distance5 = new Distance(from2, to2, distanceType, scaleFactor * 2, name);
-		Distance distance6 = new Distance(from2, to2, distanceType, scaleFactor, name6);
-		Distance distance7 = new Distance(null, null, null, scaleFactor, name);
-		Distance distance8 = new Distance(null, null, null, scaleFactor, null);
+		Distance distance1 = new Distance(from1, to1, distanceType, scale, name);
+		Distance distance2 = new Distance(from2, to2, distanceType, scale, name);
+		Distance distance3 = new Distance(from3, to3, distanceType, scale, name);
+		Distance distance4 = new Distance(from2, to2, distanceType4, scale, name);
+		Distance distance5 = new Distance(from2, to2, distanceType, scale, name);
+		Distance distance6 = new Distance(from2, to2, distanceType, scale, name6);
+		Distance distance7 = new Distance(null, null, null, scale, name);
+		Distance distance8 = new Distance(null, null, null, scale, null);
 		
 		// test
 		assertEquals(distance1, distance1);
@@ -660,24 +637,24 @@ public class DistanceTest {
 		
 		DistanceType distanceType = new DistanceTypeMetricMeter();
 		DistanceType distanceType4 =  new DistanceTypeImperialInch();
-		double scaleFactor = SCALE_FACTOR_DEFAULT;
+		Scale scale = new Scale();
 		String name = "name";
 		String name6 = "name6";
 		
-		Point<Coordinates> from1 = new Point<>();
-		Point<Coordinates> to1 = new Point<>();
-		Point<Coordinates> from2 = new Point<>(coord1);
-		Point<Coordinates> to2 = new Point<>(coord2);
+		Point from1 = new Point();
+		Point to1 = new Point();
+		Point from2 = new Point(coord1, null, null);
+		Point to2 = new Point(coord2, null, null);
 		
 		// the scaleFactor and name parameters does not meet any importance in hashCode() method
-		Distance distance1 = new Distance(from1, to1, distanceType, scaleFactor, name);
-		Distance distance2 = new Distance(from2, to2, distanceType, scaleFactor, name);
-		Distance distance3 = new Distance(from2, to2, distanceType, scaleFactor, name);
-		Distance distance4 = new Distance(from2, to2, distanceType4, scaleFactor, name);
-		Distance distance5 = new Distance(from2, to2, distanceType, scaleFactor * 2, name);
-		Distance distance6 = new Distance(from2, to2, distanceType, scaleFactor, name6);
-		Distance distance7 = new Distance(null, null, null, scaleFactor, name);
-		Distance distance8 = new Distance(null, null, null, scaleFactor, null);
+		Distance distance1 = new Distance(from1, to1, distanceType, scale, name);
+		Distance distance2 = new Distance(from2, to2, distanceType, scale, name);
+		Distance distance3 = new Distance(from2, to2, distanceType, scale, name);
+		Distance distance4 = new Distance(from2, to2, distanceType4, scale, name);
+		Distance distance5 = new Distance(from2, to2, distanceType, scale, name);
+		Distance distance6 = new Distance(from2, to2, distanceType, scale, name6);
+		Distance distance7 = new Distance(null, null, null, scale, name);
+		Distance distance8 = new Distance(null, null, null, scale, null);
 		
 		// test
 		assertTrue(distance2.equals(distance3));

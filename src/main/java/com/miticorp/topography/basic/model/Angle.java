@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.model;
 
+import java.util.Objects;
+
 /**
  * 
  * Base class for angular representation (angular value, angular type ex: grad, deg, rad)
@@ -145,20 +147,14 @@ public class Angle extends GeometricElements {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		Angle angle = (Angle) o;
-
-		if (clockwise != angle.clockwise) return false;
-		if (value != null ? !value.equals(angle.value) : angle.value != null) return false;
-		return angleType != null ? angleType.equals(angle.angleType) : angle.angleType == null;
+		return Objects.equals(value, angle.value) &&
+				Objects.equals(angleType, angle.angleType);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = value != null ? value.hashCode() : 0;
-		result = 31 * result + (angleType != null ? angleType.hashCode() : 0);
-		result = 31 * result + (clockwise ? 1 : 0);
-		return result;
+		return Objects.hash(value, angleType, clockwise);
 	}
 
 	@Override

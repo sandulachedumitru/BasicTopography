@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class GeometricElementsTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
+		{ scale = new Scale(); name = ""; }
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
 		@Override public String  toString() {return "";}
@@ -18,6 +19,7 @@ public class GeometricElementsTest {
 	public void testGetDefaultScaleFactor() {
 		// setup
 		GeometricElements geoElem = new GeometricElements() {
+			{ scale = new Scale(); name = ""; }
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
 			@Override public String  toString() {return "";}
@@ -31,11 +33,13 @@ public class GeometricElementsTest {
 	public void testSetDefaultScaleFactor() {
 		// setup
 		GeometricElements geoElem1 = new GeometricElements() {
+			{ scale = new Scale(); name = ""; }
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
 			@Override public String  toString() {return "";}
 		};
 		GeometricElements geoElem2 = new GeometricElements() {
+			{ scale = new Scale(); name = ""; }
 			@Override public int hashCode() {return 0;}
 			@Override public boolean equals(Object obj) {return false;}
 			@Override public String  toString() {return "";}

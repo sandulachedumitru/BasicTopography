@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.model;
 
+import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import com.miticorp.topography.basic.utils.Utils;
 
 /**
@@ -33,7 +34,7 @@ public class Distance extends GeometricElements {
 	private Double value;
 	// The distance measurement unit (mm, cm, m, km, inch, yard, mile)
 	// Meter by default
-	private DistanceType distanceType = new DistanceTypeMetricMeter();
+	private DistanceType distanceType = DistanceTypeMetricMeterFactory.getInstance();
 
 	{
 		scale = new Scale();

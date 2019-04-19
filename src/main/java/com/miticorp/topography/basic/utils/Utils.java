@@ -28,12 +28,15 @@ public class Utils {
 			|| 			(toCoord.getEast() == null)
 			|| 			(toCoord.getHeight() == null) ) return null;
 			
-			north1 	= fromCoord.getNorth() 	* from.getScale().getScaleFactor();
-			north2 	= toCoord.getNorth() 	* to.getScale().getScaleFactor();
-			east1 	= fromCoord.getEast() 	* from.getScale().getScaleFactor();
-			east2 	= toCoord.getEast() 	* to.getScale().getScaleFactor();
-			height1	= fromCoord.getHeight() * from.getScale().getScaleFactor();
-			height2	= toCoord.getHeight()	* to.getScale().getScaleFactor();
+			double scaleFactorFrom = from.getScale() == null ? new Scale().getScaleFactor() : from.getScale().getScaleFactor();
+			double scaleFactorTo = to.getScale() == null ? new Scale().getScaleFactor() : to.getScale().getScaleFactor();
+
+			north1 	= fromCoord.getNorth() 	* scaleFactorFrom;
+			north2 	= toCoord.getNorth() 	* scaleFactorTo;
+			east1 	= fromCoord.getEast() 	* scaleFactorFrom;
+			east2 	= toCoord.getEast() 	* scaleFactorTo;
+			height1	= fromCoord.getHeight() * scaleFactorFrom;
+			height2	= toCoord.getHeight()	* scaleFactorTo;
 			
 			deltaNorth 	= north2 - north1;
 			deltaEast 	= east2 - east1;
