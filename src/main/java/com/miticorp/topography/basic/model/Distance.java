@@ -3,6 +3,8 @@ package com.miticorp.topography.basic.model;
 import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import com.miticorp.topography.basic.utils.Utils;
 
+import java.util.Objects;
+
 /**
  * 
  * Base class for distance representation (distance value, distance point1/point2, distance type (ex; metric, imperial)).
@@ -53,7 +55,7 @@ public class Distance extends GeometricElements {
 	 * @param from start point of the distance
 	 * @param to end point of the distance
 	 * @param distanceType type of distance (ex: metric, imperial).
-	 * @param scale
+	 * @param scale object that hold scale factor
 	 * @param name name of distance
 	 */
 	public Distance(Point from, Point to, DistanceType distanceType, Scale scale, String name) {
@@ -69,7 +71,7 @@ public class Distance extends GeometricElements {
 	 * Constructor for Distance class.
 	 * @param value value of distance
 	 * @param distanceType type of distance (ex: metric, imperial).
-	 * @param scale
+	 * @param scale object that hold scale factor
 	 * @param name name of distance
 	 */
 	public Distance(Double value, DistanceType distanceType, Scale scale, String name) {
@@ -240,14 +242,6 @@ public class Distance extends GeometricElements {
 		this.distanceType = distanceType;
 	}
 
-	@Override
-	public int hashCode() {
-		int result = from != null ? from.hashCode() : 0;
-		result = 31 * result + (to != null ? to.hashCode() : 0);
-		result = 31 * result + (value != null ? value.hashCode() : 0);
-		result = 31 * result + (distanceType != null ? distanceType.hashCode() : 0);
-		return result;
-	}
 
 	/**
 	 * Two distances are equal if their value and distance type (ex: metric or imperial) are equals
@@ -256,11 +250,14 @@ public class Distance extends GeometricElements {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		Distance distance = (Distance) o;
+		return Objects.equals(value, distance.value) &&
+				Objects.equals(distanceType, distance.distanceType);
+	}
 
-		if (value != null ? !value.equals(distance.value) : distance.value != null) return false;
-		return distanceType != null ? distanceType.equals(distance.distanceType) : distance.distanceType == null;
+	@Override
+	public int hashCode() {
+		return Objects.hash(from, to, value, distanceType);
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.Scale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +21,13 @@ public class AngleBuilder {
     private AngleType angleType;
     private boolean clockwise = true; // true by default
     private String name = "";
-    @Autowired
     private Scale scale; // is 1 by default
 
-    @Autowired
-    private AngleType angleTypeCentesimalBean;
+    private final AngleType angleTypeCentesimalBean;
+    private AngleBuilder(Scale scale, AngleType angleTypeCentesimalBean) {
+        this.scale = scale;
+        this.angleTypeCentesimalBean = angleTypeCentesimalBean;
+    }
 
     public Angle build() {
         if (angleType == null) angleType = angleTypeCentesimalBean;

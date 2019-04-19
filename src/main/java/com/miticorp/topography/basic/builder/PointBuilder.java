@@ -5,7 +5,6 @@ import com.miticorp.topography.basic.model.Point;
 import com.miticorp.topography.basic.model.Scale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +17,15 @@ import org.springframework.stereotype.Component;
 public class PointBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(PointBuilder.class);
 
-    @Autowired
-    private Scale scale;
     private Coordinates coord;
     private String name = "";
+
+    private Scale scale;
+    private PointBuilder(Scale scale) {
+        this.scale = scale;
+    }
+
+    public PointBuilder() {}
 
     public Point build() {
         LOG.info("Create a Point with parameters: Coord[{}], Scale[{}], Name[{}]", coord, scale, name);

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * Created by Sandulache Dumitru on 15/04/19.
  * e-mail: sandulachedumitru@hotmail.com
@@ -45,18 +47,14 @@ public class CoordinatesPolarBuilder {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CoordinatesPolarBuilder that = (CoordinatesPolarBuilder) o;
-
-        if (angle != null ? !angle.equals(that.angle) : that.angle != null) return false;
-        return distance != null ? distance.equals(that.distance) : that.distance == null;
+        return Objects.equals(angle, that.angle) &&
+                Objects.equals(distance, that.distance);
     }
 
     @Override
     public int hashCode() {
-        int result = angle != null ? angle.hashCode() : 0;
-        result = 31 * result + (distance != null ? distance.hashCode() : 0);
-        return result;
+        return Objects.hash(angle, distance);
     }
 
     @Override

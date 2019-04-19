@@ -8,7 +8,6 @@ import com.miticorp.topography.basic.model.DistanceType;
 import com.miticorp.topography.basic.model.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
@@ -23,17 +22,16 @@ public class BasicService {
 
     ApplicationContext ctx = new AnnotationConfigApplicationContext();
 
-    @Autowired
-    private DistanceType distanceTypeImperialYardBean;
-
-    @Autowired
-    private AngleType angleTypeHexadecimalBean;
-
-    @Autowired
-    CoordinatesRectangularBuilder coordinatesRectangularBuilder;
-
-    @Autowired
-    PointBuilder pointBuilder;
+    private final DistanceType distanceTypeImperialYardBean;
+    private final AngleType angleTypeHexadecimalBean;
+    private final CoordinatesRectangularBuilder coordinatesRectangularBuilder;
+    private final PointBuilder pointBuilder;
+    private BasicService(DistanceType distanceTypeImperialYardBean, AngleType angleTypeHexadecimalBean, CoordinatesRectangularBuilder coordinatesRectangularBuilder, PointBuilder pointBuilder) {
+        this.distanceTypeImperialYardBean = distanceTypeImperialYardBean;
+        this.angleTypeHexadecimalBean = angleTypeHexadecimalBean;
+        this.coordinatesRectangularBuilder = coordinatesRectangularBuilder;
+        this.pointBuilder = pointBuilder;
+    }
 //    PointBuilder pointBuilder = ctx.getBean("pointBuilder", PointBuilder.class);
 
     public void pointService() {

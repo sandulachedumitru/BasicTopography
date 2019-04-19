@@ -35,7 +35,7 @@ public class AngleTest {
 		assertNull(angle.getValue());
 		assertNull(angle.getAngleType());
 		assertTrue(angle.isClockwise());
-		assertTrue(angle.getScale().getScaleFactor() == SCALE_FACTOR_DEFAULT);
+		assertEquals(angle.getScale().getScaleFactor(), SCALE_FACTOR_DEFAULT, 0.0);
 		assertNotNull(angle.getName());
 		assertEquals(angle.getName(), DEFAULT_NAME);
 	}
@@ -57,11 +57,11 @@ public class AngleTest {
 		Angle angle = new Angle(value, angleType, clockwise, scale, name);
 		
 		// test
-		assertTrue(angle.getValue().equals(value));
-		assertTrue(angle.getAngleType().equals(angleType));
+		assertEquals(angle.getValue(), value);
+		assertEquals(angle.getAngleType(), angleType);
 		assertFalse(angle.isClockwise());
-		assertTrue(angle.getScale().getScaleFactor() == scaleFactor);
-		assertTrue(angle.getName().equals(name));
+		assertEquals(angle.getScale().getScaleFactor(), scaleFactor, 0.0);
+		assertEquals(angle.getName(), name);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class AngleTest {
 				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to, value);
-				assertTrue(rez.equals(value*factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 
 		} else {
@@ -112,7 +112,7 @@ public class AngleTest {
 				value = i;
 				// System.out.println(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to, value);
-				assertTrue(rez.equals(value * factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 		} // else
 	} // private method
@@ -165,8 +165,8 @@ public class AngleTest {
 				// System.out.println(value);
 				from.setValue(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to);
-				assertTrue(rez.equals(value*factor));
-				assertTrue(rez.equals(to.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, to.getValue());
 			}
 
 		} else {
@@ -175,8 +175,8 @@ public class AngleTest {
 				// System.out.println(value);
 				from.setValue(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to);
-				assertTrue(rez.equals(value * factor));
-				assertTrue(rez.equals(to.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, to.getValue());
 			}
 		} // else
 	} // private method
@@ -224,7 +224,7 @@ public class AngleTest {
 				// System.out.println(value);
 				angle = new Angle(value, from, clockwise, null, null);
 				rez = angle.transformAngleFromCurrentToAnotherSystem(to);
-				assertTrue(rez.equals(value*factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 
 		} else {
@@ -233,7 +233,7 @@ public class AngleTest {
 				// System.out.println(value);
 				angle = new Angle(value, from, clockwise, null, null);
 				rez = angle.transformAngleFromCurrentToAnotherSystem(to);
-				assertTrue(rez.equals(value * factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 		} // else
 	} // private method
@@ -286,8 +286,8 @@ public class AngleTest {
 				another.setValue(value);
 				rez = current.transformAngleFromAnotherToCurrentSystem(another);
 				// System.out.println(value + " --> " + value*factor + " --> " + rez);
-				assertTrue(rez.equals(value*factor));
-				assertTrue(rez.equals(current.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, current.getValue());
 			}
 
 		} else {
@@ -297,8 +297,8 @@ public class AngleTest {
 				another.setValue(value);
 				rez = current.transformAngleFromAnotherToCurrentSystem(another);
 				// System.out.println(value + " --> " + value*factor + " --> " + rez);
-				assertTrue(rez.equals(value * factor));
-				assertTrue(rez.equals(current.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, current.getValue());
 			}
 		} // else
 	} // private method
@@ -319,7 +319,7 @@ public class AngleTest {
 		Angle angle = new Angle(value, current, clockwise, null, null);
 		
 		// test
-		assertTrue(value.equals(angle.getValue()));
+		assertEquals(value, angle.getValue());
 	}
 
 	/**
@@ -339,7 +339,7 @@ public class AngleTest {
 		angle.setValue(value);
 		
 		// test
-		assertTrue(value.equals(angle.getValue()));
+		assertEquals(value, angle.getValue());
 	}
 
 	/**
@@ -355,7 +355,7 @@ public class AngleTest {
 		Angle angle = new Angle(null, current, clockwise, null, null);
 		
 		// test
-		assertTrue(angle.getAngleType().equals(current));
+		assertEquals(angle.getAngleType(), current);
 	}
 
 	/**
@@ -371,7 +371,7 @@ public class AngleTest {
 		angle.setAngleType(current);
 		
 		// test
-		assertTrue(angle.getAngleType().equals(current));
+		assertEquals(angle.getAngleType(), current);
 	}
 
 	/**
@@ -496,13 +496,13 @@ public class AngleTest {
 		Angle angle6 = new Angle(value, angleHexa, clockwise, null, null);
 		
 		// test
-		assertTrue(angle1.equals(angle2));
-		assertTrue(angle3.equals(angle4));
-		
-		assertFalse(angle1.equals(angle3));
-		assertFalse(angle3.equals(angle5));
-		assertFalse(angle3.equals(angle6));
-		assertFalse(angle5.equals(angle6));
+		assertEquals(angle1, angle2);
+		assertEquals(angle3, angle4);
+
+		assertNotEquals(angle1, angle3);
+		assertNotEquals(angle3, angle5);
+		assertNotEquals(angle3, angle6);
+		assertNotEquals(angle5, angle6);
 	}
 	
 	/**

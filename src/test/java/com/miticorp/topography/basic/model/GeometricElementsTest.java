@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class GeometricElementsTest {
 	private static final double DELTA_TOLERANCE = 0.0001;
@@ -62,7 +63,7 @@ public class GeometricElementsTest {
 		};
 		
 		// test
-		assertEquals(geoElem.getName(), null);
+        assertNull(geoElem.getName());
 	}
 
 	@Test
@@ -82,7 +83,7 @@ public class GeometricElementsTest {
 		String name = "name"; geoElem2.setName(name);
 		
 		// test
-		assertEquals(geoElem1.getName(), null);
+        assertNull(geoElem1.getName());
 		assertEquals(geoElem2.getName(), name);
 	}
 }

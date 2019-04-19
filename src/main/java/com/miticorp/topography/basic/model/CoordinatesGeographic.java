@@ -19,9 +19,6 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 	// TODO change 'Double' to 'double'. This change have deep impact in code.
 	private double latitude, longitude, height;
 
-	private DistanceType distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
-	private AngleType angleTypeHexadecimal = AngleTypeHexadecimalFactory.getInstance();
-
 	// Constructors
 	@Autowired
 	private CoordinatesGeographic(DistanceType distanceTypeMetricMeterBean, AngleType angleTypeHexadecimalBean) {
@@ -30,8 +27,8 @@ public class CoordinatesGeographic extends CoordinatesOrthogonal {
 		LOG.info("Creates a geographic coordinate bean with values: default Latitude[{}], default Longitude[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", latitude, longitude, height, distanceType, angleType);
 	}
 	public CoordinatesGeographic() {
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeHexadecimal;
+		this.distanceType = DistanceTypeMetricMeterFactory.getInstance();
+		this.angleType = AngleTypeHexadecimalFactory.getInstance();
 		LOG.info("Creates a geographic coordinate with values: default Latitude[{}], default Longitude[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", latitude, longitude, height, distanceType, angleType);
 	}
 	public CoordinatesGeographic(double latitude,double longitude,double height) {

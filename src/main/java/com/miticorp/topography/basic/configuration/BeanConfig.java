@@ -2,7 +2,6 @@ package com.miticorp.topography.basic.configuration;
 
 import com.miticorp.topography.basic.model.*;
 import org.springframework.context.annotation.*;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class BeanConfig {

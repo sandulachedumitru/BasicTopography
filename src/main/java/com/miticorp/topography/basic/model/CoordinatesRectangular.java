@@ -19,9 +19,6 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 	// TODO change 'Double' to 'double'. This change have deep impact in code.
 	private Double north, east, height;
 
-	private DistanceType distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
-	private AngleType angleTypeCentesimal = AngleTypeCentesimalFactory.getInstance();
-
 	// constructors
 	@Autowired
 	private CoordinatesRectangular(DistanceType distanceTypeMetricMeterBean, AngleType angleTypeCentesimalBean) {
@@ -30,8 +27,8 @@ public class CoordinatesRectangular extends CoordinatesOrthogonal {
 		LOG.info("Creates a rectangular coordinate bean with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 	public CoordinatesRectangular() {
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeCentesimal;
+		this.distanceType = DistanceTypeMetricMeterFactory.getInstance();
+		this.angleType = AngleTypeCentesimalFactory.getInstance();
 		LOG.info("Creates a rectangular coordinate with values: default North[{}], default East[{}], default Height[{}], default DistanceType[{}], default AngleType[{}]", north, east, height, distanceType, angleType);
 	}
 	public CoordinatesRectangular(double northValue, double estValue, double heightValue) {

@@ -6,7 +6,6 @@ import com.miticorp.topography.basic.model.Point;
 import com.miticorp.topography.basic.model.Scale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +18,6 @@ import org.springframework.stereotype.Component;
 public class DistanceBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(DistanceBuilder.class);
 
-    @Autowired
-    DistanceType distanceTypeMetricMeterBean;
-
     private Point from;
     private Point to;
     private double value = 0D;
@@ -29,13 +25,18 @@ public class DistanceBuilder {
     private String name = "";
     private Scale scale;
 
+    private final DistanceType distanceTypeMetricMeterBean;
+    private DistanceBuilder(DistanceType distanceTypeMetricMeterBean) {
+        this.distanceTypeMetricMeterBean = distanceTypeMetricMeterBean;
+    }
+
     public Distance build() {
         Distance distance = new Distance(value, distanceType, scale, name);
 
         if (distanceType == null) distanceType = distanceTypeMetricMeterBean;
 
-        if (from != null || to != null)
-            if (from.getCoord() != null || to.getCoord() != null) distance = new Distance(from, to, distanceType, scale, name);
+        if (from != null && to != null)
+            if (from.getCoord() != null && to.getCoord() != null) distance = new Distance(from, to, distanceType, scale, name);
 
         LOG.info("Build Distance with values: PointFrom[{}], PointTo[{}], Value[{}], DistanceType[{}], Name[{}]", from, to, value, distanceType, name);
 

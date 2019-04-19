@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 // TODO reflect changes in tests classes
 @Component
 @Scope("prototype")
@@ -19,9 +21,6 @@ public class CoordinatesPolar extends Coordinates {
 	private Angle angle = AngleFactory.getInstance();
 	private Distance distance = DistanceFactory.getInstance();
 
-	private DistanceType distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
-	private AngleType angleTypeCentesimal = AngleTypeCentesimalFactory.getInstance();
-	
 	// Constructors
 	@Autowired
 	private CoordinatesPolar(DistanceType distanceTypeMetricMeterBean, AngleType angleTypeCentesimalBean) {
@@ -37,8 +36,8 @@ public class CoordinatesPolar extends Coordinates {
 		LOG.info("Creates a polar coordinate bean with values: default Distance[{}], default Angle[{}]", distance, angle);
 	}
 	public CoordinatesPolar() {
-		this.distanceType = distanceTypeMetricMeter;
-		this.angleType = angleTypeCentesimal;
+		this.distanceType = DistanceTypeMetricMeterFactory.getInstance();
+		this.angleType =  AngleTypeCentesimalFactory.getInstance();
 
 		angle.setAngleType(angleType);
 		angle.setValue(0D);
@@ -72,36 +71,19 @@ public class CoordinatesPolar extends Coordinates {
 		LOG.info("Set values of Distance: [{}]", distance);
 		this.distance = distance;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CoordinatesPolar that = (CoordinatesPolar) o;
+		return Objects.equals(angle, that.angle) &&
+				Objects.equals(distance, that.distance);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((angle == null) ? 0 : angle.hashCode());
-		result = prime * result + ((distance == null) ? 0 : distance.hashCode());
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CoordinatesPolar other = (CoordinatesPolar) obj;
-		if (angle == null) {
-			if (other.angle != null)
-				return false;
-		} else if (!angle.equals(other.angle))
-			return false;
-		if (distance == null) {
-			if (other.distance != null)
-				return false;
-		} else if (!distance.equals(other.distance))
-			return false;
-		return true;
+		return Objects.hash(angle, distance);
 	}
 
 	@Override

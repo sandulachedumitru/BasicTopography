@@ -7,6 +7,7 @@ import java.util.Random;
 import static org.junit.Assert.*;
 
 public class DistanceTest {
+	private static final String DEFAULT_NAME = "";
 	private static final double DELTA_TOLERANCE = 0.0001;
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
 		{ scale = new Scale(); name = ""; }
@@ -123,7 +124,7 @@ public class DistanceTest {
 				&& distance.getTo() == null
 				&& distance.getDistanceType() instanceof DistanceTypeMetricMeter
 				&& distance.getScale().getScaleFactor() == SCALE_FACTOR_DEFAULT
-				&& distance.getName() == ""
+				&& distance.getName().equals(DEFAULT_NAME)
 				&& distance.getValue() == null);
 	}
 
@@ -657,12 +658,12 @@ public class DistanceTest {
 		Distance distance8 = new Distance(null, null, null, scale, null);
 		
 		// test
-		assertTrue(distance2.equals(distance3));
-		assertTrue(distance2.equals(distance5));
-		assertTrue(distance2.equals(distance6));
-		assertTrue(distance7.equals(distance8));
-		
-		assertFalse(distance1.equals(distance2));
-		assertFalse(distance2.equals(distance4));
+        assertEquals(distance2, distance3);
+        assertEquals(distance2, distance5);
+        assertEquals(distance2, distance6);
+        assertEquals(distance7, distance8);
+
+        assertNotEquals(distance1, distance2);
+        assertNotEquals(distance2, distance4);
 	}
 }

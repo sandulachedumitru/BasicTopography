@@ -2,7 +2,8 @@ package com.miticorp.topography.basic.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Objects;
 
 /**
  * 
@@ -40,26 +41,21 @@ public class Point extends GeometricElements {
 	// hash
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((coord == null) ? 0 : coord.hashCode());
-		return result;
+		return Objects.hash(coord);
 	}
-	
+
 	// equals
+	/**
+	 * Two points are equals if their coordinates are equals. They could have different name and scale factor.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		Point point = (Point) o;
-
-		return coord != null ? coord.equals(point.coord) : point.coord == null;
+		return Objects.equals(coord, point.coord);
 	}
 
-	/**
-	 * Two points are equals if their coordinates are equals. They could have different name and scale factor.
-	 */
 	@Override
 	public String toString() {
 		return "Point{" +

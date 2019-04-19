@@ -220,12 +220,12 @@ public class PointTest {
 		Point point8 = null;
 		
 		// test
-		assertTrue(point1.equals(point2));
-		assertFalse(point1.equals(point3));
-		assertFalse(point1.equals(point4));
-		assertTrue(point4.equals(point5));
-		assertTrue(point4.equals(point6));
-		assertFalse(point1.equals(point7));
-		assertFalse(point1.equals(point8));
+        assertEquals(point1, point2);
+        assertNotEquals(point1, point3);
+        assertNotEquals(point1, point4);
+        assertEquals(point4, point5);
+        assertEquals(point4, point6);
+        assertNotEquals(point1, point7);
+        assertNotEquals(point1, point8);
 	}
 }

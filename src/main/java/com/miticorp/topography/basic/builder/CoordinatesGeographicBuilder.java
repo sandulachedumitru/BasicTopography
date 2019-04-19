@@ -2,13 +2,13 @@ package com.miticorp.topography.basic.builder;
 
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.CoordinatesGeographic;
-import com.miticorp.topography.basic.model.CoordinatesRectangular;
 import com.miticorp.topography.basic.model.DistanceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * Created by Dumitru Sandulache on 12/04/19.
@@ -23,8 +23,10 @@ public class CoordinatesGeographicBuilder {
     private DistanceType distanceType;
     private AngleType angleType;
 
-    @Autowired
-    private CoordinatesGeographic coordinatesGeographic;
+    private final CoordinatesGeographic coordinatesGeographic;
+    private CoordinatesGeographicBuilder(CoordinatesGeographic coordinatesGeographic) {
+        this.coordinatesGeographic = coordinatesGeographic;
+    }
 
     public CoordinatesGeographic build() {
         if (distanceType == null) distanceType = coordinatesGeographic.getDistanceType();
@@ -74,29 +76,17 @@ public class CoordinatesGeographicBuilder {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         CoordinatesGeographicBuilder that = (CoordinatesGeographicBuilder) o;
-
-        if (Double.compare(that.latitude, latitude) != 0) return false;
-        if (Double.compare(that.longitude, longitude) != 0) return false;
-        if (Double.compare(that.height, height) != 0) return false;
-        if (distanceType != null ? !distanceType.equals(that.distanceType) : that.distanceType != null) return false;
-        return angleType != null ? angleType.equals(that.angleType) : that.angleType == null;
+        return Double.compare(that.latitude, latitude) == 0 &&
+                Double.compare(that.longitude, longitude) == 0 &&
+                Double.compare(that.height, height) == 0 &&
+                Objects.equals(distanceType, that.distanceType) &&
+                Objects.equals(angleType, that.angleType);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        temp = Double.doubleToLongBits(latitude);
-        result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(longitude);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(height);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (distanceType != null ? distanceType.hashCode() : 0);
-        result = 31 * result + (angleType != null ? angleType.hashCode() : 0);
-        return result;
+        return Objects.hash(latitude, longitude, height, distanceType, angleType);
     }
 
     @Override

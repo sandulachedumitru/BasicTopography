@@ -3,8 +3,6 @@ package com.miticorp.topography.basic.builder;
 import com.miticorp.topography.basic.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +21,10 @@ public class CoordinatesRectangularBuilder {
     private DistanceType distanceType;
     private AngleType angleType;
 
-    @Autowired
-    private CoordinatesRectangular coordinatesRectangular;
+    private final CoordinatesRectangular coordinatesRectangular;
+    private CoordinatesRectangularBuilder(CoordinatesRectangular coordinatesRectangular) {
+        this.coordinatesRectangular = coordinatesRectangular;
+    }
 
     public CoordinatesRectangular build() {
         if (distanceType == null) distanceType = coordinatesRectangular.getDistanceType();
