@@ -18,7 +18,7 @@ public class PointBuilder {
     private static final Logger LOG = LoggerFactory.getLogger(PointBuilder.class);
 
     private Coordinates coord;
-    private String name = "";
+    private String name = ""; // TODO replace "" string with a file properties constants
 
     private Scale scale;
     private PointBuilder(Scale scale) {

@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.builder;
 
+import com.miticorp.topography.basic.factory.AngleTypeCentesimalFactory;
+import com.miticorp.topography.basic.factory.ScaleFactory;
 import com.miticorp.topography.basic.model.Angle;
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.Scale;
@@ -21,16 +23,23 @@ public class AngleBuilder {
     private AngleType angleType;
     private boolean clockwise = true; // true by default
     private String name = "";
-    private Scale scale; // is 1 by default
 
-    private final AngleType angleTypeCentesimalBean;
+    // constructors
+    private Scale scale; // is 1 by default
+    private AngleType angleTypeCentesimal;
     private AngleBuilder(Scale scale, AngleType angleTypeCentesimalBean) {
         this.scale = scale;
-        this.angleTypeCentesimalBean = angleTypeCentesimalBean;
+        this.angleTypeCentesimal = angleTypeCentesimalBean;
     }
 
+    public AngleBuilder() {
+        this.scale = ScaleFactory.getInstance();
+        angleTypeCentesimal = AngleTypeCentesimalFactory.getInstance();
+    }
+
+    // methods
     public Angle build() {
-        if (angleType == null) angleType = angleTypeCentesimalBean;
+        if (angleType == null) angleType = angleTypeCentesimal;
 
         LOG.info("Build Angle with values: Value[{}], AngleType[{}], Clockwise[{}], Name[{}], Scale[{}]", value, angleType, clockwise, name, scale);
 

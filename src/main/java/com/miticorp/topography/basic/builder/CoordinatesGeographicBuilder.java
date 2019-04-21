@@ -23,11 +23,17 @@ public class CoordinatesGeographicBuilder {
     private DistanceType distanceType;
     private AngleType angleType;
 
+    // constructors
     private final CoordinatesGeographic coordinatesGeographic;
     private CoordinatesGeographicBuilder(CoordinatesGeographic coordinatesGeographic) {
         this.coordinatesGeographic = coordinatesGeographic;
     }
 
+    public CoordinatesGeographicBuilder() {
+        coordinatesGeographic = new CoordinatesGeographic(); // TODO creates factory instead new operator
+    }
+
+    // methods
     public CoordinatesGeographic build() {
         if (distanceType == null) distanceType = coordinatesGeographic.getDistanceType();
         if (angleType == null) angleType = coordinatesGeographic.getAngleType();

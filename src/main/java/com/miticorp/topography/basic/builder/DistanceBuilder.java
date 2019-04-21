@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.builder;
 
+import com.miticorp.topography.basic.factory.DistanceTypeMetricMeterFactory;
 import com.miticorp.topography.basic.model.Distance;
 import com.miticorp.topography.basic.model.DistanceType;
 import com.miticorp.topography.basic.model.Point;
@@ -25,15 +26,20 @@ public class DistanceBuilder {
     private String name = "";
     private Scale scale;
 
-    private final DistanceType distanceTypeMetricMeterBean;
+    // constructors
+    private final DistanceType distanceTypeMetricMeter;
     private DistanceBuilder(DistanceType distanceTypeMetricMeterBean) {
-        this.distanceTypeMetricMeterBean = distanceTypeMetricMeterBean;
+        this.distanceTypeMetricMeter = distanceTypeMetricMeterBean;
+    }
+    public DistanceBuilder() {
+        distanceTypeMetricMeter = DistanceTypeMetricMeterFactory.getInstance();
     }
 
+    // methods
     public Distance build() {
         Distance distance = new Distance(value, distanceType, scale, name);
 
-        if (distanceType == null) distanceType = distanceTypeMetricMeterBean;
+        if (distanceType == null) distanceType = distanceTypeMetricMeter;
 
         if (from != null && to != null)
             if (from.getCoord() != null && to.getCoord() != null) distance = new Distance(from, to, distanceType, scale, name);

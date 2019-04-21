@@ -1,6 +1,8 @@
 package com.miticorp.topography.basic.builder;
 
-import com.miticorp.topography.basic.model.*;
+import com.miticorp.topography.basic.model.AngleType;
+import com.miticorp.topography.basic.model.CoordinatesRectangular;
+import com.miticorp.topography.basic.model.DistanceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -21,11 +23,16 @@ public class CoordinatesRectangularBuilder {
     private DistanceType distanceType;
     private AngleType angleType;
 
-    private final CoordinatesRectangular coordinatesRectangular;
+    // constructors
+    private CoordinatesRectangular coordinatesRectangular;
     private CoordinatesRectangularBuilder(CoordinatesRectangular coordinatesRectangular) {
         this.coordinatesRectangular = coordinatesRectangular;
     }
+    public CoordinatesRectangularBuilder() {
+        coordinatesRectangular = new CoordinatesRectangular(); // TODO create a factory instead new operator
+    }
 
+    // methods
     public CoordinatesRectangular build() {
         if (distanceType == null) distanceType = coordinatesRectangular.getDistanceType();
         if (angleType == null) angleType = coordinatesRectangular.getAngleType();
