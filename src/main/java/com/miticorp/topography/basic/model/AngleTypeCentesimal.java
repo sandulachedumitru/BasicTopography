@@ -29,4 +29,11 @@ public class AngleTypeCentesimal extends AngleType {
 		AngleTypeCentesimal other = (AngleTypeCentesimal) obj;
 		return Double.doubleToLongBits(degree) == Double.doubleToLongBits(other.degree);
 	}
+
+	@Override
+	public String toString() {
+		return "AngleTypeCentesimal{" +
+				"degree=" + degree +
+				'}';
+	}
 }

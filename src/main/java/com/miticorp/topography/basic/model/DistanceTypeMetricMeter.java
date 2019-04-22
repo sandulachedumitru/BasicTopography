@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.model;
 
+import java.util.Objects;
+
 public class DistanceTypeMetricMeter extends DistanceTypeMetric {
 	private final Double conversionToMeter = 1D;
 
@@ -9,27 +11,22 @@ public class DistanceTypeMetricMeter extends DistanceTypeMetric {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((conversionToMeter == null) ? 0 : conversionToMeter.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		DistanceTypeMetricMeter that = (DistanceTypeMetricMeter) o;
+		return Objects.equals(conversionToMeter, that.conversionToMeter);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DistanceTypeMetricMeter other = (DistanceTypeMetricMeter) obj;
-		if (conversionToMeter == null) {
-			if (other.conversionToMeter != null)
-				return false;
-		} else if (!conversionToMeter.equals(other.conversionToMeter))
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hash(conversionToMeter);
+	}
+
+	@Override
+	public String toString() {
+		return "DistanceTypeMetricMeter{" +
+				"conversionToMeter=" + conversionToMeter +
+				'}';
 	}
 }

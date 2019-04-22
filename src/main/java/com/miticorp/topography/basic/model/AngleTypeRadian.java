@@ -29,4 +29,11 @@ public class AngleTypeRadian extends AngleType {
 		AngleTypeRadian other = (AngleTypeRadian) obj;
 		return Double.doubleToLongBits(degree) == Double.doubleToLongBits(other.degree);
 	}
+
+	@Override
+	public String toString() {
+		return "AngleTypeRadian{" +
+				"degree=" + degree +
+				'}';
+	}
 }

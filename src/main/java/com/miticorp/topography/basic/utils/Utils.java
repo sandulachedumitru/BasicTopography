@@ -7,30 +7,36 @@ import java.util.Random;
 public class Utils {
 	
 	// Calculates the bearing and distance (polar coordinates) from rectangular coordinates
-	public static <T extends CoordinatesRectangular> CoordinatesPolar calculatesPolarfromRectangularCoordinates(Point<T> from, Point<T> to, AngleType angleType) {
-		if (from != null && to != null) {
+	public static CoordinatesPolar calculatesPolarFromRectangularCoordinates(Point from, Point to, AngleType angleType) {
+		if ((from != null && to != null) && (from.getCoord() instanceof CoordinatesRectangular && to.getCoord() instanceof CoordinatesRectangular)) {
 			CoordinatesPolar coordinatesPolar = new CoordinatesPolar();
 			
 			double deltaNorth, deltaEast;
 			double north1, east1;
 			double north2, east2;
 			double height1, height2;
+
+			CoordinatesRectangular fromCoord 	= (CoordinatesRectangular) from.getCoord();
+			CoordinatesRectangular toCoord 		= (CoordinatesRectangular) to.getCoord();
+
+			if ( fromCoord == null ) return null;
+			else if ( 	(fromCoord.getNorth() == null)
+			|| 			(fromCoord.getEast() == null)
+			|| 			(fromCoord.getHeight() == null) ) return null;
+			if ( toCoord == null ) return null;
+			else if ( 	(toCoord.getNorth() == null)
+			|| 			(toCoord.getEast() == null)
+			|| 			(toCoord.getHeight() == null) ) return null;
 			
-			if ( from.getCoord() == null ) return null;
-			else if ( 	(from.getCoord().getNorth() == null)
-			|| 			(from.getCoord().getEast() == null)
-			|| 			(from.getCoord().getHeight() == null) ) return null;
-			if ( to.getCoord() == null ) return null;
-			else if ( 	(to.getCoord().getNorth() == null)
-			|| 			(to.getCoord().getEast() == null)
-			|| 			(to.getCoord().getHeight() == null) ) return null;
-			
-			north1 	= from.getCoord().getNorth() 	* from.getScaleFactor();
-			north2 	= to.getCoord().getNorth() 		* to.getScaleFactor();
-			east1 	= from.getCoord().getEast() 	* from.getScaleFactor();
-			east2 	= to.getCoord().getEast() 		* to.getScaleFactor();
-			height1	= from.getCoord().getHeight() 	* from.getScaleFactor();
-			height2	= to.getCoord().getHeight()		* to.getScaleFactor();
+			double scaleFactorFrom = from.getScale() == null ? new Scale().getScaleFactor() : from.getScale().getScaleFactor();
+			double scaleFactorTo = to.getScale() == null ? new Scale().getScaleFactor() : to.getScale().getScaleFactor();
+
+			north1 	= fromCoord.getNorth() 	* scaleFactorFrom;
+			north2 	= toCoord.getNorth() 	* scaleFactorTo;
+			east1 	= fromCoord.getEast() 	* scaleFactorFrom;
+			east2 	= toCoord.getEast() 	* scaleFactorTo;
+			height1	= fromCoord.getHeight() * scaleFactorFrom;
+			height2	= toCoord.getHeight()	* scaleFactorTo;
 			
 			deltaNorth 	= north2 - north1;
 			deltaEast 	= east2 - east1;
@@ -62,7 +68,7 @@ public class Utils {
 			double distance = Math.sqrt(Math.pow(deltaNorth, 2) + Math.pow(deltaEast, 2));
 			
 			// Prepare return
-			Angle angleRez = new Angle(theta, angleType);
+			Angle angleRez = new Angle(theta, angleType, true, null, null);
 			Distance distanceRez = new Distance();
 			
 			distanceRez.setValue(distance);

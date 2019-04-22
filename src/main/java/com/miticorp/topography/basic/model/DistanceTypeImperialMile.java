@@ -1,5 +1,7 @@
 package com.miticorp.topography.basic.model;
 
+import java.util.Objects;
+
 public class DistanceTypeImperialMile extends DistanceTypeImperial  {
 	private final Double conversionToYard = 1760D;
 
@@ -9,27 +11,22 @@ public class DistanceTypeImperialMile extends DistanceTypeImperial  {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((conversionToYard == null) ? 0 : conversionToYard.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		DistanceTypeImperialMile that = (DistanceTypeImperialMile) o;
+		return Objects.equals(conversionToYard, that.conversionToYard);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DistanceTypeImperialMile other = (DistanceTypeImperialMile) obj;
-		if (conversionToYard == null) {
-			if (other.conversionToYard != null)
-				return false;
-		} else if (!conversionToYard.equals(other.conversionToYard))
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hash(conversionToYard);
+	}
+
+	@Override
+	public String toString() {
+		return "DistanceTypeImperialMile{" +
+				"conversionToYard=" + conversionToYard +
+				'}';
 	}
 }
