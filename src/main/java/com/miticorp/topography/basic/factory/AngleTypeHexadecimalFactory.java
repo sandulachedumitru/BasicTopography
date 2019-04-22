@@ -9,7 +9,7 @@ public class AngleTypeHexadecimalFactory {
     private static final AngleTypeHexadecimal INSTANCE = new AngleTypeHexadecimal();
 
     public static AngleTypeHexadecimal getInstance() {
-        LOG.info("Angle Type Hexadecimal instance:[{}]", INSTANCE);
+        LOG.info("Factory for Angle Type Hexadecimal instance: [{}]", INSTANCE);
         return INSTANCE;
     }
 }

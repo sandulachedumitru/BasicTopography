@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 public class DistanceFactory {
     private static final Logger LOG = LoggerFactory.getLogger(DistanceFactory.class);
 
-    private static Distance INSTANCE = new Distance();
-
     public static Distance getInstance() {
-        LOG.info("Created default Distance: [{}]", INSTANCE);
+        Distance INSTANCE = new Distance();
+        LOG.info("Factory for default Distance : [{}]", INSTANCE);
         return INSTANCE;
     }
 }

@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.builder;
 
+import com.miticorp.topography.basic.factory.CoordinatesGeographicFactory;
 import com.miticorp.topography.basic.model.AngleType;
 import com.miticorp.topography.basic.model.CoordinatesGeographic;
 import com.miticorp.topography.basic.model.DistanceType;
@@ -30,7 +31,7 @@ public class CoordinatesGeographicBuilder {
     }
 
     public CoordinatesGeographicBuilder() {
-        coordinatesGeographic = new CoordinatesGeographic(); // TODO creates factory instead new operator
+        coordinatesGeographic = CoordinatesGeographicFactory.getInstance();
     }
 
     // methods

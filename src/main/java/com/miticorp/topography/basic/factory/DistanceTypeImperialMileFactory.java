@@ -9,7 +9,7 @@ public class DistanceTypeImperialMileFactory {
     private static final DistanceTypeImperialMile INSTANCE = new DistanceTypeImperialMile();
 
     public static DistanceTypeImperialMile getInstance() {
-        LOG.info("Factory of Distance Type Imperial for Mile instance:[{}]", INSTANCE);
+        LOG.info("Factory of Distance Type Imperial for Mile instance: [{}]", INSTANCE);
         return INSTANCE;
     }
 }

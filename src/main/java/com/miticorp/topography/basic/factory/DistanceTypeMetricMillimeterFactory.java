@@ -9,7 +9,7 @@ public class DistanceTypeMetricMillimeterFactory {
     private static final DistanceTypeMetricMillimeter INSTANCE = new DistanceTypeMetricMillimeter();
 
     public static DistanceTypeMetricMillimeter getInstance() {
-        LOG.info("Factory of Distance Type Metric for Millimeter instance:[{}]", INSTANCE);
+        LOG.info("Factory of Distance Type Metric for Millimeter instance: [{}]", INSTANCE);
         return INSTANCE;
     }
 }

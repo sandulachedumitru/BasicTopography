@@ -9,7 +9,7 @@ public class DistanceTypeImperialYardFactory {
     private static final DistanceTypeImperialYard INSGANCE = new DistanceTypeImperialYard();
 
     public static DistanceTypeImperialYard getInstance() {
-        LOG.info("Factory of Distance Type Imperial for Yard instance:[{}]", INSGANCE);
+        LOG.info("Factory of Distance Type Imperial for Yard instance: [{}]", INSGANCE);
         return INSGANCE;
     }
 }

@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
  * e-mail: sandulachedumitru@hotmail.com
  */
 public class AngleTypeRadianFactory {
-    private static final Logger LOG = LoggerFactory.getLogger(AngleTypeCentesimalFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AngleTypeRadianFactory.class);
     private static final AngleTypeRadian INSTANCE = new AngleTypeRadian();
 
     public static AngleTypeRadian getInstance() {
-        LOG.info("Angle Type Radian instance:[{}]", INSTANCE);
+        LOG.info("Factory Angle Type Radian instance: [{}]", INSTANCE);
         return INSTANCE;
     }
 }

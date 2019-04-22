@@ -9,7 +9,7 @@ public class DistanceTypeMetricKilometerFactory {
     private static final DistanceTypeMetricKilometer INSTANCE = new DistanceTypeMetricKilometer();
 
     public static DistanceTypeMetricKilometer getInstance() {
-        LOG.info("Factory of Distance Type Metric for Kilometer:[{}]", INSTANCE);
+        LOG.info("Factory of Distance Type Metric for Kilometer: [{}]", INSTANCE);
         return INSTANCE;
     }
 }

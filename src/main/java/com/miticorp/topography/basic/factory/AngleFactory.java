@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 public class AngleFactory {
     private static final Logger LOG = LoggerFactory.getLogger(AngleFactory.class);
 
-    private static Angle INSTANCE = new Angle();
-
     public static Angle getInstance() {
-        LOG.info("Created default Angle: [{}]", INSTANCE);
+        Angle INSTANCE = new Angle();
+        LOG.info("Factory for default Angle instance: [{}]", INSTANCE);
         return INSTANCE;
     }
 }
