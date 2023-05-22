@@ -29,4 +29,11 @@ public class AngleTypeHexadecimal extends AngleType {
 		AngleTypeHexadecimal other = (AngleTypeHexadecimal) obj;
 		return Double.doubleToLongBits(degree) == Double.doubleToLongBits(other.degree);
 	}
+
+	@Override
+	public String toString() {
+		return "AngleTypeHexadecimal{" +
+				"degree=" + degree +
+				'}';
+	}
 }

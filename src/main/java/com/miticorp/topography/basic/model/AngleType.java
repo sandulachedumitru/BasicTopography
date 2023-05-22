@@ -1,5 +1,6 @@
 package com.miticorp.topography.basic.model;
 
+// TODO insert logs to all classes
 public abstract class AngleType {
 	public abstract Double getMaxNumberOfCircleDegrees();
 	
@@ -9,4 +10,5 @@ public abstract class AngleType {
 	
 	public abstract int hashCode();
 	public abstract boolean equals(Object obj);
+	public abstract String toString();
 }

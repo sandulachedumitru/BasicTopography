@@ -12,11 +12,14 @@ import static org.junit.Assert.*;
  * @author Dumitru Săndulache (sandulachedumitru@hotmail.com)
  */
 public class AngleTest {
+	private static final String DEFAULT_NAME = "";
 	private static final double DELTA_TOLERANCE = 0.0001;
 	private static final double SCALE_FACTOR_DEFAULT = (new GeometricElements() {
+		{ scale = new Scale(); name = ""; }
 		@Override public int hashCode() {return 0;}
 		@Override public boolean equals(Object obj) {return false;}
-	}).getScaleFactor();
+		@Override public String  toString() {return "";}
+	}).getScale().getScaleFactor();
 
 	/**
 	 * Test constructor Angle()
@@ -32,8 +35,9 @@ public class AngleTest {
 		assertNull(angle.getValue());
 		assertNull(angle.getAngleType());
 		assertTrue(angle.isClockwise());
-		assertTrue(angle.getScaleFactor() == SCALE_FACTOR_DEFAULT);
-		assertNull(angle.getName());
+		assertEquals(angle.getScale().getScaleFactor(), SCALE_FACTOR_DEFAULT, 0.0);
+		assertNotNull(angle.getName());
+		assertEquals(angle.getName(), DEFAULT_NAME);
 	}
 	
 	/**
@@ -43,66 +47,21 @@ public class AngleTest {
 	public void testAngleDoubleAngleTypeBooleanDoubleString() {
 		// setup
 		AngleType angleType = new AngleTypeCentesimal();
+		Scale scale = new Scale();
 		Double value = (new Random()).nextDouble() * angleType.getMaxNumberOfCircleDegrees();
 		boolean clockwise = false;
 		double scaleFactor = (new Random()).nextDouble() * 100;
+		scale.setScaleFactor(scaleFactor);
 		String name = "test point";
 		
-		Angle angle = new Angle(value, angleType, clockwise, scaleFactor, name);
+		Angle angle = new Angle(value, angleType, clockwise, scale, name);
 		
 		// test
-		assertTrue(angle.getValue().equals(value));
-		assertTrue(angle.getAngleType().equals(angleType));
+		assertEquals(angle.getValue(), value);
+		assertEquals(angle.getAngleType(), angleType);
 		assertFalse(angle.isClockwise());
-		assertTrue(angle.getScaleFactor() == scaleFactor);
-		assertTrue(angle.getName().equals(name));
-	}
-
-	/**
-	 * Test constructor Angle(Double value, AngleType angleType)
-	 */
-	@Test
-	public void testAngleDoubleAngleType() {
-		// setup
-		AngleType current;
-		Double value;
-		
-		Random random = new Random();
-		current = new AngleTypeCentesimal();
-		value = random.nextDouble()*current.getMaxNumberOfCircleDegrees();
-		Angle angle = new Angle(value, current);
-		
-		// test
-		// clockwise == true by default
-		assertTrue(angle.getValue().equals(value));
-		assertTrue(angle.getAngleType().equals(current));
-		assertTrue(angle.isClockwise());
-		assertTrue(angle.getScaleFactor() == SCALE_FACTOR_DEFAULT);
-		assertTrue(angle.getName() == null);
-	}
-	
-	/**
-	 * Test constructor Angle(Double value, AngleType angleType, boolean clockwise)
-	 */
-	@Test
-	public void testAngleDoubleAngleTypeBoolean() {
-		// setup
-		AngleType current;
-		Double value;
-		boolean clockwise; // == true by default
-		
-		Random random = new Random();
-		current = new AngleTypeCentesimal();
-		value = random.nextDouble()*current.getMaxNumberOfCircleDegrees();
-		clockwise = false;
-		Angle angle = new Angle(value, current, clockwise);
-		
-		// test
-		assertTrue(angle.getValue().equals(value));
-		assertTrue(angle.getAngleType().equals(current));
-		assertFalse(angle.isClockwise());
-		assertTrue(angle.getScaleFactor() == SCALE_FACTOR_DEFAULT);
-		assertTrue(angle.getName() == null);
+		assertEquals(angle.getScale().getScaleFactor(), scaleFactor, 0.0);
+		assertEquals(angle.getName(), name);
 	}
 
 	/**
@@ -145,7 +104,7 @@ public class AngleTest {
 				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to, value);
-				assertTrue(rez.equals(value*factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 
 		} else {
@@ -153,7 +112,7 @@ public class AngleTest {
 				value = i;
 				// System.out.println(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to, value);
-				assertTrue(rez.equals(value * factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 		} // else
 	} // private method
@@ -165,13 +124,15 @@ public class AngleTest {
 	@Test
 	public void testTransformAngleFromSystemToSystem2() {
 		// setup
+		boolean clockwise = true;
+
 		AngleType cent = new AngleTypeCentesimal();
 		AngleType hex = new AngleTypeHexadecimal();
 		AngleType rad = new AngleTypeRadian();
 		
-		Angle angleCent = new Angle(null, cent);
-		Angle angleHex = new Angle(null, hex);
-		Angle angleRad = new Angle(null, rad);
+		Angle angleCent = new Angle(null, cent, clockwise, null, null);
+		Angle angleHex = new Angle(null, hex, clockwise, null, null);
+		Angle angleRad = new Angle(null, rad, clockwise, null, null);
 		
 		// test
 		loop3(angleCent, angleCent, 1);
@@ -204,8 +165,8 @@ public class AngleTest {
 				// System.out.println(value);
 				from.setValue(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to);
-				assertTrue(rez.equals(value*factor));
-				assertTrue(rez.equals(to.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, to.getValue());
 			}
 
 		} else {
@@ -214,8 +175,8 @@ public class AngleTest {
 				// System.out.println(value);
 				from.setValue(value);
 				rez = Angle.transformAngleFromSystemToSystem(from, to);
-				assertTrue(rez.equals(value * factor));
-				assertTrue(rez.equals(to.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, to.getValue());
 			}
 		} // else
 	} // private method
@@ -252,6 +213,7 @@ public class AngleTest {
 		Double rez;
 		Random random = new Random();
 		double length, value;
+		boolean clockwise = false;
 
 		length = from.getMaxNumberOfCircleDegrees();
 		if (!(from instanceof AngleTypeRadian)) {
@@ -260,18 +222,18 @@ public class AngleTest {
 				double temp = random.nextInt(99999); temp /= 10000;
 				if ((value % (length/4)) != 0D ) value += temp;
 				// System.out.println(value);
-				angle = new Angle(value, from);
+				angle = new Angle(value, from, clockwise, null, null);
 				rez = angle.transformAngleFromCurrentToAnotherSystem(to);
-				assertTrue(rez.equals(value*factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 
 		} else {
 			for (double i = 0; i <= length; i += (length / 400) ) {
 				value = i;
 				// System.out.println(value);
-				angle = new Angle(value, from);
+				angle = new Angle(value, from, clockwise, null, null);
 				rez = angle.transformAngleFromCurrentToAnotherSystem(to);
-				assertTrue(rez.equals(value * factor));
+				assertEquals(rez, value * factor, 0.0);
 			}
 		} // else
 	} // private method
@@ -282,13 +244,15 @@ public class AngleTest {
 	@Test
 	public void testTransformAngleFromAnotherToCurrentSystem() {
 		// setup
+		boolean clockwise = false;
+
 		AngleType cent = new AngleTypeCentesimal();
 		AngleType hex = new AngleTypeHexadecimal();
 		AngleType rad = new AngleTypeRadian();
 		
-		Angle angleCent = new Angle(null, cent);
-		Angle angleHex = new Angle(null, hex);
-		Angle angleRad = new Angle(null, rad);
+		Angle angleCent = new Angle(null, cent, clockwise, null, null);
+		Angle angleHex = new Angle(null, hex, clockwise, null, null);
+		Angle angleRad = new Angle(null, rad, clockwise, null, null);
 		
 		// test
 		loop4(angleCent, angleCent, 1);
@@ -322,8 +286,8 @@ public class AngleTest {
 				another.setValue(value);
 				rez = current.transformAngleFromAnotherToCurrentSystem(another);
 				// System.out.println(value + " --> " + value*factor + " --> " + rez);
-				assertTrue(rez.equals(value*factor));
-				assertTrue(rez.equals(current.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, current.getValue());
 			}
 
 		} else {
@@ -333,8 +297,8 @@ public class AngleTest {
 				another.setValue(value);
 				rez = current.transformAngleFromAnotherToCurrentSystem(another);
 				// System.out.println(value + " --> " + value*factor + " --> " + rez);
-				assertTrue(rez.equals(value * factor));
-				assertTrue(rez.equals(current.getValue()));
+				assertEquals(rez, value * factor, 0.0);
+				assertEquals(rez, current.getValue());
 			}
 		} // else
 	} // private method
@@ -347,14 +311,15 @@ public class AngleTest {
 		// setup
 		AngleType current;
 		Double value;
+		boolean clockwise = false;
 		
 		Random random = new Random();
 		current = new AngleTypeCentesimal();
 		value = random.nextDouble()*current.getMaxNumberOfCircleDegrees();
-		Angle angle = new Angle(value, current);
+		Angle angle = new Angle(value, current, clockwise, null, null);
 		
 		// test
-		assertTrue(value.equals(angle.getValue()));
+		assertEquals(value, angle.getValue());
 	}
 
 	/**
@@ -365,15 +330,16 @@ public class AngleTest {
 		// setup
 		AngleType current;
 		Double value;
+		boolean clockwise = false;
 		
 		Random random = new Random();
 		current = new AngleTypeCentesimal();
 		value = random.nextDouble()*current.getMaxNumberOfCircleDegrees();
-		Angle angle = new Angle(null, current);
+		Angle angle = new Angle(null, current, clockwise, null, null);
 		angle.setValue(value);
 		
 		// test
-		assertTrue(value.equals(angle.getValue()));
+		assertEquals(value, angle.getValue());
 	}
 
 	/**
@@ -383,12 +349,13 @@ public class AngleTest {
 	public void testGetAngleType() {
 		// setup
 		AngleType current;
+		boolean clockwise = false;
 		
 		current = new AngleTypeCentesimal();
-		Angle angle = new Angle(null, current);
+		Angle angle = new Angle(null, current, clockwise, null, null);
 		
 		// test
-		assertTrue(angle.getAngleType().equals(current));
+		assertEquals(angle.getAngleType(), current);
 	}
 
 	/**
@@ -404,7 +371,7 @@ public class AngleTest {
 		angle.setAngleType(current);
 		
 		// test
-		assertTrue(angle.getAngleType().equals(current));
+		assertEquals(angle.getAngleType(), current);
 	}
 
 	/**
@@ -414,7 +381,7 @@ public class AngleTest {
 	public void testIsClockwise() {
 		// setup
 		Angle angleTrue = new Angle();
-		Angle angleFalse = new Angle(null, null, false);
+		Angle angleFalse = new Angle(null, null, false, null, null);
 		
 		// test
 		assertTrue(angleTrue.isClockwise());
@@ -435,9 +402,6 @@ public class AngleTest {
 		assertFalse(angleFalse.isClockwise());
 	}
 
-	/**
-	 * Test method for Angle's getScaleFactor()
-	 */
 	@Test
 	public void testGetScaleFactor() {
 		// setup
@@ -445,21 +409,42 @@ public class AngleTest {
 		Angle angle = new Angle();
 
 		// test
-		assertEquals(scaleFactor, angle.getScaleFactor(), DELTA_TOLERANCE);
+		assertEquals(scaleFactor, angle.getScale().getScaleFactor(), DELTA_TOLERANCE);
 	}
 
-	/**
-	 * Test method for Angle's setScaleFactor(double scaleFactor)
-	 */
 	@Test
 	public void testSetScaleFactor() {
 		// setup
 		Angle angle = new Angle();
 		Double scaleFactor = SCALE_FACTOR_DEFAULT * 2 + 1;
-		angle.setScaleFactor(scaleFactor);
+		angle.getScale().setScaleFactor(scaleFactor);
 
 		// test
-		assertEquals(scaleFactor, angle.getScaleFactor(), DELTA_TOLERANCE);
+		assertEquals(scaleFactor, angle.getScale().getScaleFactor(), DELTA_TOLERANCE);
+	}
+
+	@Test
+	public void testGetScale() {
+		// setup
+		Angle angle = new Angle();
+
+		// test
+		assertNotNull(angle.getScale());
+	}
+
+	@Test
+	public void testSetSclale() {
+		// setup
+		Angle angle1 = new Angle();
+		Angle angle2 = new Angle();
+		Scale scale = new Scale(SCALE_FACTOR_DEFAULT * (new Random().nextDouble()) + 1);
+
+		angle1.setScale(scale);
+
+		// test
+		assertNotNull(angle1.getScale());
+		assertNotNull(angle2.getScale());
+		assertNotEquals(angle1.getScale(), angle2.getScale());
 	}
 
 	/**
@@ -469,9 +454,8 @@ public class AngleTest {
 	public void testGetName() {
 		// setup
 		String name = "angle name";
-		Double scaleFactor = SCALE_FACTOR_DEFAULT * 2 + 1;
 		boolean flag = (new Angle()).isClockwise();
-		Angle angle = new Angle(null, null, !flag, scaleFactor, name);
+		Angle angle = new Angle(null, null, !flag, null, name);
 
 		// test
 		assertEquals(name, angle.getName());
@@ -484,9 +468,8 @@ public class AngleTest {
 	public void testSetName() {
 		// setup
 		String name1 = "angle name1", name2 = "angle name2";
-		Double scaleFactor = SCALE_FACTOR_DEFAULT * 2 + 1;
 		boolean flag = (new Angle()).isClockwise();
-		Angle angle = new Angle(null, null, !flag, scaleFactor, name1);
+		Angle angle = new Angle(null, null, !flag, null, name1);
 		angle.setName(name2);
 
 		// test
@@ -499,24 +482,27 @@ public class AngleTest {
 	@Test
 	public void testEquals() {
 		// setup
-		AngleType angle = new AngleTypeCentesimal();
+		AngleType angleCente = new AngleTypeCentesimal();
+		AngleType angleHexa = new AngleTypeHexadecimal();
 		Random random = new Random();
-		Double value = random.nextDouble()*angle.getMaxNumberOfCircleDegrees();
+		Double value = random.nextDouble()*angleCente.getMaxNumberOfCircleDegrees();
+		boolean clockwise = true;
 		
 		Angle angle1 = new Angle();
 		Angle angle2 = new Angle();
-		Angle angle3 = new Angle(value, angle);
-		Angle angle4 = new Angle(value, angle, false);
-		Angle angle5 = new Angle(value*2, angle);
-		Angle angle6 = new Angle(value, new AngleTypeHexadecimal());
+		Angle angle3 = new Angle(value, angleCente, clockwise, null, null);
+		Angle angle4 = new Angle(value, angleCente, !clockwise, null, null);
+		Angle angle5 = new Angle(value*2, angleCente, clockwise, null, null);
+		Angle angle6 = new Angle(value, angleHexa, clockwise, null, null);
 		
 		// test
-		assertTrue(angle1.equals(angle2));
-		
-		assertFalse(angle1.equals(angle3));
-		assertFalse(angle3.equals(angle4));
-		assertFalse(angle3.equals(angle5));
-		assertFalse(angle3.equals(angle6));
+		assertEquals(angle1, angle2);
+		assertEquals(angle3, angle4);
+
+		assertNotEquals(angle1, angle3);
+		assertNotEquals(angle3, angle5);
+		assertNotEquals(angle3, angle6);
+		assertNotEquals(angle5, angle6);
 	}
 	
 	/**
@@ -524,15 +510,19 @@ public class AngleTest {
 	 */
 	@Test
 	public void testHashCode() {
-		AngleType angleType = new AngleTypeCentesimal();
-		Double value = (new Random()).nextDouble() * angleType.getMaxNumberOfCircleDegrees();
+		// setup
+		boolean clockwise = true;
+
+		AngleType angleCente = new AngleTypeCentesimal();
+		AngleType angleHexa = new AngleTypeHexadecimal();
+		Double value = (new Random()).nextDouble() * angleCente.getMaxNumberOfCircleDegrees();
 		
 		Angle angle1 = new Angle();
 		Angle angle2 = new Angle();
-		Angle angle3 = new Angle(value, angleType);
-		Angle angle4 = new Angle(value, angleType, false);
-		Angle angle5 = new Angle(value*2, angleType);
-		Angle angle6 = new Angle(value, new AngleTypeHexadecimal());
+		Angle angle3 = new Angle(value, angleCente, clockwise, null, null);
+		Angle angle4 = new Angle(value, angleCente, !clockwise, null, null);
+		Angle angle5 = new Angle(value*2, angleCente, clockwise, null, null);
+		Angle angle6 = new Angle(value, angleHexa, clockwise, null, null);
 		
 		// test
 		assertEquals(angle1.hashCode(), angle1.hashCode());
