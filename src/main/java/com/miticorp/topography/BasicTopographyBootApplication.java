@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import java.math.RoundingMode;
+//import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
@@ -62,9 +62,9 @@ public class BasicTopographyBootApplication {
 		r = coordinatesPolar.getDistance().getValue();
 		thet = coordinatesPolar.getAngle().getValue();
 		DecimalFormat df3 = new DecimalFormat(".###m");
-		df3.setRoundingMode(RoundingMode.UP);
+//		df3.setRoundingMode(RoundingMode.UP);
 		DecimalFormat df4 = new DecimalFormat(".####g");
-		df4.setRoundingMode(RoundingMode.UP);
+//		df4.setRoundingMode(RoundingMode.UP);
 		LOG.info("P(r,thet) = P(" + df3.format(r) + "," + df4.format(thet) + ")");
 	}
 
